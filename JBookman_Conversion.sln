@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C# Express 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JBookman_Conversion", "JBookman_Conversion\JBookman_Conversion.csproj", "{756FA5C2-218C-414D-B6DA-42E6047BF683}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JBookman_Mapper", "..\JBookman_Mapper\JBookman_Mapper\JBookman_Mapper.csproj", "{F3539C9A-EEEA-468D-B48C-2DAB30456555}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{756FA5C2-218C-414D-B6DA-42E6047BF683}.Debug|x86.ActiveCfg = Debug|x86
+		{756FA5C2-218C-414D-B6DA-42E6047BF683}.Debug|x86.Build.0 = Debug|x86
+		{756FA5C2-218C-414D-B6DA-42E6047BF683}.Release|x86.ActiveCfg = Release|x86
+		{756FA5C2-218C-414D-B6DA-42E6047BF683}.Release|x86.Build.0 = Release|x86
+		{F3539C9A-EEEA-468D-B48C-2DAB30456555}.Debug|x86.ActiveCfg = Debug|x86
+		{F3539C9A-EEEA-468D-B48C-2DAB30456555}.Debug|x86.Build.0 = Debug|x86
+		{F3539C9A-EEEA-468D-B48C-2DAB30456555}.Release|x86.ActiveCfg = Release|x86
+		{F3539C9A-EEEA-468D-B48C-2DAB30456555}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
