@@ -590,7 +590,10 @@ namespace JBookman_Conversion
 /////////////////
       private void DrawPlayer()
       {
-         /* int playerMapCol = m_Player.GetSector() % m_MapCols;
+       // TODO: Move to seperate classes.
+          
+          
+          /* int playerMapCol = m_Player.GetSector() % m_MapCols;
           int playerMapRow = (int)m_Player.GetSector() / m_MapRows;*/
                     
           int playerMapCol = SectorToCols(m_Player.GetSector(), g_CurrentMap.m_MapCols);
