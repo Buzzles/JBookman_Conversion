@@ -555,7 +555,7 @@ namespace JBookman_Conversion
                     GL.PushMatrix(); //save
                     GL.LoadIdentity();
                     GL.Translate(drawCol, -drawRow, 0);
-                    //Rotation to be handled here.
+                    //Rotation to be handled here. Need to recenter the draw for this to work before shifting tiles around.
                     if (currentMapSector.rotationAngle != 0)
                     {
                        GL.Rotate(currentMapSector.rotationAngle, 0, 0, 1);
