@@ -602,7 +602,6 @@ namespace JBookman_Conversion
           int FinalVisiblePlayerCol = Constants.NORMALVISIBLEPLAYERCOL;
           int FinalVisiblePlayerRow = Constants.NORMALVISIBLEPLAYERROW;
 
-          //
           // Handling player being near edges of game world
           // by handling playercols/rows in respect to the viewport
           // reaching min or max movement
