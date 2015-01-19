@@ -186,9 +186,9 @@ namespace JBookman_Mapper
 
         void SetUp_currentMap()
         {
-            currentMap.m_MapTypeID = 0;
-            currentMap.m_MapCols = 0;
-            currentMap.m_MapRows = 0;
+            currentMap.MapTypeId = 0;
+            currentMap.MapCols = 0;
+            currentMap.MapRows = 0;
 
             
 
@@ -218,8 +218,8 @@ namespace JBookman_Mapper
 
             ushort sector = getSectorDetails_FromPoint(contextPoint, map_RectArray, (object)mapPanel);
 
-            int x1 = sector % currentMap.m_MapCols;
-            int y1 = (int)((sector / currentMap.m_MapRows) + 0.001f);
+            int x1 = sector % currentMap.MapCols;
+            int y1 = (int)((sector / currentMap.MapRows) + 0.001f);
 
             if (currentMap.m_MapSectors[y1, x1].Get_Is_Impassable())
             { cMenuItem2.Checked = true; }
@@ -241,8 +241,8 @@ namespace JBookman_Mapper
         {
             ushort sector = getSectorDetails_FromPoint(contextPoint, map_RectArray, (object)mapPanel);
 
-            int x1 = sector % currentMap.m_MapCols;
-            int y1 = (int)((sector / currentMap.m_MapRows) + 0.001f);
+            int x1 = sector % currentMap.MapCols;
+            int y1 = (int)((sector / currentMap.MapRows) + 0.001f);
 
             if (currentMap.m_MapSectors[y1, x1].Get_Is_Impassable())
             {
@@ -319,22 +319,22 @@ namespace JBookman_Mapper
             CreateMapInputForm newMapInput = new CreateMapInputForm();
             if (newMapInput.ShowDialog() == DialogResult.OK)
             {
-                currentMap.m_MapTypeID = newMapInput.MapID;
-                currentMap.m_MapCols = newMapInput.MapCols;
-                currentMap.m_MapRows = newMapInput.MapRows;
+                currentMap.MapTypeId = newMapInput.MapID;
+                currentMap.MapCols = newMapInput.MapCols;
+                currentMap.MapRows = newMapInput.MapRows;
                 g_sCurrentMapName = newMapInput.MapName;
             }
 
-            MessageBox.Show("Map values: ID= "+currentMap.m_MapTypeID+" Cols= "+currentMap.m_MapCols+" Rows= "+currentMap.m_MapRows+ " MapName: "+g_sCurrentMapName);
+            MessageBox.Show("Map values: ID= "+currentMap.MapTypeId+" Cols= "+currentMap.MapCols+" Rows= "+currentMap.MapRows+ " MapName: "+g_sCurrentMapName);
             
             //currentMap.m_MapSectors = new ushort[currentMap.m_MapRows][];
-            currentMap.m_MapSectors = new MapSector[currentMap.m_MapRows,currentMap.m_MapCols];
+            currentMap.m_MapSectors = new MapSector[currentMap.MapRows,currentMap.MapCols];
 
             //Create blank map
-            for (short y = 0; y < currentMap.m_MapRows; y++)
+            for (short y = 0; y < currentMap.MapRows; y++)
             {
-                //currentMap.m_MapSectors[y] = new ushort[currentMap.m_MapCols];
-                for(short x = 0; x< currentMap.m_MapCols; x++)
+                //currentMap.m_MapSectors[y] = new ushort[currentMap.MapCols];
+                for(short x = 0; x< currentMap.MapCols; x++)
                 {
                     //currentMap.m_MapSectors[y][x] = 0;
                     //currentMap.m_MapSectors[y,x].Set_Tileset_Number(0);
@@ -345,10 +345,10 @@ namespace JBookman_Mapper
             //test output display
             string output = null;
             int count = 0;
-            for (short cy = 0; cy < currentMap.m_MapRows; cy++)
+            for (short cy = 0; cy < currentMap.MapRows; cy++)
             {
                 
-                for (short cx = 0; cx < currentMap.m_MapCols; cx++)
+                for (short cx = 0; cx < currentMap.MapCols; cx++)
                 {
                     //output += currentMap.m_MapSectors[c1][c2];
                     output += currentMap.m_MapSectors[cy, cx].Get_Tileset_Number();
@@ -409,7 +409,7 @@ namespace JBookman_Mapper
             
             
             /*
-               if (currentMap.m_MapCols != 0 && currentMap.m_MapRows != 0)
+               if (currentMap.MapCols != 0 && currentMap.m_MapRows != 0)
                {
 
                    try
@@ -419,14 +419,14 @@ namespace JBookman_Mapper
                     //   ushort test = 99;
                      //  binWriter.Write(test);
                       // 
-                       binWriter.Write(currentMap.m_MapTypeID);
+                       binWriter.Write(currentMap.MapTypeId);
                        binWriter.Write(currentMap.m_MapRows);
-                       binWriter.Write(currentMap.m_MapCols);
+                       binWriter.Write(currentMap.MapCols);
                    
                        //write map to file
                        for (short y = 0; y < currentMap.m_MapRows; y++)
                        {
-                           for (short x = 0; x < currentMap.m_MapCols; x++)
+                           for (short x = 0; x < currentMap.MapCols; x++)
                            {
                                //binWriter.Write(currentMap.m_MapSectors[y][x]);
                                binWriter.Write(currentMap.m_MapSectors[y,x].Get_Tileset_Number());
@@ -660,7 +660,7 @@ namespace JBookman_Mapper
             mapPanel.VerticalScroll.Maximum = (currentMap.m_MapRows * 32) + scrollbarHeight;
             Size mapPanelClientSize = new Size((currentMap.m_MapRows * 32) + scrollbarWidth, (currentMap.m_MapRows * 32) + scrollbarHeight);
             */
-            Size mapPanelSize = new Size((currentMap.m_MapCols * 32), (currentMap.m_MapRows * 32));
+            Size mapPanelSize = new Size((currentMap.MapCols * 32), (currentMap.MapRows * 32));
             MessageBox.Show("Draw on map. MapPanelClientSize width= " + mapPanelSize.Width + " height:" + mapPanelSize.Height);
 
             outer_mapPanel = new DoubleBufferPanel();
@@ -688,14 +688,14 @@ namespace JBookman_Mapper
 
 
             //draw code!
-            int numberOfSectors = currentMap.m_MapRows * currentMap.m_MapCols;
+            int numberOfSectors = currentMap.MapRows * currentMap.MapCols;
 
             map_RectArray = new Rectangle[numberOfSectors];
 
             int rectCount = 0;
-            for (short y = 0; y < currentMap.m_MapRows; y++)
+            for (short y = 0; y < currentMap.MapRows; y++)
             {
-                for (short x = 0; x < currentMap.m_MapCols; x++)
+                for (short x = 0; x < currentMap.MapCols; x++)
                 {
                     Rectangle newRect = new Rectangle(x * 32, y * 32, 32, 32);
 
@@ -726,8 +726,8 @@ namespace JBookman_Mapper
                currentlySelectedMapSector = getSectorDetails_FromMouseEvent(e, map_RectArray, sender);
              //   MessageBox.Show("CurrentlySelectedMapSector: " + currentlySelectedMapSector);
 
-                int x1 = currentlySelectedMapSector % currentMap.m_MapCols;
-                int y1 = (int)((currentlySelectedMapSector / currentMap.m_MapCols) + 0.001f);
+                int x1 = currentlySelectedMapSector % currentMap.MapCols;
+                int y1 = (int)((currentlySelectedMapSector / currentMap.MapCols) + 0.001f);
                // MessageBox.Show("x1 (col)= " + x1 + " y1(row)= " + y1);
                // MessageBox.Show("Tile value = " + currentMap.m_MapSectors[y1, x1]);
 
@@ -773,8 +773,8 @@ namespace JBookman_Mapper
                             if (e.Y >= rectArray[i].Y && e.Y <= (rectArray[i].Y + 32))
                             {
                                // MessageBox.Show("Current map sector= " + i);
-                              /*  int x1 = i % currentMap.m_MapCols;
-                                int y1 = (int)((i / currentMap.m_MapCols) + 0.001f);
+                              /*  int x1 = i % currentMap.MapCols;
+                                int y1 = (int)((i / currentMap.MapCols) + 0.001f);
                                 MessageBox.Show("x1 (col)= " + x1 + " y1(row)= " + y1);
                                 MessageBox.Show("Tile value = " + currentMap.m_MapSectors[y1, x1]);
                                 mapPanel.Invalidate();*/
@@ -799,8 +799,8 @@ namespace JBookman_Mapper
                             if (e.Y > rectArray[i].Y && e.Y < (rectArray[i].Y + 32))
                             {
                                 //MessageBox.Show("Current tile= " + i);
-                              /*  int x1 = i % currentMap.m_MapCols;
-                                int y1 = (int)((i / currentMap.m_MapCols) + 0.001f);
+                              /*  int x1 = i % currentMap.MapCols;
+                                int y1 = (int)((i / currentMap.MapCols) + 0.001f);
                                 MessageBox.Show("x1 (col)= " + x1 + " y1(row)= " + y1);
                                 MessageBox.Show("Tile value = " + currentMap.m_MapSectors[y1, x1]);
                                 mapPanel.Invalidate();*/
@@ -830,8 +830,8 @@ namespace JBookman_Mapper
                             if (location.Y >= rectArray[i].Y && location.Y <= (rectArray[i].Y + 32))
                             {
                                 // MessageBox.Show("Current map sector= " + i);
-                                /*  int x1 = i % currentMap.m_MapCols;
-                                  int y1 = (int)((i / currentMap.m_MapCols) + 0.001f);
+                                /*  int x1 = i % currentMap.MapCols;
+                                  int y1 = (int)((i / currentMap.MapCols) + 0.001f);
                                   MessageBox.Show("x1 (col)= " + x1 + " y1(row)= " + y1);
                                   MessageBox.Show("Tile value = " + currentMap.m_MapSectors[y1, x1]);
                                   mapPanel.Invalidate();*/
@@ -856,8 +856,8 @@ namespace JBookman_Mapper
                             if (location.Y > rectArray[i].Y && location.Y < (rectArray[i].Y + 32))
                             {
                                 //MessageBox.Show("Current tile= " + i);
-                                /*  int x1 = i % currentMap.m_MapCols;
-                                  int y1 = (int)((i / currentMap.m_MapCols) + 0.001f);
+                                /*  int x1 = i % currentMap.MapCols;
+                                  int y1 = (int)((i / currentMap.MapCols) + 0.001f);
                                   MessageBox.Show("x1 (col)= " + x1 + " y1(row)= " + y1);
                                   MessageBox.Show("Tile value = " + currentMap.m_MapSectors[y1, x1]);
                                   mapPanel.Invalidate();*/
@@ -926,9 +926,9 @@ namespace JBookman_Mapper
                 if (bMapLoaded && bTileSetLoaded)
                 {
                     int count = 0;
-                    for (int y = 0; y < currentMap.m_MapRows; y++)
+                    for (int y = 0; y < currentMap.MapRows; y++)
                     {
-                        for (int x = 0; x < currentMap.m_MapCols; x++)
+                        for (int x = 0; x < currentMap.MapCols; x++)
                         {
                             int currentMapSectorValue = currentMap.m_MapSectors[y, x].Get_Tileset_Number();
                             //  MessageBox.Show("onPaint, both bool =true, map sector value= "+currentMapSectorValue);

@@ -13,13 +13,13 @@ namespace JBookman_Conversion
         //public ushort[,] m_MapSectors;
         public MapSector[,] m_MapSectors;
 
-        public List<Door> DoorsInMap;
-        public List<Person> PeopleInMap; 
-        public List<Container> ContainersInMap;
+        public List<Door> DoorsInMap { get; set; }
+        public List<Person> PeopleInMap { get; set; }
+        public List<Container> ContainersInMap { get; set; }
 
-        public ushort m_MapTypeID;
-        public ushort m_MapCols;
-        public ushort m_MapRows;
+        public ushort MapTypeId { get; set; }
+        public ushort MapCols { get; set; }
+        public ushort MapRows { get; set; }
 
         public Map()
         {

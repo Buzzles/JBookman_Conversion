@@ -298,7 +298,7 @@ namespace JBookman_Conversion
             else
                 MessageBox.Show("Map load failure");
 
-            MessageBox.Show("Firstmap loaded rows: "+g_FirstMap.m_MapRows );
+            MessageBox.Show("Firstmap loaded rows: "+g_FirstMap.MapRows );
             MessageBox.Show("Firstmap loaded tile 1,1: " + g_FirstMap.m_MapSectors[1,1].Get_Tileset_Number());
 
             //  instantiate player + other objects not in CMap
@@ -469,8 +469,8 @@ namespace JBookman_Conversion
          //ushort m_MapRows = g_CurrentMap.m_MapRows;
          MapSector[,] m_MapSectors = g_CurrentMap.m_MapSectors;
 
-         int playerMapCol = SectorToCols(m_Player.GetSector(), g_CurrentMap.m_MapCols);
-         int playerMapRow = SectorToRow(m_Player.GetSector(), g_CurrentMap.m_MapRows);
+         int playerMapCol = SectorToCols(m_Player.GetSector(), g_CurrentMap.MapCols);
+         int playerMapRow = SectorToRow(m_Player.GetSector(), g_CurrentMap.MapRows);
          MinVisibleCol = playerMapCol - Constants.NORMALVISIBLEPLAYERCOL;
          MaxVisibleCol = playerMapCol + Constants.NORMALVISIBLEPLAYERCOL;
 
@@ -483,10 +483,10 @@ namespace JBookman_Conversion
              MaxVisibleCol = Constants.VISIBLECOLUMNCOUNT;
             
          }
-         else if (playerMapCol > ((g_CurrentMap.m_MapCols - 1) - Constants.NORMALVISIBLEPLAYERCOL)) //right
+         else if (playerMapCol > ((g_CurrentMap.MapCols - 1) - Constants.NORMALVISIBLEPLAYERCOL)) //right
          {
-             MinVisibleCol = g_CurrentMap.m_MapCols - Constants.VISIBLECOLUMNCOUNT;
-             MaxVisibleCol = g_CurrentMap.m_MapCols - 1;
+             MinVisibleCol = g_CurrentMap.MapCols - Constants.VISIBLECOLUMNCOUNT;
+             MaxVisibleCol = g_CurrentMap.MapCols - 1;
          }
          //min/max rows
          if (playerMapRow < Constants.NORMALVISIBLEPLAYERROW) //top
@@ -494,10 +494,10 @@ namespace JBookman_Conversion
              MinVisibleRow = 0;
              MaxVisibleRow = Constants.VISIBLEROWCOUNT ;
          }
-         else if (playerMapRow > ((g_CurrentMap.m_MapRows - 1) - Constants.NORMALVISIBLEPLAYERROW)) //bottom
+         else if (playerMapRow > ((g_CurrentMap.MapRows - 1) - Constants.NORMALVISIBLEPLAYERROW)) //bottom
          {
-             MinVisibleRow = g_CurrentMap.m_MapRows - Constants.VISIBLEROWCOUNT;
-             MaxVisibleRow = g_CurrentMap.m_MapRows - 1;
+             MinVisibleRow = g_CurrentMap.MapRows - Constants.VISIBLEROWCOUNT;
+             MaxVisibleRow = g_CurrentMap.MapRows - 1;
          }
 
           /////////////
@@ -596,8 +596,8 @@ namespace JBookman_Conversion
           /* int playerMapCol = m_Player.GetSector() % m_MapCols;
           int playerMapRow = (int)m_Player.GetSector() / m_MapRows;*/
                     
-          int playerMapCol = SectorToCols(m_Player.GetSector(), g_CurrentMap.m_MapCols);
-          int playerMapRow = SectorToRow(m_Player.GetSector(), g_CurrentMap.m_MapRows);
+          int playerMapCol = SectorToCols(m_Player.GetSector(), g_CurrentMap.MapCols);
+          int playerMapRow = SectorToRow(m_Player.GetSector(), g_CurrentMap.MapRows);
 
           int FinalVisiblePlayerCol = Constants.NORMALVISIBLEPLAYERCOL;
           int FinalVisiblePlayerRow = Constants.NORMALVISIBLEPLAYERROW;
@@ -613,10 +613,10 @@ namespace JBookman_Conversion
                   Constants.NORMALVISIBLEPLAYERCOL - (Constants.NORMALVISIBLEPLAYERCOL - playerMapCol);
           }
           //else if location is right of last possible rightmost viewport centre line
-          else if (playerMapCol > ((g_CurrentMap.m_MapCols - 1) - Constants.NORMALVISIBLEPLAYERCOL))
+          else if (playerMapCol > ((g_CurrentMap.MapCols - 1) - Constants.NORMALVISIBLEPLAYERCOL))
           {
               FinalVisiblePlayerCol =
-                  Constants.VISIBLECOLUMNCOUNT - ((g_CurrentMap.m_MapCols - 1) - playerMapCol) - 1;
+                  Constants.VISIBLECOLUMNCOUNT - ((g_CurrentMap.MapCols - 1) - playerMapCol) - 1;
               //-1 on end is to take into account the visible display is 25 tiles wide, but range is 0 to 24.
           }
           //if location is top of last possible uppermost viewport centre line
@@ -626,10 +626,10 @@ namespace JBookman_Conversion
                   Constants.NORMALVISIBLEPLAYERROW - (Constants.NORMALVISIBLEPLAYERROW - playerMapRow);
           }
           //else if location is below last possible lowermost viewport centre line
-          else if (playerMapRow > ((g_CurrentMap.m_MapRows - 1) - Constants.NORMALVISIBLEPLAYERROW))
+          else if (playerMapRow > ((g_CurrentMap.MapRows - 1) - Constants.NORMALVISIBLEPLAYERROW))
           {
               FinalVisiblePlayerRow =
-                  Constants.VISIBLEROWCOUNT - ((g_CurrentMap.m_MapRows - 1) - playerMapRow) - 1;
+                  Constants.VISIBLEROWCOUNT - ((g_CurrentMap.MapRows - 1) - playerMapRow) - 1;
 
           }
           //drawing the bastard.
@@ -691,13 +691,13 @@ namespace JBookman_Conversion
         
         g_iDirection dir = g_iDirection.NORTH;
         if (CharacterCanMove(dir, m_Player.GetSector()))
-            m_Player.SetSector(m_Player.GetSector() - g_CurrentMap.m_MapCols);
+            m_Player.SetSector(m_Player.GetSector() - g_CurrentMap.MapCols);
     }
     private void MovePlayerDown()
     {
         g_iDirection dir = g_iDirection.SOUTH;
         if (CharacterCanMove(dir, m_Player.GetSector()))
-            m_Player.SetSector(m_Player.GetSector() + g_CurrentMap.m_MapCols);
+            m_Player.SetSector(m_Player.GetSector() + g_CurrentMap.MapCols);
     }
     private void MovePlayerRight()
     {
@@ -719,10 +719,10 @@ namespace JBookman_Conversion
 
         if (direction == g_iDirection.NORTH)
         {
-            if (SectorToRow(currentSector, g_CurrentMap.m_MapRows) < 1)
+            if (SectorToRow(currentSector, g_CurrentMap.MapRows) < 1)
             { 
                 move = false;
-                MessageBox.Show("North, \ntop of map, \nmove=false, \nSectorToRow=" + SectorToRow(currentSector, g_CurrentMap.m_MapRows));
+                MessageBox.Show("North, \ntop of map, \nmove=false, \nSectorToRow=" + SectorToRow(currentSector, g_CurrentMap.MapRows));
             }
             else if (PlayerBlocked(currentSector, direction))
             { 
@@ -732,10 +732,10 @@ namespace JBookman_Conversion
         }
         if (direction == g_iDirection.SOUTH)
         {
-            if (SectorToRow(currentSector, g_CurrentMap.m_MapRows) >= (g_CurrentMap.m_MapRows - 1))
+            if (SectorToRow(currentSector, g_CurrentMap.MapRows) >= (g_CurrentMap.MapRows - 1))
             {
                 move = false;
-                MessageBox.Show("South, \nBottom of map, \nmove=false, \nSectorToRow=" + SectorToRow(currentSector, g_CurrentMap.m_MapRows));
+                MessageBox.Show("South, \nBottom of map, \nmove=false, \nSectorToRow=" + SectorToRow(currentSector, g_CurrentMap.MapRows));
             }
             else if (PlayerBlocked(currentSector, direction))
             {
@@ -744,18 +744,18 @@ namespace JBookman_Conversion
         }
         if (direction == g_iDirection.EAST)
         {
-            if (SectorToCols(currentSector, g_CurrentMap.m_MapCols) >= (g_CurrentMap.m_MapCols - 1))
+            if (SectorToCols(currentSector, g_CurrentMap.MapCols) >= (g_CurrentMap.MapCols - 1))
             { move = false;
-            MessageBox.Show("East, \nRight of map, \nmove=false, \nSectorToCol=" + SectorToCols(currentSector, g_CurrentMap.m_MapCols));
+            MessageBox.Show("East, \nRight of map, \nmove=false, \nSectorToCol=" + SectorToCols(currentSector, g_CurrentMap.MapCols));
             }
             else if (PlayerBlocked(currentSector, direction))
             { move = false; }
         }
         if (direction == g_iDirection.WEST)
         {
-            if (SectorToCols(currentSector, g_CurrentMap.m_MapCols) <= 0) 
+            if (SectorToCols(currentSector, g_CurrentMap.MapCols) <= 0) 
             { move = false;
-            MessageBox.Show("West, \nLeft of map, \nmove=false, \nSectorToCol=" + SectorToCols(currentSector, g_CurrentMap.m_MapCols));
+            MessageBox.Show("West, \nLeft of map, \nmove=false, \nSectorToCol=" + SectorToCols(currentSector, g_CurrentMap.MapCols));
             }
             else if (PlayerBlocked(currentSector, direction)) 
             { move = false; }
@@ -771,11 +771,11 @@ namespace JBookman_Conversion
 
         if (direction == g_iDirection.NORTH)
         {
-            iSector = iSector - g_CurrentMap.m_MapCols;
+            iSector = iSector - g_CurrentMap.MapCols;
         }
         else if (direction == g_iDirection.SOUTH)
         {
-            iSector = iSector + g_CurrentMap.m_MapCols;
+            iSector = iSector + g_CurrentMap.MapCols;
         }
         else if (direction == g_iDirection.EAST)
         {
@@ -786,49 +786,22 @@ namespace JBookman_Conversion
             iSector = iSector -1;
         }
 
-        int y = SectorToRow(iSector, g_CurrentMap.m_MapRows);
-        int x = SectorToCols(iSector, g_CurrentMap.m_MapCols);
+        int y = SectorToRow(iSector, g_CurrentMap.MapRows);
+        int x = SectorToCols(iSector, g_CurrentMap.MapCols);
 
         int item = g_CurrentMap.m_MapSectors[y, x].Get_Tileset_Number();
 
-        g_iMapTypeEnum mapType = (g_iMapTypeEnum)g_CurrentMap.m_MapTypeID;
+        g_iMapTypeEnum mapType = (g_iMapTypeEnum)g_CurrentMap.MapTypeId;
        
-
         //is tile set to be impassable?
         if (g_CurrentMap.m_MapSectors[y, x].Get_Is_Impassable() == true)
         {
             blocked = true;
         }
-
-        /* 
-         * OLD blocking code, horrible isn't it?
-        switch (mapType)
-        {
-            case Constants.g_iMapTypeEnum.TOWNEXTERIOR:
-                //stuff
-                //MessageBox.Show("TOWNEXTERIOR in PlayerBlocked switch statement");
-                if (item == Constants.BRICKWALL_EXT || item == Constants.VERTFENCE_EXT
-                    || item == Constants.HORZFENCE_EXT || item == Constants.ANGLEFENCE_EXT
-                    || item == Constants.TREE_EXT || item == Constants.WINDOW01_EXT
-                    || item == Constants.WINDOW02_EXT || item == Constants.WELL_EXT
-                    || item == Constants.FOUNTAIN_EXT || item == Constants.FOUNTAIN_EXT+1
-                    || item == Constants.STONEWALL_EXT
-                    || ((item >= Constants.WATER01_EXT) && (item <= Constants.WATER02_EXT)))
-                    blocked = true;
-                
-                
-                break;
-
-            default: break;
-        }
-        */
-        
+              
         return blocked;
     }
-
-
-
-
+        
     //end of Game class   
     }
 //end-namespace
