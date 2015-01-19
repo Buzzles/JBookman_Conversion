@@ -6,7 +6,7 @@ using System.Text;
 namespace JBookman_Conversion
 {
     [Serializable]
-    public class CContainer
+    public class Container
     {
     protected int m_iGold, 
                   m_iKeys,
@@ -20,7 +20,7 @@ namespace JBookman_Conversion
 
 
     //constructors/deconstructors
-    public CContainer()
+    public Container()
     {
         m_iGold = 0;
         m_iKeys = 0;
@@ -32,7 +32,7 @@ namespace JBookman_Conversion
         m_iTile = 0;
     }
 
-    ~CContainer()
+    ~Container()
     {
     }
     //Gold access modifiers

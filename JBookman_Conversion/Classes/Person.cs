@@ -6,20 +6,20 @@ using System.Text;
 namespace JBookman_Conversion
 {
     [Serializable]
-   public class CPerson
+   public class Person
     {
         protected string m_sName;
         protected int m_iSector, m_iTile;
         protected bool m_bCanMove;
 
-        public CPerson()
+        public Person()
         {
             m_sName = null;
             m_iSector = 0;
             m_iTile = 0;
             m_bCanMove = false;
         }
-        ~CPerson()
+        ~Person()
         {
         }
 

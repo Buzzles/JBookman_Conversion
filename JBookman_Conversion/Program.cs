@@ -40,9 +40,9 @@ namespace JBookman_Conversion
     class Game : GameWindow
     {
        protected int m_iCurrentMap, m_iFirstMapType, m_iStartSector;
-        protected CPlayer m_Player;
-        protected CMap g_CurrentMap;
-        protected CMap g_FirstMap;
+        protected Player m_Player;
+        protected Map g_CurrentMap;
+        protected Map g_FirstMap;
         //  protected ushort m_MapTypeID;
         //  protected ushort m_MapCols;
         //  protected ushort m_MapRows;
@@ -85,7 +85,7 @@ namespace JBookman_Conversion
             //CENGINE(char* pstrMap, int iMapType, int iSector)
            // m_sFirstMap = "FirstMap.map";
            // m_sFirstMap = "Maps\\SerialiseMapTest01.map";
-            m_sFirstMap = "Maps\\SerialiseTest2.map";
+            m_sFirstMap = "Maps\\Test.map";
             m_iFirstMapType = (int) g_iLocationEnum.FIRSTTOWN;
             //m_iStartSector = 1485;
             m_iStartSector = 85;
@@ -255,7 +255,7 @@ namespace JBookman_Conversion
         //  JBOOKMAN RELATED METHODS
         ////////////////////////////////
 
-        public CMapSector[,] GetSectors()
+        public MapSector[,] GetSectors()
         {
             //  return m_MapSectors;
             return g_CurrentMap.m_MapSectors;
@@ -268,7 +268,7 @@ namespace JBookman_Conversion
         {
             m_iCurrentMap = map;
         }
-        public CPlayer GetPlayer()
+        public Player GetPlayer()
         {
             return m_Player;
         }
@@ -284,10 +284,10 @@ namespace JBookman_Conversion
             LoadTilesets();
 
             //  Create new map instance as a loader then use it load the map (not ideal)
-            g_FirstMap = new CMap();
-            g_CurrentMap = new CMap();
+            g_FirstMap = new Map();
+            g_CurrentMap = new Map();
 
-            g_FirstMap = CMap.ReadMapFile(m_sFirstMap);
+            g_FirstMap = Map.ReadMapFile(m_sFirstMap);
             
 
             //if firstmap has loaded, set it to be current map, otherwise it's failed to load
@@ -302,7 +302,7 @@ namespace JBookman_Conversion
             MessageBox.Show("Firstmap loaded tile 1,1: " + g_FirstMap.m_MapSectors[1,1].Get_Tileset_Number());
 
             //  instantiate player + other objects not in CMap
-            m_Player = new CPlayer();
+            m_Player = new Player();
             //  add player starting stats
             m_Player.SetGold(25);
             m_Player.SetHitPoints(10);
@@ -467,7 +467,7 @@ namespace JBookman_Conversion
          
          //ushort m_MapCols =  g_CurrentMap.m_MapCols;
          //ushort m_MapRows = g_CurrentMap.m_MapRows;
-         CMapSector[,] m_MapSectors = g_CurrentMap.m_MapSectors;
+         MapSector[,] m_MapSectors = g_CurrentMap.m_MapSectors;
 
          int playerMapCol = SectorToCols(m_Player.GetSector(), g_CurrentMap.m_MapCols);
          int playerMapRow = SectorToRow(m_Player.GetSector(), g_CurrentMap.m_MapRows);
@@ -602,7 +602,6 @@ namespace JBookman_Conversion
           int FinalVisiblePlayerCol = Constants.NORMALVISIBLEPLAYERCOL;
           int FinalVisiblePlayerRow = Constants.NORMALVISIBLEPLAYERROW;
 
-          //
           // Handling player being near edges of game world
           // by handling playercols/rows in respect to the viewport
           // reaching min or max movement

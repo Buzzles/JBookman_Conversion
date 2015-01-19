@@ -8,7 +8,6 @@ using JBookman_Conversion;
 
 namespace JBookman_Mapper
 {
-
     class EditContainerForm : Form
     {
         //Form vars
@@ -16,17 +15,17 @@ namespace JBookman_Mapper
 
         //Form Components
         Label lblContainerCount;
-        CMap map;
+        Map map;
 
         Button okButton;
         Button cancelButton;
 
-        public EditContainerForm(CMap currentmapIn)
+        public EditContainerForm(Map currentmapIn)
         {
             //default constructor
 
             map = currentmapIn;
-            
+
             //MessageBox.Show("Dialog loaded");
             this.Size = new Size(200, 250);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -50,7 +49,7 @@ namespace JBookman_Mapper
             cancelButton.Text = "Cancel";
             cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 
-            lblContainerCount.Text = "Container Count:" + map.m_ContainersInMap.GetContainerCount();
+            lblContainerCount.Text = "Container Count:" + map.ContainersInMap.Count();
             lblContainerCount.Location = new Point(5, 5);
             lblContainerCount.Size = new Size(90, 30);
 
@@ -58,12 +57,9 @@ namespace JBookman_Mapper
             this.Controls.AddRange(new Control[] { okButton, cancelButton, lblContainerCount });
         }
 
-     /*   protected override void OnLoad(EventArgs e)
-        {
-            
-
-
-        }*/
+        //protected override void OnLoad(EventArgs e)
+        //{
+        //}
 
         private void okClickEvent(object sender, EventArgs e)
         {
@@ -71,7 +67,6 @@ namespace JBookman_Mapper
         }
 
 
-
-//endofclass
+        //endofclass
     }
 }

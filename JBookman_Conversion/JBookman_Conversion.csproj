@@ -52,16 +52,13 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Classes\CContainer.cs" />
-    <Compile Include="Classes\CContainers.cs" />
-    <Compile Include="Classes\CDoor.cs" />
-    <Compile Include="Classes\CDoors.cs" />
-    <Compile Include="Classes\CMap.cs" />
-    <Compile Include="Classes\CMapSector.cs" />
+    <Compile Include="Classes\Container.cs" />
+    <Compile Include="Classes\Door.cs" />
+    <Compile Include="Classes\Map.cs" />
+    <Compile Include="Classes\MapSector.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Classes\CPeople.cs" />
-    <Compile Include="Classes\CPerson.cs" />
-    <Compile Include="Classes\CPlayer.cs" />
+    <Compile Include="Classes\Person.cs" />
+    <Compile Include="Classes\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

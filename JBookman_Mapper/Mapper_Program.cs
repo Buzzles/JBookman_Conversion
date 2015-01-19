@@ -37,7 +37,7 @@ namespace JBookman_Mapper
     {
         //Game content variables
         //Map
-        CMap currentMap = new CMap();
+        Map currentMap = new Map();
                
        
         string map_FileName = null;
@@ -328,7 +328,7 @@ namespace JBookman_Mapper
             MessageBox.Show("Map values: ID= "+currentMap.m_MapTypeID+" Cols= "+currentMap.m_MapCols+" Rows= "+currentMap.m_MapRows+ " MapName: "+g_sCurrentMapName);
             
             //currentMap.m_MapSectors = new ushort[currentMap.m_MapRows][];
-            currentMap.m_MapSectors = new CMapSector[currentMap.m_MapRows,currentMap.m_MapCols];
+            currentMap.m_MapSectors = new MapSector[currentMap.m_MapRows,currentMap.m_MapCols];
 
             //Create blank map
             for (short y = 0; y < currentMap.m_MapRows; y++)
@@ -338,7 +338,7 @@ namespace JBookman_Mapper
                 {
                     //currentMap.m_MapSectors[y][x] = 0;
                     //currentMap.m_MapSectors[y,x].Set_Tileset_Number(0);
-                    currentMap.m_MapSectors[y, x] = new CMapSector(0);
+                    currentMap.m_MapSectors[y, x] = new MapSector(0);
                 }
             }
 
@@ -405,7 +405,7 @@ namespace JBookman_Mapper
         private void WriteMapData(string fPath)
         {
             
-            CMap.SaveMapFile(fPath + "\\" + g_sCurrentMapName + ".map", currentMap);
+            Map.SaveMapFile(fPath + "\\" + g_sCurrentMapName + ".map", currentMap);
             
             
             /*
@@ -457,7 +457,7 @@ namespace JBookman_Mapper
                 currentMap = null;
             }
             
-            currentMap = CMap.ReadMapFile(fileName);
+            currentMap = Map.ReadMapFile(fileName);
 
             if (currentMap != null)
             {

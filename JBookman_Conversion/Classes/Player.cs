@@ -6,9 +6,8 @@ using System.Text;
 namespace JBookman_Conversion
 {
     [Serializable]
-   public class CPlayer
+    public class Player
     {
-
         protected int m_iSector,
                       m_iHitPoints,
                       m_iMaxHitPoints,
@@ -19,7 +18,7 @@ namespace JBookman_Conversion
                       m_iPotions,
                       m_iExperience;
 
-        public CPlayer()
+        public Player()
     {
         m_iSector = 0;
         m_iHitPoints = 0;
@@ -33,7 +32,7 @@ namespace JBookman_Conversion
         
     }
 
-    ~CPlayer()
+    ~Player()
     {
     }
     //position modifiers

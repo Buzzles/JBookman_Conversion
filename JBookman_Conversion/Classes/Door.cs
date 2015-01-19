@@ -7,19 +7,19 @@ namespace JBookman_Conversion
 {
     [Serializable]
     
-    public class CDoor
+    public class Door
     {
         protected bool m_bSecret, m_bLocked;
         protected int m_iSector, m_iTile;
 
-        public CDoor()
+        public Door()
         {
             m_bSecret = false;
             m_bLocked = false;
             m_iSector = 0;
             m_iTile = 0;
         }
-        ~CDoor()
+        ~Door()
         {
         }
 

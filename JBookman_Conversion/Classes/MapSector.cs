@@ -5,24 +5,24 @@ using System.Text;
 namespace JBookman_Conversion
 {
     [Serializable]
-    public class CMapSector
+    public class MapSector
     {
         ushort tileset_number;
         bool bImpassable;
         public UInt16 rotationAngle {get;set;}
 
-        public CMapSector()
+        public MapSector()
         {
             //empty constructor
         }
 
-        public CMapSector(ushort tileID)
+        public MapSector(ushort tileID)
         {
             tileset_number = tileID;
             bImpassable = false;
 
         }
-        public CMapSector(ushort tileID, bool impassable,UInt16 rot = 0)
+        public MapSector(ushort tileID, bool impassable,UInt16 rot = 0)
         {
             tileset_number = tileID;
             bImpassable = impassable;
