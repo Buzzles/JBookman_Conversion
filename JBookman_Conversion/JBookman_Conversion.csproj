@@ -98,8 +98,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>robocopy "$(ProjectDir)\Tilesets" "$(TargetDir)\Tilesets" /purge
-robocopy "$(ProjectDir)\Maps" "$(TargetDir)\Maps" /purge</PostBuildEvent>
+    <PostBuildEvent>robocopy "$(ProjectDir)Tilesets" "$(TargetDir)Tilesets" /purge
+robocopy "$(ProjectDir)Maps" "$(TargetDir)Maps" /purge</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
