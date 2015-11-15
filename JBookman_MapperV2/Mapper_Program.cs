@@ -11,10 +11,8 @@ using System.Drawing.Imaging;
 
 namespace JBookman_MapperV2
 {
-    class Mapper_Program :Form
+    class Mapper_Program : Form
     {
-
-
         //Application entry point.
         [STAThread]
         static void Main()

@@ -1,7 +1,4 @@
 ﻿using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -10,31 +7,23 @@ using OpenTK.Audio;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
-//message handling for testing
 using System.Windows.Forms;
 using System.Diagnostics;
-
-//serialisation
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-
 
 namespace JBookman_Conversion
 {
    class Program
     {
-      //program entry point.
         [STAThread]
         static void Main()
         {
              using (Game game = new Game())
             {
                 game.Run(30.0);
-               
             }
-
-        }
-    
+        }   
     }
 
     class Game : GameWindow
