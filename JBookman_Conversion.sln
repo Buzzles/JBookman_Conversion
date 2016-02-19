@@ -1,32 +1,42 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JBookman_Conversion", "JBookman_Conversion\JBookman_Conversion.csproj", "{756FA5C2-218C-414D-B6DA-42E6047BF683}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JBookman_MapperV2", "JBookman_MapperV2\JBookman_MapperV2.csproj", "{C185B964-F14A-46F8-98D2-2B4F202CAE92}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JBookman_Mapper", "JBookman_Mapper\JBookman_Mapper.csproj", "{F3539C9A-EEEA-468D-B48C-2DAB30456555}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JBookman_MapperV2", "JBookman_MapperV2\JBookman_MapperV2.csproj", "{081FA74D-1C9B-4150-A624-FE5641E7BB6D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{756FA5C2-218C-414D-B6DA-42E6047BF683}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{756FA5C2-218C-414D-B6DA-42E6047BF683}.Debug|x86.ActiveCfg = Debug|x86
 		{756FA5C2-218C-414D-B6DA-42E6047BF683}.Debug|x86.Build.0 = Debug|x86
+		{756FA5C2-218C-414D-B6DA-42E6047BF683}.Release|Any CPU.ActiveCfg = Release|x86
 		{756FA5C2-218C-414D-B6DA-42E6047BF683}.Release|x86.ActiveCfg = Release|x86
 		{756FA5C2-218C-414D-B6DA-42E6047BF683}.Release|x86.Build.0 = Release|x86
-		{C185B964-F14A-46F8-98D2-2B4F202CAE92}.Debug|x86.ActiveCfg = Debug|x86
-		{C185B964-F14A-46F8-98D2-2B4F202CAE92}.Debug|x86.Build.0 = Debug|x86
-		{C185B964-F14A-46F8-98D2-2B4F202CAE92}.Release|x86.ActiveCfg = Release|x86
-		{C185B964-F14A-46F8-98D2-2B4F202CAE92}.Release|x86.Build.0 = Release|x86
+		{F3539C9A-EEEA-468D-B48C-2DAB30456555}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{F3539C9A-EEEA-468D-B48C-2DAB30456555}.Debug|x86.ActiveCfg = Debug|x86
 		{F3539C9A-EEEA-468D-B48C-2DAB30456555}.Debug|x86.Build.0 = Debug|x86
+		{F3539C9A-EEEA-468D-B48C-2DAB30456555}.Release|Any CPU.ActiveCfg = Release|x86
 		{F3539C9A-EEEA-468D-B48C-2DAB30456555}.Release|x86.ActiveCfg = Release|x86
 		{F3539C9A-EEEA-468D-B48C-2DAB30456555}.Release|x86.Build.0 = Release|x86
+		{081FA74D-1C9B-4150-A624-FE5641E7BB6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{081FA74D-1C9B-4150-A624-FE5641E7BB6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{081FA74D-1C9B-4150-A624-FE5641E7BB6D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{081FA74D-1C9B-4150-A624-FE5641E7BB6D}.Debug|x86.Build.0 = Debug|Any CPU
+		{081FA74D-1C9B-4150-A624-FE5641E7BB6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{081FA74D-1C9B-4150-A624-FE5641E7BB6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{081FA74D-1C9B-4150-A624-FE5641E7BB6D}.Release|x86.ActiveCfg = Release|Any CPU
+		{081FA74D-1C9B-4150-A624-FE5641E7BB6D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
