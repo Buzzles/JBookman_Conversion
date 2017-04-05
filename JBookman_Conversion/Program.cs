@@ -28,7 +28,7 @@ namespace JBookman_Conversion
 
     class Game : GameWindow
     {
-       protected int m_iCurrentMap, m_iFirstMapType, m_iStartSector;
+        protected int m_iCurrentMap, m_iFirstMapType, m_iStartSector;
         protected Player m_Player;
         protected Map g_CurrentMap;
         protected Map g_FirstMap;
@@ -112,7 +112,7 @@ namespace JBookman_Conversion
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
-
+            
             //  KeyboardState keystate = OpenTK.Input.Keyboard.GetState();
 
                if (Keyboard[Key.Escape])

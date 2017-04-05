@@ -55,13 +55,13 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Classes\Container.cs" />
-    <Compile Include="Classes\Door.cs" />
-    <Compile Include="Classes\Map.cs" />
-    <Compile Include="Classes\MapSector.cs" />
+    <Compile Include="GameObjects\Container.cs" />
+    <Compile Include="GameObjects\Door.cs" />
+    <Compile Include="GameObjects\Map.cs" />
+    <Compile Include="GameObjects\MapSector.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Classes\Person.cs" />
-    <Compile Include="Classes\Player.cs" />
+    <Compile Include="GameObjects\Person.cs" />
+    <Compile Include="GameObjects\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
