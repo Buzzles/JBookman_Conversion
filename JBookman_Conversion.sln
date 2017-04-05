@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JBookman_Conversion", "JBookman_Conversion\JBookman_Conversion.csproj", "{756FA5C2-218C-414D-B6DA-42E6047BF683}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JBookman_Mapper", "JBookman_Mapper\JBookman_Mapper.csproj", "{F3539C9A-EEEA-468D-B48C-2DAB30456555}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JBookman_MapperV2", "JBookman_MapperV2\JBookman_MapperV2.csproj", "{081FA74D-1C9B-4150-A624-FE5641E7BB6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JBookman_Conversion_Tests", "JBookman_Conversion_Tests\JBookman_Conversion_Tests.csproj", "{8026604C-34FE-410B-B3BE-42D4F2BEB319}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,14 @@ Global
 		{081FA74D-1C9B-4150-A624-FE5641E7BB6D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{081FA74D-1C9B-4150-A624-FE5641E7BB6D}.Release|x86.ActiveCfg = Release|Any CPU
 		{081FA74D-1C9B-4150-A624-FE5641E7BB6D}.Release|x86.Build.0 = Release|Any CPU
+		{8026604C-34FE-410B-B3BE-42D4F2BEB319}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8026604C-34FE-410B-B3BE-42D4F2BEB319}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8026604C-34FE-410B-B3BE-42D4F2BEB319}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8026604C-34FE-410B-B3BE-42D4F2BEB319}.Debug|x86.Build.0 = Debug|Any CPU
+		{8026604C-34FE-410B-B3BE-42D4F2BEB319}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8026604C-34FE-410B-B3BE-42D4F2BEB319}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8026604C-34FE-410B-B3BE-42D4F2BEB319}.Release|x86.ActiveCfg = Release|Any CPU
+		{8026604C-34FE-410B-B3BE-42D4F2BEB319}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

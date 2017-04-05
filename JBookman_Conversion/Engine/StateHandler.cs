@@ -19,7 +19,7 @@ namespace JBookman_Conversion.Engine
         public enum ProcessAction
         {
             GoToMenu,
-            ReturnToWorld,
+            ToWorld,
             BattleStart
         }
 
@@ -33,10 +33,10 @@ namespace JBookman_Conversion.Engine
 
             _transitionDictionary = new Dictionary<StateTransition, ProcessState>
             {
-                { new StateTransition(ProcessState.Menu, ProcessAction.ReturnToWorld), ProcessState.World },
+                { new StateTransition(ProcessState.Menu, ProcessAction.ToWorld), ProcessState.World },
                 { new StateTransition(ProcessState.World, ProcessAction.BattleStart), ProcessState.Battle },
                 { new StateTransition(ProcessState.World, ProcessAction.GoToMenu), ProcessState.Menu },
-                { new StateTransition(ProcessState.Battle, ProcessAction.ReturnToWorld), ProcessState.World },
+                { new StateTransition(ProcessState.Battle, ProcessAction.ToWorld), ProcessState.World },
                 { new StateTransition(ProcessState.Battle, ProcessAction.GoToMenu), ProcessState.Menu }
             };
         }
@@ -47,12 +47,12 @@ namespace JBookman_Conversion.Engine
 
             ProcessState nextState;
 
-            if (_transitionDictionary.TryGetValue(newTrans, out nextState))
+            if (!_transitionDictionary.TryGetValue(newTrans, out nextState))
             {
                 Debug.Write($"Invalid transition: {CurrentState} -> {actionToTake}");
             };
             
-            return ProcessState.Menu;
+            return nextState;
         }
 
         public ProcessState MoveNext(ProcessAction command)
