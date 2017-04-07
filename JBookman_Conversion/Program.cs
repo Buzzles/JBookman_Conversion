@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using JBookman_Conversion.Engine;
 
 namespace JBookman_Conversion
 {
@@ -234,7 +235,7 @@ namespace JBookman_Conversion
             drawAxis();
             GL.Enable(EnableCap.Texture2D);
             DrawTiles();
-            DrawPlayer();
+            PlayerRenderer.DrawPlayer(g_CurrentMap, m_Player, m_iPlayerTileSet);
             GL.Disable(EnableCap.Texture2D);
 
             SwapBuffers();
@@ -331,19 +332,6 @@ namespace JBookman_Conversion
             GL.End();
 
         }
-
-        private int SectorToRow(int sector, int rowCount)
-        {
-            int rowValue = sector / rowCount;
-
-            return rowValue;
-        }
-        private int SectorToCols(int sector, int colCount)
-        {
-            int columnValue = sector % colCount;
-
-            return columnValue;
-        }
         
         ////////////////////////////////
         //      LOAD TEXTURE
@@ -351,7 +339,6 @@ namespace JBookman_Conversion
         //      Might be worth moving to a new class for textures
         //
         //////////////////////////////// 
-        
        
         private int LoadTextureFromFile(string fileName)
         {
@@ -458,8 +445,8 @@ namespace JBookman_Conversion
          //ushort m_MapRows = g_CurrentMap.m_MapRows;
          MapSector[,] m_MapSectors = g_CurrentMap.m_MapSectors;
 
-         int playerMapCol = SectorToCols(m_Player.GetSector(), g_CurrentMap.MapCols);
-         int playerMapRow = SectorToRow(m_Player.GetSector(), g_CurrentMap.MapRows);
+         int playerMapCol = MapUtils.SectorToCols(m_Player.GetSector(), g_CurrentMap.MapCols);
+         int playerMapRow = MapUtils.SectorToRow(m_Player.GetSector(), g_CurrentMap.MapRows);
          MinVisibleCol = playerMapCol - Constants.NORMALVISIBLEPLAYERCOL;
          MaxVisibleCol = playerMapCol + Constants.NORMALVISIBLEPLAYERCOL;
 
@@ -574,82 +561,6 @@ namespace JBookman_Conversion
           }
             //end of drawtiles
         }
-/////////////////
-// Draw player
-/////////////////
-      private void DrawPlayer()
-      {
-       // TODO: Move to seperate classes.
-          
-          
-          /* int playerMapCol = m_Player.GetSector() % m_MapCols;
-          int playerMapRow = (int)m_Player.GetSector() / m_MapRows;*/
-                    
-          int playerMapCol = SectorToCols(m_Player.GetSector(), g_CurrentMap.MapCols);
-          int playerMapRow = SectorToRow(m_Player.GetSector(), g_CurrentMap.MapRows);
-
-          int FinalVisiblePlayerCol = Constants.NORMALVISIBLEPLAYERCOL;
-          int FinalVisiblePlayerRow = Constants.NORMALVISIBLEPLAYERROW;
-
-          // Handling player being near edges of game world
-          // by handling playercols/rows in respect to the viewport
-          // reaching min or max movement
-
-          //if location is left of last possible leftmost viewport centre line
-          if (playerMapCol < Constants.NORMALVISIBLEPLAYERCOL)
-          {
-              FinalVisiblePlayerCol = 
-                  Constants.NORMALVISIBLEPLAYERCOL - (Constants.NORMALVISIBLEPLAYERCOL - playerMapCol);
-          }
-          //else if location is right of last possible rightmost viewport centre line
-          else if (playerMapCol > ((g_CurrentMap.MapCols - 1) - Constants.NORMALVISIBLEPLAYERCOL))
-          {
-              FinalVisiblePlayerCol =
-                  Constants.VISIBLECOLUMNCOUNT - ((g_CurrentMap.MapCols - 1) - playerMapCol) - 1;
-              //-1 on end is to take into account the visible display is 25 tiles wide, but range is 0 to 24.
-          }
-          //if location is top of last possible uppermost viewport centre line
-          if (playerMapRow < Constants.NORMALVISIBLEPLAYERROW)
-          {
-              FinalVisiblePlayerRow =
-                  Constants.NORMALVISIBLEPLAYERROW - (Constants.NORMALVISIBLEPLAYERROW - playerMapRow);
-          }
-          //else if location is below last possible lowermost viewport centre line
-          else if (playerMapRow > ((g_CurrentMap.MapRows - 1) - Constants.NORMALVISIBLEPLAYERROW))
-          {
-              FinalVisiblePlayerRow =
-                  Constants.VISIBLEROWCOUNT - ((g_CurrentMap.MapRows - 1) - playerMapRow) - 1;
-
-          }
-          //drawing the bastard.
-          GL.BindTexture(TextureTarget.Texture2D, m_iPlayerTileSet); //set texture
-
-          GL.Enable(EnableCap.Blend);
-         // GL.BlendFunc(BlendingFactorSrc.SrcAlpha,BlendingFactorDest.OneMinusSrcAlpha);
-          GL.BlendFunc(BlendingFactorSrc.SrcAlpha,BlendingFactorDest.OneMinusSrcAlpha);
-          GL.LoadIdentity();
-          GL.Begin(BeginMode.Quads);
-          //quad1
-          //bottomleft
-          GL.TexCoord2(0, 0);
-          GL.Vertex3((float)FinalVisiblePlayerCol, -((float)FinalVisiblePlayerRow) - 1.0f, 1.0f);
-          //top left
-          GL.TexCoord2(0, 1);
-          GL.Vertex3((float)FinalVisiblePlayerCol, -(float)FinalVisiblePlayerRow, 1.0f);
-          //top right
-          GL.TexCoord2(1, 1);
-          GL.Vertex3((float)FinalVisiblePlayerCol + 1.0f, -(float)FinalVisiblePlayerRow, 1.0f);
-          //bottom right
-          GL.TexCoord2(1, 0);
-          GL.Vertex3((float)FinalVisiblePlayerCol + 1.0f, -(float)FinalVisiblePlayerRow - 1.0f, 1.0f);
-
-
-          GL.End();
-
-          GL.Disable(EnableCap.Blend);
-
-//end of DrawPlayer()
-      }
 
 //////////////////////
 //
@@ -708,10 +619,10 @@ namespace JBookman_Conversion
 
         if (direction == g_iDirection.NORTH)
         {
-            if (SectorToRow(currentSector, g_CurrentMap.MapRows) < 1)
+            if (MapUtils.SectorToRow(currentSector, g_CurrentMap.MapRows) < 1)
             { 
                 move = false;
-                MessageBox.Show("North, \ntop of map, \nmove=false, \nSectorToRow=" + SectorToRow(currentSector, g_CurrentMap.MapRows));
+                MessageBox.Show("North, \ntop of map, \nmove=false, \nSectorToRow=" + MapUtils.SectorToRow(currentSector, g_CurrentMap.MapRows));
             }
             else if (PlayerBlocked(currentSector, direction))
             { 
@@ -721,10 +632,10 @@ namespace JBookman_Conversion
         }
         if (direction == g_iDirection.SOUTH)
         {
-            if (SectorToRow(currentSector, g_CurrentMap.MapRows) >= (g_CurrentMap.MapRows - 1))
+            if (MapUtils.SectorToRow(currentSector, g_CurrentMap.MapRows) >= (g_CurrentMap.MapRows - 1))
             {
                 move = false;
-                MessageBox.Show("South, \nBottom of map, \nmove=false, \nSectorToRow=" + SectorToRow(currentSector, g_CurrentMap.MapRows));
+                MessageBox.Show("South, \nBottom of map, \nmove=false, \nSectorToRow=" + MapUtils.SectorToRow(currentSector, g_CurrentMap.MapRows));
             }
             else if (PlayerBlocked(currentSector, direction))
             {
@@ -733,18 +644,18 @@ namespace JBookman_Conversion
         }
         if (direction == g_iDirection.EAST)
         {
-            if (SectorToCols(currentSector, g_CurrentMap.MapCols) >= (g_CurrentMap.MapCols - 1))
+            if (MapUtils.SectorToCols(currentSector, g_CurrentMap.MapCols) >= (g_CurrentMap.MapCols - 1))
             { move = false;
-            MessageBox.Show("East, \nRight of map, \nmove=false, \nSectorToCol=" + SectorToCols(currentSector, g_CurrentMap.MapCols));
+            MessageBox.Show("East, \nRight of map, \nmove=false, \nSectorToCol=" + MapUtils.SectorToCols(currentSector, g_CurrentMap.MapCols));
             }
             else if (PlayerBlocked(currentSector, direction))
             { move = false; }
         }
         if (direction == g_iDirection.WEST)
         {
-            if (SectorToCols(currentSector, g_CurrentMap.MapCols) <= 0) 
+            if (MapUtils.SectorToCols(currentSector, g_CurrentMap.MapCols) <= 0) 
             { move = false;
-            MessageBox.Show("West, \nLeft of map, \nmove=false, \nSectorToCol=" + SectorToCols(currentSector, g_CurrentMap.MapCols));
+            MessageBox.Show("West, \nLeft of map, \nmove=false, \nSectorToCol=" + MapUtils.SectorToCols(currentSector, g_CurrentMap.MapCols));
             }
             else if (PlayerBlocked(currentSector, direction)) 
             { move = false; }
@@ -775,8 +686,8 @@ namespace JBookman_Conversion
             iSector = iSector -1;
         }
 
-        int y = SectorToRow(iSector, g_CurrentMap.MapRows);
-        int x = SectorToCols(iSector, g_CurrentMap.MapCols);
+        int y = MapUtils.SectorToRow(iSector, g_CurrentMap.MapRows);
+        int x = MapUtils.SectorToCols(iSector, g_CurrentMap.MapCols);
 
         int item = g_CurrentMap.m_MapSectors[y, x].Get_Tileset_Number();
 

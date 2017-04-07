@@ -1,4 +1,5 @@
-﻿using JBookman_Conversion.Engine;
+﻿using FluentAssertions;
+using JBookman_Conversion.Engine;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static JBookman_Conversion.Engine.StateHandler;
 
@@ -19,7 +20,7 @@ namespace JBookman_Conversion_Tests
         public void Menu_ToWorld_Returns_WorldState()
         { 
             var current = _stateHandler.MoveNext(ProcessAction.ToWorld);
-            Assert.AreEqual(ProcessState.World, current);
+            current.Should().Be(ProcessState.World);
         }
     }
 }
