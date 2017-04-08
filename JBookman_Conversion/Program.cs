@@ -15,16 +15,16 @@ using JBookman_Conversion.Engine;
 
 namespace JBookman_Conversion
 {
-   class Program
+    class Program
     {
         [STAThread]
         static void Main()
         {
-             using (Game game = new Game())
+            using (Game game = new Game())
             {
                 game.Run(30.0);
             }
-        }   
+        }
     }
 
     class Game : GameWindow
@@ -41,7 +41,7 @@ namespace JBookman_Conversion
 
         Matrix4 m_moveMatrix = new Matrix4();
         private const float moveAmount = 0.1f;
-            
+
         //tileset vars
         int m_iPlayerTileSet = 0;
         int m_iTownExtTileSet = 0;
@@ -50,15 +50,20 @@ namespace JBookman_Conversion
         int m_iWildernessTileSet = 0;
         int m_iCurrentTileSet = 0;
 
-        int m_iUpdateCount=0;
+        int m_iUpdateCount = 0;
 
         /// <summary>Creates a 800x600 window with the specified title.</summary>
         public Game()
             : base(800, 600, GraphicsMode.Default, "JBookman Conversion")
         {
             VSync = VSyncMode.On;
-         Keyboard.KeyDown += HandleKeyboardKeyDown;
-            
+            Keyboard.KeyDown += HandleKeyboardKeyDown;
+
+            // Instantiate renderer here!
+            // var renderer = new Renderer();
+            // var engine = engine();
+            // engine.LoadTextures();
+            // engine.LoadMap();
         }
 
         /// <summary>Load resources here.</summary>
@@ -73,14 +78,14 @@ namespace JBookman_Conversion
             m_moveMatrix = Matrix4.CreateTranslation(0.0f, 0.0f, 0.0f);
 
             //CENGINE(char* pstrMap, int iMapType, int iSector)
-           // m_sFirstMap = "FirstMap.map";
-           // m_sFirstMap = "Maps\\SerialiseMapTest01.map";
+            // m_sFirstMap = "FirstMap.map";
+            // m_sFirstMap = "Maps\\SerialiseMapTest01.map";
             m_sFirstMap = "Maps\\Test.map";
-            m_iFirstMapType = (int) g_iLocationEnum.FIRSTTOWN;
+            m_iFirstMapType = (int)g_iLocationEnum.FIRSTTOWN;
             //m_iStartSector = 1485;
             m_iStartSector = 85;
             InitGame();
-            
+
         }
 
         /// <summary>
@@ -94,9 +99,9 @@ namespace JBookman_Conversion
             base.OnResize(e);
 
             GL.Viewport(ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, ClientRectangle.Height);
-            
+
             //  Matrix4 projection = Matrix4.CreateOrthographicOffCenter(0, 1024 / 56, -768 / 56, 0, -50.0f, 50.0f);
-            
+
             //  working, calculing 25 cols and 18.75 rows.
             //  Matrix4 projection = Matrix4.CreateOrthographicOffCenter(0, 800 / 32, -600 / 32, 0, -50.0f, 50.0f);
             Matrix4 projection = Matrix4.CreateOrthographicOffCenter(0, 800 / 32, -19, 0, -50.0f, 50.0f);
@@ -113,19 +118,19 @@ namespace JBookman_Conversion
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
-            
+
             //  KeyboardState keystate = OpenTK.Input.Keyboard.GetState();
 
-               if (Keyboard[Key.Escape])
-               { // Exit();
-               }
+            if (Keyboard[Key.Escape])
+            { // Exit();
+            }
 
-               if (m_iUpdateCount == 15)
-               {
-                   m_iUpdateCount = 0;
-               }
-               else m_iUpdateCount++;
-            
+            if (m_iUpdateCount == 15)
+            {
+                m_iUpdateCount = 0;
+            }
+            else m_iUpdateCount++;
+
             /*
                if (Keyboard[Key.Up])
                {
@@ -143,73 +148,69 @@ namespace JBookman_Conversion
                {
                    m_moveMatrix.M41 -= moveAmount;
                }*/
-               
-                //  player location + viewport test code
-                if (Keyboard[Key.Number1])
-                {
-                    m_Player.SetSector(85);
-                }
-                if (Keyboard[Key.Number2])
-                {
-                    m_Player.SetSector(842);
-                }
-                if (Keyboard[Key.Number3])
-                {
-                    m_Player.SetSector(1530);
-                }
-                if (Keyboard[Key.Number4])
-                {
-                    m_Player.SetSector(820);
-                }
-                if (Keyboard[Key.Number5])
-                {
-                    m_Player.SetSector(1558);
-                }
-                if (Keyboard[Key.Number0])
-                {
-                    m_Player.SetSector(0);
-                }
-         
-           
-        //  end of OnUpdateFrame
+
+            //  player location + viewport test code
+            if (Keyboard[Key.Number1])
+            {
+                m_Player.SetSector(85);
+            }
+            if (Keyboard[Key.Number2])
+            {
+                m_Player.SetSector(842);
+            }
+            if (Keyboard[Key.Number3])
+            {
+                m_Player.SetSector(1530);
+            }
+            if (Keyboard[Key.Number4])
+            {
+                m_Player.SetSector(820);
+            }
+            if (Keyboard[Key.Number5])
+            {
+                m_Player.SetSector(1558);
+            }
+            if (Keyboard[Key.Number0])
+            {
+                m_Player.SetSector(0);
+            }
+
+
+            //  end of OnUpdateFrame
         }
 
-     /*   private void HandleKeyPressEvent(object sender, OpenTK.KeyPressEventArgs e)
-        {
-            MessageBox.Show("HandleKeyPressEvent triggered by: "+e.KeyChar);
-                               
+        /*   private void HandleKeyPressEvent(object sender, OpenTK.KeyPressEventArgs e)
+           {
+               MessageBox.Show("HandleKeyPressEvent triggered by: "+e.KeyChar);
 
-        }*/
+
+           }*/
         private void HandleKeyboardKeyDown(object sender, KeyboardKeyEventArgs e)
         {
             //  MessageBox.Show("HandleKeyPressEvent triggered by: " + e.Key);
-            
-             switch (e.Key)
+
+            switch (e.Key)
             {
-                 case Key.Escape:
+                case Key.Escape:
                     Exit();
                     break;
-                 default: 
+                default:
                     //  Default. Do nothing for now
                     break;
-                 case Key.Up:
+                case Key.Up:
                     HandleUpArrow();
                     break;
                 case Key.Down:
-                     HandleDownArrow();
-                     break;
+                    HandleDownArrow();
+                    break;
                 case Key.Left:
-                     HandleLeftArrow();
-                     break;
+                    HandleLeftArrow();
+                    break;
                 case Key.Right:
-                     HandleRightArrow();
-                     break;
-                }
-        
-        
+                    HandleRightArrow();
+                    break;
+            }
         }
-
-
 
         /// <summary>
         /// Called when it is time to render the next frame. Add your rendering code here.
@@ -219,24 +220,7 @@ namespace JBookman_Conversion
         {
             base.OnRenderFrame(e);
 
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            Matrix4 modelview = Matrix4.LookAt(0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-
-            modelview = m_moveMatrix * modelview;
-
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-            GL.LoadMatrix(ref modelview);
-
-            //  move down by 10;
-            //  GL.Translate(0.0f, -0.0f, -10.0f);
-            //  GL.Rotate(180, Vector3.UnitY);
-
-            drawAxis();
-            GL.Enable(EnableCap.Texture2D);
-            DrawTiles();
-            PlayerRenderer.DrawPlayer(g_CurrentMap, m_Player, m_iPlayerTileSet);
-            GL.Disable(EnableCap.Texture2D);
+            Renderer.Render(g_CurrentMap, m_iCurrentTileSet, m_iPlayerTileSet, m_Player, m_moveMatrix);
 
             SwapBuffers();
         }
@@ -263,22 +247,27 @@ namespace JBookman_Conversion
             return m_Player;
         }
 
-      
         public void InitGame()
         {
             // Set map ID's (No longer needed?) 
             m_iCurrentMap = m_iFirstMapType;
-            
 
             //  load textures
-            LoadTilesets();
+            Core.LoadTilesets();
+
+            // To remove!
+            m_iPlayerTileSet = Core.PlayerTileSetId;
+            m_iTownExtTileSet = Core.TownExtTileSetId;
+            m_iTownIntTileSet = Core.TownIntTileSetId;
+            m_iDungeonTileSet = Core.DungeonTileSetId;
+            m_iWildernessTileSet = Core.WildernessTileSetId;
+            m_iCurrentTileSet = Core.CurrentTileSetId;
 
             //  Create new map instance as a loader then use it load the map (not ideal)
             g_FirstMap = new Map();
             g_CurrentMap = new Map();
 
             g_FirstMap = Map.ReadMapFile(m_sFirstMap);
-            
 
             //if firstmap has loaded, set it to be current map, otherwise it's failed to load
             if (g_FirstMap != null)
@@ -288,8 +277,8 @@ namespace JBookman_Conversion
             else
                 MessageBox.Show("Map load failure");
 
-            MessageBox.Show("Firstmap loaded rows: "+g_FirstMap.MapRows );
-            MessageBox.Show("Firstmap loaded tile 1,1: " + g_FirstMap.m_MapSectors[1,1].Get_Tileset_Number());
+            MessageBox.Show("Firstmap loaded rows: " + g_FirstMap.MapRows);
+            MessageBox.Show("Firstmap loaded tile 1,1: " + g_FirstMap.m_MapSectors[1, 1].Get_Tileset_Number());
 
             //  instantiate player + other objects not in CMap
             m_Player = new Player();
@@ -299,412 +288,148 @@ namespace JBookman_Conversion
             m_Player.SetMaxHitPoints(10);
             m_Player.SetKeys(1);
             m_Player.SetSector(m_iStartSector);
-            
-            
+
             Random rand = new Random();
         }
-    
-        private void drawAxis()
-        {
-            /*  Axis Draw Code
-             *  Simply draw 3 lines representing the 3D axis
-             *  Blue = x axis (-left/+right)
-             *  Red = y axis (+up/-down)
-             *  Green = Z (depth)
-             */
-            
-            //  test code
-            GL.Begin(BeginMode.Lines);
-            //  x = blue
-            GL.Color3(0.0f, 0.0f, 1.0f);
-            GL.Vertex3(-100.0f, 0.0f, 0.0f);
-            GL.Vertex3(100.0f, 0.0f, 0.0f);
-            //  y = red
-            GL.Color3(1.0f, 0.0f, 0.0f);
-            GL.Vertex3(0.0f, -110.0f, 0.0f);
-            GL.Vertex3(0.0f, 100.0f, 0.0f);
-            //  z = green
-            GL.Color3(0.0f, 1.0f, 0.0f);
-            GL.Vertex3(0.0f, 0.0f, -100.0f);
-            GL.Vertex3(0.0f, 0.0f, 100.0f);
-            GL.Color4(1.0f, 1.0f, 1.0f, 1.0f);
 
-            GL.End();
-
-        }
-        
-        ////////////////////////////////
-        //      LOAD TEXTURE
-        // 
-        //      Might be worth moving to a new class for textures
+        //////////////////////
         //
-        //////////////////////////////// 
-       
-        private int LoadTextureFromFile(string fileName)
+        // Movement handling
+        //
+        ///////////////////////
+
+        private void HandleUpArrow()
         {
-            if (string.IsNullOrEmpty(fileName))
-            {
-                //  no texture supplied.
-                throw new ArgumentException(fileName);
-            }
-
-            //  general internal texture ID
-            int textureID = GL.GenTexture();
-            //bind a named texture to a texturing target
-            GL.BindTexture(TextureTarget.Texture2D, textureID);
-
-            //  using System.Drawing.Bimap for bitmap file handling 
-            //  (note: bitmaps are not just .bmp. png/jpeg etcc are all bitmaps)
-            Bitmap bmp = null;
-            try
-            {
-
-                bmp = new Bitmap(fileName);
-                //  flip y axis as image will have top left 0.0 but GL has bottom left 0.0 origin.
-                bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
-
-                //  lock part of bitmap in memory, in this case, the entire bitmap
-                BitmapData bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
-                //  create a texture from it.
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bmpData.Width,
-                    bmpData.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bmpData.Scan0);
-
-                bmp.UnlockBits(bmpData);
-
-                // We haven't uploaded mipmaps, so disable mipmapping (otherwise the texture will not appear).
-                // On newer video cards, we can use GL.GenerateMipmaps() or GL.Ext.GenerateMipmaps() to create
-                // mipmaps automatically. In that case, use TextureMinFilter.LinearMipmapLinear to enable them.
-                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
-                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
-
-                //  Clamping methods
-                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureParameterName.ClampToEdge);
-                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureParameterName.ClampToEdge);
-                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapR, (int)TextureParameterName.ClampToEdge);
-                
-                // Clean up
-                bmp.Dispose();
-                
-
-            }
-            catch (FileNotFoundException e)
-            {
-                Console.WriteLine("FnF " + e);
-            }
-            catch (ArgumentException e1)
-            {
-                Console.WriteLine("ArgExcp " + e1);
-            }
-
-            //return texture ID for use.
-            return textureID;
+            MovePlayerUp();
         }
-
-        private void LoadTilesets()
+        private void HandleDownArrow()
         {
-            //load tilesets into textures.
-            m_iPlayerTileSet = LoadTextureFromFile("Tilesets\\playerTile.png");
-            m_iTownExtTileSet = LoadTextureFromFile("Tilesets\\tileset1.png");
-            m_iTownIntTileSet = LoadTextureFromFile("Tilesets\\playerTile.bmp");
-            m_iDungeonTileSet = LoadTextureFromFile("Tilesets\\playerTile.bmp");
-            m_iWildernessTileSet = LoadTextureFromFile("Tilesets\\playerTile.bmp");
-            
-
-#if (TILETEST)
-            int testTileSetID;
-            testTileSetID = LoadTexture("Tilesets\\TestTileset.png");
-            //tileSetID = LoadTexture("Tilesets\\tileset1.png");
-            tileSetID2 = LoadTexture("Tilesets\\tileset2.png");
-            m_iCurrentTileSet = testTileSetID;
-#warning This code is not production ready
-#else
-            m_iCurrentTileSet = m_iTownExtTileSet;
-#endif
-
-
-
+            MovePlayerDown();
+        }
+        private void HandleLeftArrow()
+        {
+            MovePlayerLeft();
+        }
+        private void HandleRightArrow()
+        {
+            MovePlayerRight();
         }
 
 
-
-
-///////////////////////////////////////////
-//        Drawing Code
-/////////////////////////////////////////
-
-      private void DrawTiles()
+        private void MovePlayerUp()
         {
-            
-         //Calculate visible columns
-         int MinVisibleCol, MaxVisibleCol, MinVisibleRow, MaxVisibleRow;
-         //int playerMapCol = m_Player.GetSector() % m_MapCols;
-         //int playerMapRow = (int)m_Player.GetSector() / m_MapRows;
-         
-         //ushort m_MapCols =  g_CurrentMap.m_MapCols;
-         //ushort m_MapRows = g_CurrentMap.m_MapRows;
-         MapSector[,] m_MapSectors = g_CurrentMap.m_MapSectors;
+            g_iDirection dir = g_iDirection.NORTH;
+            if (CharacterCanMove(dir, m_Player.GetSector()))
+                m_Player.SetSector(m_Player.GetSector() - g_CurrentMap.MapCols);
+        }
+        private void MovePlayerDown()
+        {
+            g_iDirection dir = g_iDirection.SOUTH;
+            if (CharacterCanMove(dir, m_Player.GetSector()))
+                m_Player.SetSector(m_Player.GetSector() + g_CurrentMap.MapCols);
+        }
+        private void MovePlayerRight()
+        {
+            g_iDirection dir = g_iDirection.EAST;
+            if (CharacterCanMove(dir, m_Player.GetSector()))
+                m_Player.SetSector(m_Player.GetSector() + 1);
+        }
+        private void MovePlayerLeft()
+        {
+            g_iDirection dir = g_iDirection.WEST;
+            if (CharacterCanMove(dir, m_Player.GetSector()))
+                m_Player.SetSector(m_Player.GetSector() - 1);
+        }
 
-         int playerMapCol = MapUtils.SectorToCols(m_Player.GetSector(), g_CurrentMap.MapCols);
-         int playerMapRow = MapUtils.SectorToRow(m_Player.GetSector(), g_CurrentMap.MapRows);
-         MinVisibleCol = playerMapCol - Constants.NORMALVISIBLEPLAYERCOL;
-         MaxVisibleCol = playerMapCol + Constants.NORMALVISIBLEPLAYERCOL;
+        private bool CharacterCanMove(g_iDirection direction, int currentSector)
+        {
+            bool move = true;
 
-         MinVisibleRow = playerMapRow - Constants.NORMALVISIBLEPLAYERROW;
-         MaxVisibleRow = playerMapRow + Constants.NORMALVISIBLEPLAYERROW;
-         //min and max cols
-         if (playerMapCol < Constants.NORMALVISIBLEPLAYERCOL) //left
-         {
-             MinVisibleCol = 0;
-             MaxVisibleCol = Constants.VISIBLECOLUMNCOUNT;
-            
-         }
-         else if (playerMapCol > ((g_CurrentMap.MapCols - 1) - Constants.NORMALVISIBLEPLAYERCOL)) //right
-         {
-             MinVisibleCol = g_CurrentMap.MapCols - Constants.VISIBLECOLUMNCOUNT;
-             MaxVisibleCol = g_CurrentMap.MapCols - 1;
-         }
-         //min/max rows
-         if (playerMapRow < Constants.NORMALVISIBLEPLAYERROW) //top
-         {
-             MinVisibleRow = 0;
-             MaxVisibleRow = Constants.VISIBLEROWCOUNT ;
-         }
-         else if (playerMapRow > ((g_CurrentMap.MapRows - 1) - Constants.NORMALVISIBLEPLAYERROW)) //bottom
-         {
-             MinVisibleRow = g_CurrentMap.MapRows - Constants.VISIBLEROWCOUNT;
-             MaxVisibleRow = g_CurrentMap.MapRows - 1;
-         }
-
-          /////////////
-          //Draw code
-          ////////////
-          int tile;
-          GL.BindTexture(TextureTarget.Texture2D, m_iCurrentTileSet); //set texture
-          int drawRow = 0; 
-          for (int currRow = MinVisibleRow; currRow <=  MaxVisibleRow; currRow++) //row loop (y)
+            if (direction == g_iDirection.NORTH)
             {
-                int drawCol = 0;
-                
-                for (int currCol = MinVisibleCol; currCol <= MaxVisibleCol; currCol++) //columns (x)
+                if (MapUtils.SectorToRow(currentSector, g_CurrentMap.MapRows) < 1)
                 {
-                    //get the map tile value
-                    var currentMapSector = m_MapSectors[currRow, currCol];
-                    tile = currentMapSector.Get_Tileset_Number();
-                    
-                    //calulate tilenumber's row and column value on tileset
-                    // int numberofcolumns = 2;
-                    int row;
-                    int column;
-                    column = tile % Constants.TILESETCOLUMNCOUNT;
-                    float texture_size = 1.0f / Constants.TILESETCOLUMNCOUNT;
-                    //0.5 = size
-                    row = (int)((tile * texture_size) + 0.00001f);
-                    // MessageBox.Show("tile number: " + tile +" row: "+row+" col: "+column +" texturesize:"+texture_size);
-                    float s1 = texture_size * (column + 0);
-                    float s2 = texture_size * (column + 1);
-                    float t1 = 1 - (texture_size * (row + 0));
-                    float t2 = 1 - (texture_size * (row + 1));
-
-                    // MessageBox.Show("s1 = "+s1+" s2 = "+s2+" t1 = "+t1+" t2 = "+t2);
-
-                    //draw the quad
-                   // GL.BindTexture(TextureTarget.Texture2D, tileSetID); //set texture --done above
-                    //GL.Begin(BeginMode.Quads); 
-                    
-                    //Draw by drawing at different locations.
-                    ////quad1
-                    ////bottomleft
-                    //GL.TexCoord2(s1, t2);
-                    //GL.Vertex3((float)drawCol, -((float)drawRow) - 1.0f, 0.0f);  //vertex3(x,y,z)
-                    ////top left
-                    //GL.TexCoord2(s1, t1);
-                    //GL.Vertex3((float)drawCol, -(float)drawRow, 0.0f);
-                    ////top right
-                    //GL.TexCoord2(s2, t1);
-                    //GL.Vertex3((float)drawCol + 1.0f, -(float)drawRow, 0.0f);
-                    ////bottom right
-                    //GL.TexCoord2(s2, t2);
-                    //GL.Vertex3((float)drawCol + 1.0f, -(float)drawRow - 1.0f, 0.0f);
-
-                    //Proper GL way, translate grid, then draw at new 0.0
-                    GL.PushMatrix(); //save
-                    GL.LoadIdentity();
-                    GL.Translate(drawCol, -drawRow, 0);
-                    //Rotation to be handled here. Need to recenter the draw for this to work before shifting tiles around.
-                    if (currentMapSector.rotationAngle != 0)
-                    {
-                       GL.Rotate(currentMapSector.rotationAngle, 0, 0, 1);
-                    }
-                    
-
-                    GL.Begin(BeginMode.Quads);
-                    //quad1
-                    //bottomleft
-                    GL.TexCoord2(s1, t2);
-                    GL.Vertex3(0, -1.0f, 0.0f);  //vertex3(x,y,z)
-                    //top left
-                    GL.TexCoord2(s1, t1);
-                    GL.Vertex3(0, 0.0f, 0.0f);
-                    //top right
-                    GL.TexCoord2(s2, t1);
-                    GL.Vertex3(1.0f, 0.0f, 0.0f);
-                    //bottom right
-                    GL.TexCoord2(s2, t2);
-                    GL.Vertex3(1.0f, -1.0f, 0.0f);
-
-                    GL.End();
-                    
-                    drawCol++;
+                    move = false;
+                    MessageBox.Show("North, \ntop of map, \nmove=false, \nSectorToRow=" + MapUtils.SectorToRow(currentSector, g_CurrentMap.MapRows));
                 }
-                drawRow++;  
-          }
-            //end of drawtiles
-        }
-
-//////////////////////
-//
-// Movement handling
-//
-///////////////////////
-
-    private void HandleUpArrow()
-    {
-        MovePlayerUp();
-    }
-    private void HandleDownArrow()
-    {
-        MovePlayerDown();
-    }
-    private void HandleLeftArrow()
-    {
-        MovePlayerLeft();
-    }
-    private void HandleRightArrow()
-    {
-        MovePlayerRight();
-    }
-
-
-    private void MovePlayerUp()
-    {
-        
-        g_iDirection dir = g_iDirection.NORTH;
-        if (CharacterCanMove(dir, m_Player.GetSector()))
-            m_Player.SetSector(m_Player.GetSector() - g_CurrentMap.MapCols);
-    }
-    private void MovePlayerDown()
-    {
-        g_iDirection dir = g_iDirection.SOUTH;
-        if (CharacterCanMove(dir, m_Player.GetSector()))
-            m_Player.SetSector(m_Player.GetSector() + g_CurrentMap.MapCols);
-    }
-    private void MovePlayerRight()
-    {
-        g_iDirection dir = g_iDirection.EAST;
-        if (CharacterCanMove(dir, m_Player.GetSector()))
-            m_Player.SetSector(m_Player.GetSector() + 1);
-    }
-    private void MovePlayerLeft()
-    {
-        g_iDirection dir = g_iDirection.WEST;
-        if (CharacterCanMove(dir, m_Player.GetSector()))
-            m_Player.SetSector(m_Player.GetSector() -1);
-    }
-    
-    
-    private bool CharacterCanMove(g_iDirection direction, int currentSector)
-    {
-        bool move = true;
-
-        if (direction == g_iDirection.NORTH)
-        {
-            if (MapUtils.SectorToRow(currentSector, g_CurrentMap.MapRows) < 1)
-            { 
-                move = false;
-                MessageBox.Show("North, \ntop of map, \nmove=false, \nSectorToRow=" + MapUtils.SectorToRow(currentSector, g_CurrentMap.MapRows));
+                else if (PlayerBlocked(currentSector, direction))
+                {
+                    move = false;
+                    // MessageBox.Show("North-elseif-playerblocked=true");
+                }
             }
-            else if (PlayerBlocked(currentSector, direction))
-            { 
-                move = false;
-               // MessageBox.Show("North-elseif-playerblocked=true");
-            }
-        }
-        if (direction == g_iDirection.SOUTH)
-        {
-            if (MapUtils.SectorToRow(currentSector, g_CurrentMap.MapRows) >= (g_CurrentMap.MapRows - 1))
+            if (direction == g_iDirection.SOUTH)
             {
-                move = false;
-                MessageBox.Show("South, \nBottom of map, \nmove=false, \nSectorToRow=" + MapUtils.SectorToRow(currentSector, g_CurrentMap.MapRows));
+                if (MapUtils.SectorToRow(currentSector, g_CurrentMap.MapRows) >= (g_CurrentMap.MapRows - 1))
+                {
+                    move = false;
+                    MessageBox.Show("South, \nBottom of map, \nmove=false, \nSectorToRow=" + MapUtils.SectorToRow(currentSector, g_CurrentMap.MapRows));
+                }
+                else if (PlayerBlocked(currentSector, direction))
+                {
+                    move = false;
+                }
             }
-            else if (PlayerBlocked(currentSector, direction))
+            if (direction == g_iDirection.EAST)
             {
-                move = false;
+                if (MapUtils.SectorToCols(currentSector, g_CurrentMap.MapCols) >= (g_CurrentMap.MapCols - 1))
+                {
+                    move = false;
+                    MessageBox.Show("East, \nRight of map, \nmove=false, \nSectorToCol=" + MapUtils.SectorToCols(currentSector, g_CurrentMap.MapCols));
+                }
+                else if (PlayerBlocked(currentSector, direction))
+                { move = false; }
             }
-        }
-        if (direction == g_iDirection.EAST)
-        {
-            if (MapUtils.SectorToCols(currentSector, g_CurrentMap.MapCols) >= (g_CurrentMap.MapCols - 1))
-            { move = false;
-            MessageBox.Show("East, \nRight of map, \nmove=false, \nSectorToCol=" + MapUtils.SectorToCols(currentSector, g_CurrentMap.MapCols));
+            if (direction == g_iDirection.WEST)
+            {
+                if (MapUtils.SectorToCols(currentSector, g_CurrentMap.MapCols) <= 0)
+                {
+                    move = false;
+                    MessageBox.Show("West, \nLeft of map, \nmove=false, \nSectorToCol=" + MapUtils.SectorToCols(currentSector, g_CurrentMap.MapCols));
+                }
+                else if (PlayerBlocked(currentSector, direction))
+                { move = false; }
             }
-            else if (PlayerBlocked(currentSector, direction))
-            { move = false; }
+
+            return move;
         }
-        if (direction == g_iDirection.WEST)
+
+        private bool PlayerBlocked(int iPlayerSector, g_iDirection direction)
         {
-            if (MapUtils.SectorToCols(currentSector, g_CurrentMap.MapCols) <= 0) 
-            { move = false;
-            MessageBox.Show("West, \nLeft of map, \nmove=false, \nSectorToCol=" + MapUtils.SectorToCols(currentSector, g_CurrentMap.MapCols));
+            bool blocked = false;
+            int iSector = iPlayerSector;
+
+            if (direction == g_iDirection.NORTH)
+            {
+                iSector = iSector - g_CurrentMap.MapCols;
             }
-            else if (PlayerBlocked(currentSector, direction)) 
-            { move = false; }
-        }
+            else if (direction == g_iDirection.SOUTH)
+            {
+                iSector = iSector + g_CurrentMap.MapCols;
+            }
+            else if (direction == g_iDirection.EAST)
+            {
+                iSector = iSector + 1;
+            }
+            else if (direction == g_iDirection.WEST)
+            {
+                iSector = iSector - 1;
+            }
 
-        return move;
+            int y = MapUtils.SectorToRow(iSector, g_CurrentMap.MapRows);
+            int x = MapUtils.SectorToCols(iSector, g_CurrentMap.MapCols);
+
+            int item = g_CurrentMap.m_MapSectors[y, x].Get_Tileset_Number();
+
+            g_iMapTypeEnum mapType = (g_iMapTypeEnum)g_CurrentMap.MapTypeId;
+
+            //is tile set to be impassable?
+            if (g_CurrentMap.m_MapSectors[y, x].Get_Is_Impassable() == true)
+            {
+                blocked = true;
+            }
+
+            return blocked;
+        }
     }
-    
-    private bool PlayerBlocked(int iPlayerSector, g_iDirection direction)
-    {
-        bool blocked = false;
-        int iSector = iPlayerSector;
-
-        if (direction == g_iDirection.NORTH)
-        {
-            iSector = iSector - g_CurrentMap.MapCols;
-        }
-        else if (direction == g_iDirection.SOUTH)
-        {
-            iSector = iSector + g_CurrentMap.MapCols;
-        }
-        else if (direction == g_iDirection.EAST)
-        {
-            iSector = iSector + 1;
-        }
-        else if (direction == g_iDirection.WEST)
-        {
-            iSector = iSector -1;
-        }
-
-        int y = MapUtils.SectorToRow(iSector, g_CurrentMap.MapRows);
-        int x = MapUtils.SectorToCols(iSector, g_CurrentMap.MapCols);
-
-        int item = g_CurrentMap.m_MapSectors[y, x].Get_Tileset_Number();
-
-        g_iMapTypeEnum mapType = (g_iMapTypeEnum)g_CurrentMap.MapTypeId;
-       
-        //is tile set to be impassable?
-        if (g_CurrentMap.m_MapSectors[y, x].Get_Is_Impassable() == true)
-        {
-            blocked = true;
-        }
-              
-        return blocked;
-    }
-        
-    //end of Game class   
-    }
-//end-namespace
 }
-
-
