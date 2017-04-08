@@ -80,7 +80,7 @@ namespace JBookman_Conversion
             //CENGINE(char* pstrMap, int iMapType, int iSector)
             // m_sFirstMap = "FirstMap.map";
             // m_sFirstMap = "Maps\\SerialiseMapTest01.map";
-            m_sFirstMap = "Maps\\Test.map";
+            m_sFirstMap = "Maps\\April2017.map";
             m_iFirstMapType = (int)g_iLocationEnum.FIRSTTOWN;
             //m_iStartSector = 1485;
             m_iStartSector = 85;
@@ -278,7 +278,7 @@ namespace JBookman_Conversion
                 MessageBox.Show("Map load failure");
 
             MessageBox.Show("Firstmap loaded rows: " + g_FirstMap.MapRows);
-            MessageBox.Show("Firstmap loaded tile 1,1: " + g_FirstMap.m_MapSectors[1, 1].Get_Tileset_Number());
+            MessageBox.Show("Firstmap loaded tile 1,1: " + g_FirstMap.m_MapSectors[1, 1].TileNumberId);
 
             //  instantiate player + other objects not in CMap
             m_Player = new Player();
@@ -419,12 +419,12 @@ namespace JBookman_Conversion
             int y = MapUtils.SectorToRow(iSector, g_CurrentMap.MapRows);
             int x = MapUtils.SectorToCols(iSector, g_CurrentMap.MapCols);
 
-            int item = g_CurrentMap.m_MapSectors[y, x].Get_Tileset_Number();
+            int item = g_CurrentMap.m_MapSectors[y, x].TileNumberId;
 
             g_iMapTypeEnum mapType = (g_iMapTypeEnum)g_CurrentMap.MapTypeId;
 
             //is tile set to be impassable?
-            if (g_CurrentMap.m_MapSectors[y, x].Get_Is_Impassable() == true)
+            if (g_CurrentMap.m_MapSectors[y, x].Impassable == true)
             {
                 blocked = true;
             }

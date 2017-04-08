@@ -123,7 +123,7 @@ namespace JBookman_Conversion.Engine
                 {
                     //get the map tile value
                     var currentMapSector = m_MapSectors[currRow, currCol];
-                    tile = currentMapSector.Get_Tileset_Number();
+                    tile = currentMapSector.TileNumberId;
 
                     //calulate tilenumber's row and column value on tileset
                     // int numberofcolumns = 2;

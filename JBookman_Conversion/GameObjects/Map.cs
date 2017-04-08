@@ -8,7 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace JBookman_Conversion
 {
     [Serializable]
-    public class Map : System.Object
+    public class Map
     {
         //public ushort[,] m_MapSectors;
         public MapSector[,] m_MapSectors;
@@ -28,13 +28,13 @@ namespace JBookman_Conversion
             DoorsInMap = new List<Door>();
             ContainersInMap = new List<Container>();
         }
-        
+
         public void OpenMapFiles(string fName)
         {
             string mapFileName = ConstructFileName(fName);
             ReadMapFile(mapFileName);
         }
-        
+
         public string ConstructFileName(string fileName)
         {
             //string newFileName = "\\Map";
@@ -115,7 +115,7 @@ namespace JBookman_Conversion
 
             return mapToLoad;
         }
-                
+
         public string GetStringFromFile(BinaryReader streamIn, string buf)
         {
             buf = streamIn.ReadString();

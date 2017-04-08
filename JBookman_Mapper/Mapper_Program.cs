@@ -221,7 +221,7 @@ namespace JBookman_Mapper
             int x1 = sector % currentMap.MapCols;
             int y1 = (int)((sector / currentMap.MapRows) + 0.001f);
 
-            if (currentMap.m_MapSectors[y1, x1].Get_Is_Impassable())
+            if (currentMap.m_MapSectors[y1, x1].Impassable)
             { cMenuItem2.Checked = true; }
             else cMenuItem2.Checked = false;
 
@@ -244,11 +244,14 @@ namespace JBookman_Mapper
             int x1 = sector % currentMap.MapCols;
             int y1 = (int)((sector / currentMap.MapRows) + 0.001f);
 
-            if (currentMap.m_MapSectors[y1, x1].Get_Is_Impassable())
+            if (currentMap.m_MapSectors[y1, x1].Impassable)
             {
-                currentMap.m_MapSectors[y1, x1].Set_Is_Impassable(false);
+                currentMap.m_MapSectors[y1, x1].Impassable = false;
             }
-            else currentMap.m_MapSectors[y1, x1].Set_Is_Impassable(true);
+            else
+            {
+                currentMap.m_MapSectors[y1, x1].Impassable = true;
+            }
 
             //as it's changed. Redraw the map.
             mapPanel.Invalidate();
@@ -351,7 +354,7 @@ namespace JBookman_Mapper
                 for (short cx = 0; cx < currentMap.MapCols; cx++)
                 {
                     //output += currentMap.m_MapSectors[c1][c2];
-                    output += currentMap.m_MapSectors[cy, cx].Get_Tileset_Number();
+                    output += currentMap.m_MapSectors[cy, cx].TileNumberId;
                     count++;
                 }
             }
@@ -734,15 +737,15 @@ namespace JBookman_Mapper
 
                 //update maptile if different to currently selected tile
                 // or if redrawing with a different placeImpassable flag or a different angle
-                if (currentMap.m_MapSectors[y1, x1].Get_Tileset_Number() != currentlySelectedTile 
-                    || currentMap.m_MapSectors[y1,x1].Get_Is_Impassable() != placeImpassable
+                if (currentMap.m_MapSectors[y1, x1].TileNumberId != currentlySelectedTile 
+                    || currentMap.m_MapSectors[y1,x1].Impassable != placeImpassable
                     || currentMap.m_MapSectors[y1,x1].rotationAngle != currentAngle
                     )
                 {
-                    currentMap.m_MapSectors[y1, x1].Set_Tileset_Number(currentlySelectedTile);
+                    currentMap.m_MapSectors[y1, x1].TileNumberId = currentlySelectedTile;
                     
                     //set passable/impassibe flag from global bool.
-                    currentMap.m_MapSectors[y1, x1].Set_Is_Impassable(placeImpassable);
+                    currentMap.m_MapSectors[y1, x1].Impassable = placeImpassable;
                     
                     //Set the angle.
                     currentMap.m_MapSectors[y1, x1].rotationAngle = currentAngle;
@@ -930,7 +933,7 @@ namespace JBookman_Mapper
                     {
                         for (int x = 0; x < currentMap.MapCols; x++)
                         {
-                            int currentMapSectorValue = currentMap.m_MapSectors[y, x].Get_Tileset_Number();
+                            int currentMapSectorValue = currentMap.m_MapSectors[y, x].TileNumberId;
                             //  MessageBox.Show("onPaint, both bool =true, map sector value= "+currentMapSectorValue);
 
                             //panelGraphics.DrawImage(tileImageArray[currentMapSectorValue], map_RectArray[count]);
@@ -954,7 +957,7 @@ namespace JBookman_Mapper
                             gBmp.DrawImage(currentImage, map_RectArray[count]);
 
                             //Draw overlay for passable.
-                            if (currentMap.m_MapSectors[y, x].Get_Is_Impassable())
+                            if (currentMap.m_MapSectors[y, x].Impassable)
                             {
                                 gBmp.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
                                 TextureBrush newTextureBrush = new TextureBrush(overlayImage);
