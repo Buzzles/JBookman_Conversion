@@ -17,6 +17,7 @@ namespace JBookman_Conversion
             TileId = 0;
             CanMove = false;
         }
+
         ~Person()
         {
         }

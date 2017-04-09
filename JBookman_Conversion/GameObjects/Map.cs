@@ -10,7 +10,6 @@ namespace JBookman_Conversion
     [Serializable]
     public class Map
     {
-        //public ushort[,] m_MapSectors;
         public MapSector[,] m_MapSectors;
 
         public List<Door> DoorsInMap { get; set; }

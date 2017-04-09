@@ -66,7 +66,9 @@
     <Compile Include="Engine\Core.cs" />
     <Compile Include="Engine\MapUtils.cs" />
     <Compile Include="Engine\PlayerRenderer.cs" />
+    <Compile Include="Engine\StaticPlayerRenderer.cs" />
     <Compile Include="Engine\Renderer.cs" />
+    <Compile Include="Engine\StaticRenderer.cs" />
     <Compile Include="Engine\StateHandler.cs" />
     <Compile Include="GameObjects\Container.cs" />
     <Compile Include="GameObjects\Door.cs" />

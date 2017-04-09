@@ -33,10 +33,6 @@ namespace JBookman_Conversion
         protected Player m_Player;
         protected Map g_CurrentMap;
         protected Map g_FirstMap;
-        //  protected ushort m_MapTypeID;
-        //  protected ushort m_MapCols;
-        //  protected ushort m_MapRows;
-        //  protected ushort[,] m_MapSectors;
         protected string m_sFirstMap;
 
         Matrix4 m_moveMatrix = new Matrix4();
@@ -51,6 +47,7 @@ namespace JBookman_Conversion
         int m_iCurrentTileSet = 0;
 
         int m_iUpdateCount = 0;
+        private readonly Renderer _renderer;
 
         /// <summary>Creates a 800x600 window with the specified title.</summary>
         public Game()
@@ -60,7 +57,7 @@ namespace JBookman_Conversion
             Keyboard.KeyDown += HandleKeyboardKeyDown;
 
             // Instantiate renderer here!
-            // var renderer = new Renderer();
+            _renderer = new Renderer();
             // var engine = engine();
             // engine.LoadTextures();
             // engine.LoadMap();
@@ -85,7 +82,6 @@ namespace JBookman_Conversion
             //m_iStartSector = 1485;
             m_iStartSector = 85;
             InitGame();
-
         }
 
         /// <summary>
@@ -122,7 +118,8 @@ namespace JBookman_Conversion
             //  KeyboardState keystate = OpenTK.Input.Keyboard.GetState();
 
             if (Keyboard[Key.Escape])
-            { // Exit();
+            { 
+                // Exit();
             }
 
             if (m_iUpdateCount == 15)
@@ -220,32 +217,30 @@ namespace JBookman_Conversion
         {
             base.OnRenderFrame(e);
 
-            Renderer.Render(g_CurrentMap, m_iCurrentTileSet, m_iPlayerTileSet, m_Player, m_moveMatrix);
+            StaticRenderer.Render(g_CurrentMap, m_iCurrentTileSet, m_iPlayerTileSet, m_Player, m_moveMatrix);
+
+            _renderer.RenderFrame();
 
             SwapBuffers();
         }
 
-        /////////////////////////////////
-        //  JBOOKMAN RELATED METHODS
-        ////////////////////////////////
-
-        public MapSector[,] GetSectors()
-        {
-            //  return m_MapSectors;
-            return g_CurrentMap.m_MapSectors;
-        }
-        public int GetCurrentMap()
-        {
-            return m_iCurrentMap;
-        }
-        public void SetCurrentMap(int map)
-        {
-            m_iCurrentMap = map;
-        }
-        public Player GetPlayer()
-        {
-            return m_Player;
-        }
+        //public MapSector[,] GetSectors()
+        //{
+        //    //  return m_MapSectors;
+        //    return g_CurrentMap.m_MapSectors;
+        //}
+        //public int GetCurrentMap()
+        //{
+        //    return m_iCurrentMap;
+        //}
+        //public void SetCurrentMap(int map)
+        //{
+        //    m_iCurrentMap = map;
+        //}
+        //public Player GetPlayer()
+        //{
+        //    return m_Player;
+        //}
 
         public void InitGame()
         {
@@ -275,14 +270,16 @@ namespace JBookman_Conversion
                 g_CurrentMap = g_FirstMap;
             }
             else
+            {
                 MessageBox.Show("Map load failure");
+            }
 
             MessageBox.Show("Firstmap loaded rows: " + g_FirstMap.MapRows);
             MessageBox.Show("Firstmap loaded tile 1,1: " + g_FirstMap.m_MapSectors[1, 1].TileNumberId);
 
-            //  instantiate player + other objects not in CMap
+            // instantiate player + other objects not in CMap
             m_Player = new Player();
-            //  add player starting stats
+            // add player starting stats
             m_Player.SetGold(25);
             m_Player.SetHitPoints(10);
             m_Player.SetMaxHitPoints(10);
@@ -315,7 +312,6 @@ namespace JBookman_Conversion
             MovePlayerRight();
         }
 
-
         private void MovePlayerUp()
         {
             g_iDirection dir = g_iDirection.NORTH;
@@ -345,50 +341,57 @@ namespace JBookman_Conversion
         {
             bool move = true;
 
+            var currentRow = MapUtils.SectorToRow(currentSector, g_CurrentMap.MapRows);
+            var currentCol = MapUtils.SectorToCols(currentSector, g_CurrentMap.MapCols);
+
             if (direction == g_iDirection.NORTH)
             {
-                if (MapUtils.SectorToRow(currentSector, g_CurrentMap.MapRows) < 1)
+                if (currentRow < 1)
                 {
                     move = false;
-                    MessageBox.Show("North, \ntop of map, \nmove=false, \nSectorToRow=" + MapUtils.SectorToRow(currentSector, g_CurrentMap.MapRows));
+                    MessageBox.Show("North, \ntop of map, \nmove=false, \nSectorToRow=" + currentRow);
                 }
                 else if (PlayerBlocked(currentSector, direction))
                 {
                     move = false;
-                    // MessageBox.Show("North-elseif-playerblocked=true");
                 }
             }
             if (direction == g_iDirection.SOUTH)
             {
-                if (MapUtils.SectorToRow(currentSector, g_CurrentMap.MapRows) >= (g_CurrentMap.MapRows - 1))
+                if (currentRow >= (g_CurrentMap.MapRows - 1))
                 {
                     move = false;
-                    MessageBox.Show("South, \nBottom of map, \nmove=false, \nSectorToRow=" + MapUtils.SectorToRow(currentSector, g_CurrentMap.MapRows));
+                    MessageBox.Show("South, \nBottom of map, \nmove=false, \nSectorToRow=" + currentRow);
                 }
                 else if (PlayerBlocked(currentSector, direction))
                 {
                     move = false;
                 }
             }
+
             if (direction == g_iDirection.EAST)
             {
-                if (MapUtils.SectorToCols(currentSector, g_CurrentMap.MapCols) >= (g_CurrentMap.MapCols - 1))
+                if (currentCol >= (g_CurrentMap.MapCols - 1))
                 {
                     move = false;
-                    MessageBox.Show("East, \nRight of map, \nmove=false, \nSectorToCol=" + MapUtils.SectorToCols(currentSector, g_CurrentMap.MapCols));
+                    MessageBox.Show("East, \nRight of map, \nmove=false, \nSectorToCol=" + currentCol);
                 }
                 else if (PlayerBlocked(currentSector, direction))
-                { move = false; }
+                {
+                    move = false;
+                }
             }
             if (direction == g_iDirection.WEST)
             {
-                if (MapUtils.SectorToCols(currentSector, g_CurrentMap.MapCols) <= 0)
+                if (currentCol <= 0)
                 {
                     move = false;
-                    MessageBox.Show("West, \nLeft of map, \nmove=false, \nSectorToCol=" + MapUtils.SectorToCols(currentSector, g_CurrentMap.MapCols));
+                    MessageBox.Show("West, \nLeft of map, \nmove=false, \nSectorToCol=" + currentCol);
                 }
                 else if (PlayerBlocked(currentSector, direction))
-                { move = false; }
+                {
+                    move = false;
+                }
             }
 
             return move;
@@ -399,6 +402,7 @@ namespace JBookman_Conversion
             bool blocked = false;
             int iSector = iPlayerSector;
 
+            // Based on direction travelling, get locaion of next tile
             if (direction == g_iDirection.NORTH)
             {
                 iSector = iSector - g_CurrentMap.MapCols;
