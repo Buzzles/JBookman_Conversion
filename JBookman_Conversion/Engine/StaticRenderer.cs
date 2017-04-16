@@ -49,7 +49,8 @@ namespace JBookman_Conversion.Engine
              */
 
             //  test code
-            GL.Begin(BeginMode.Lines);
+            GL.Begin(PrimitiveType.Lines);
+
             //  x = blue
             GL.Color3(0.0f, 0.0f, 1.0f);
             GL.Vertex3(-100.0f, 0.0f, 0.0f);
@@ -69,45 +70,7 @@ namespace JBookman_Conversion.Engine
 
         private static void DrawTiles(Map g_CurrentMap, int m_iCurrentTileSet, Player m_Player)
         {
-            //Calculate visible columns
-            int MinVisibleCol, MaxVisibleCol, MinVisibleRow, MaxVisibleRow;
-            //int playerMapCol = m_Player.GetSector() % m_MapCols;
-            //int playerMapRow = (int)m_Player.GetSector() / m_MapRows;
-
-            //ushort m_MapCols =  g_CurrentMap.m_MapCols;
-            //ushort m_MapRows = g_CurrentMap.m_MapRows;
-            MapSector[,] m_MapSectors = g_CurrentMap.m_MapSectors;
-
-            int playerMapCol = MapUtils.SectorToCols(m_Player.GetSector(), g_CurrentMap.MapCols);
-            int playerMapRow = MapUtils.SectorToRow(m_Player.GetSector(), g_CurrentMap.MapRows);
-            MinVisibleCol = playerMapCol - Constants.NORMALVISIBLEPLAYERCOL;
-            MaxVisibleCol = playerMapCol + Constants.NORMALVISIBLEPLAYERCOL;
-
-            MinVisibleRow = playerMapRow - Constants.NORMALVISIBLEPLAYERROW;
-            MaxVisibleRow = playerMapRow + Constants.NORMALVISIBLEPLAYERROW;
-            //min and max cols
-            if (playerMapCol < Constants.NORMALVISIBLEPLAYERCOL) //left
-            {
-                MinVisibleCol = 0;
-                MaxVisibleCol = Constants.VISIBLECOLUMNCOUNT;
-
-            }
-            else if (playerMapCol > ((g_CurrentMap.MapCols - 1) - Constants.NORMALVISIBLEPLAYERCOL)) //right
-            {
-                MinVisibleCol = g_CurrentMap.MapCols - Constants.VISIBLECOLUMNCOUNT;
-                MaxVisibleCol = g_CurrentMap.MapCols - 1;
-            }
-            //min/max rows
-            if (playerMapRow < Constants.NORMALVISIBLEPLAYERROW) //top
-            {
-                MinVisibleRow = 0;
-                MaxVisibleRow = Constants.VISIBLEROWCOUNT;
-            }
-            else if (playerMapRow > ((g_CurrentMap.MapRows - 1) - Constants.NORMALVISIBLEPLAYERROW)) //bottom
-            {
-                MinVisibleRow = g_CurrentMap.MapRows - Constants.VISIBLEROWCOUNT;
-                MaxVisibleRow = g_CurrentMap.MapRows - 1;
-            }
+            var drawBoundries = GetDrawBoundries(g_CurrentMap, m_iCurrentTileSet, m_Player);
 
             int tile;
 
@@ -115,14 +78,15 @@ namespace JBookman_Conversion.Engine
 
             int drawRow = 0;
 
-            for (int currRow = MinVisibleRow; currRow <= MaxVisibleRow; currRow++) //row loop (y)
+            // Draw row by row so: outer == rows, inner == cols
+            for (int currRow = drawBoundries.MinVisibleRow; currRow <= drawBoundries.MaxVisibleRow; currRow++)
             {
                 int drawCol = 0;
 
-                for (int currCol = MinVisibleCol; currCol <= MaxVisibleCol; currCol++) //columns (x)
+                for (int currCol = drawBoundries.MinVisibleCol; currCol <= drawBoundries.MaxVisibleCol; currCol++)
                 {
                     //get the map tile value
-                    var currentMapSector = m_MapSectors[currRow, currCol];
+                    var currentMapSector = g_CurrentMap.m_MapSectors[currRow, currCol];
                     tile = currentMapSector.TileNumberId;
 
                     //calulate tilenumber's row and column value on tileset
@@ -139,27 +103,6 @@ namespace JBookman_Conversion.Engine
                     float t1 = 1 - (texture_size * (row + 0));
                     float t2 = 1 - (texture_size * (row + 1));
 
-                    // MessageBox.Show("s1 = "+s1+" s2 = "+s2+" t1 = "+t1+" t2 = "+t2);
-
-                    //draw the quad
-                    // GL.BindTexture(TextureTarget.Texture2D, tileSetID); //set texture --done above
-                    //GL.Begin(BeginMode.Quads); 
-
-                    //Draw by drawing at different locations.
-                    ////quad1
-                    ////bottomleft
-                    //GL.TexCoord2(s1, t2);
-                    //GL.Vertex3((float)drawCol, -((float)drawRow) - 1.0f, 0.0f);  //vertex3(x,y,z)
-                    ////top left
-                    //GL.TexCoord2(s1, t1);
-                    //GL.Vertex3((float)drawCol, -(float)drawRow, 0.0f);
-                    ////top right
-                    //GL.TexCoord2(s2, t1);
-                    //GL.Vertex3((float)drawCol + 1.0f, -(float)drawRow, 0.0f);
-                    ////bottom right
-                    //GL.TexCoord2(s2, t2);
-                    //GL.Vertex3((float)drawCol + 1.0f, -(float)drawRow - 1.0f, 0.0f);
-
                     //Proper GL way, translate grid, then draw at new 0.0
                     GL.PushMatrix(); //save
                     GL.LoadIdentity();
@@ -169,19 +112,41 @@ namespace JBookman_Conversion.Engine
                     var translateVector = new Vector3(drawCol, -drawRow, 0);
                     GL.Translate(translateVector);
 
-                    //Rotation to be handled here. Need to recenter the draw for this to work before shifting tiles around.
+                    ////Rotation to be handled here. Need to recenter the draw for this to work before shifting tiles around.
+                    //if (currentMapSector.rotationAngle != 0)
+                    //{
+                    //    //GL.PushMatrix();
+
+                    //    //GL.Rotate(currentMapSector.rotationAngle, 0, 0, 1);
+                    //    var rotateVex = new Vector3(0, 0, 1);
+                    //    GL.Rotate(currentMapSector.rotationAngle, rotateVex);
+
+                    //    //GL.PopMatrix();
+                    //}
+
+                    // Rotate the texture matrix
                     if (currentMapSector.rotationAngle != 0)
                     {
-                        //GL.PushMatrix();
-
-                        //GL.Rotate(currentMapSector.rotationAngle, 0, 0, 1);
                         var rotateVex = new Vector3(0, 0, 1);
                         GL.Rotate(currentMapSector.rotationAngle, rotateVex);
 
-                        //GL.PopMatrix();
+                        //GL.MatrixMode(MatrixMode.Texture);
+                        //GL.LoadIdentity();
+
+                        //// Make origin in middle of texture
+                        //GL.Translate(0.5, 0.5, 0.0);
+
+                        //var rotateVex = new Vector3(0, 0, 1);
+                        //GL.Rotate(currentMapSector.rotationAngle, rotateVex);
+
+                        //// move texture back
+                        //GL.Translate(-0.5, -0.5, 0.0);
+
+                        //GL.MatrixMode(MatrixMode.Modelview);
                     }
 
-                    GL.Begin(BeginMode.Quads);
+                    GL.Begin(PrimitiveType.Quads);
+
                     //quad1
                     //bottomleft
                     GL.TexCoord2(s1, t2);
@@ -198,11 +163,70 @@ namespace JBookman_Conversion.Engine
 
                     GL.End();
 
+                    GL.PopMatrix();
+
                     drawCol++;
                 }
                 drawRow++;
             }
             //end of drawtiles
+        }
+
+        private static DrawBoundries GetDrawBoundries(Map g_CurrentMap, int m_iCurrentTileSet, Player m_Player)
+        {
+            int _minVisibleCol, _maxVisibleCol, _minVisibleRow, _maxVisibleRow;
+        
+            int playerMapCol = MapUtils.SectorToCols(m_Player.GetSector(), g_CurrentMap.MapCols);
+            int playerMapRow = MapUtils.SectorToRow(m_Player.GetSector(), g_CurrentMap.MapRows);
+
+            _minVisibleCol = playerMapCol - Constants.NORMALVISIBLEPLAYERCOL;
+            _maxVisibleCol = playerMapCol + Constants.NORMALVISIBLEPLAYERCOL;
+
+            _minVisibleRow = playerMapRow - Constants.NORMALVISIBLEPLAYERROW;
+            _maxVisibleRow = playerMapRow + Constants.NORMALVISIBLEPLAYERROW;
+            //min and max cols
+            if (playerMapCol < Constants.NORMALVISIBLEPLAYERCOL) //left
+            {
+                _minVisibleCol = 0;
+                _maxVisibleCol = Constants.VISIBLECOLUMNCOUNT;
+
+            }
+            else if (playerMapCol > ((g_CurrentMap.MapCols - 1) - Constants.NORMALVISIBLEPLAYERCOL)) //right
+            {
+                _minVisibleCol = g_CurrentMap.MapCols - Constants.VISIBLECOLUMNCOUNT;
+                _maxVisibleCol = g_CurrentMap.MapCols - 1;
+            }
+            //min/max rows
+            if (playerMapRow < Constants.NORMALVISIBLEPLAYERROW) //top
+            {
+                _minVisibleRow = 0;
+                _maxVisibleRow = Constants.VISIBLEROWCOUNT;
+            }
+            else if (playerMapRow > ((g_CurrentMap.MapRows - 1) - Constants.NORMALVISIBLEPLAYERROW)) //bottom
+            {
+                _minVisibleRow = g_CurrentMap.MapRows - Constants.VISIBLEROWCOUNT;
+                _maxVisibleRow = g_CurrentMap.MapRows - 1;
+            }
+
+            var drawBoundries = new DrawBoundries(_minVisibleCol, _maxVisibleCol, _minVisibleRow, _maxVisibleRow);
+            
+            return drawBoundries;
+        }
+
+        private class DrawBoundries
+        {
+            public int MinVisibleCol { get; private set; }
+            public int MaxVisibleCol { get; private set; }
+            public int MinVisibleRow { get; private set; }
+            public int MaxVisibleRow { get; private set; }
+
+            public DrawBoundries(int _minVisibleCol, int _maxVisibleCol, int _minVisibleRow, int _maxVisibleRow)
+            {
+                MinVisibleCol = _minVisibleCol;
+                MaxVisibleCol = _maxVisibleCol;
+                MinVisibleRow = _minVisibleRow;
+                MaxVisibleRow = _maxVisibleRow;
+            }
         }
     }
 }
