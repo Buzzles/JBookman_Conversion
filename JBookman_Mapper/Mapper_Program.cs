@@ -235,7 +235,10 @@ namespace JBookman_Mapper
         {
             //MessageBox.Show("TileInfo_OnClick");
             ushort sector = getSectorDetails_FromPoint(contextPoint, map_RectArray, (object) mapPanel);
-            MessageBox.Show("TileInfo_OnClick \n ContextPoint X: "+contextPoint.X +" Y: "+contextPoint.Y +"\n Sector: "+sector);
+
+            var mapSec = getMapSectorDetails_FromPoint(contextPoint, map_RectArray, (object)mapPanel);
+
+            MessageBox.Show(@"TileInfo_OnClick \n ContextPoint X: "+contextPoint.X +" Y: "+contextPoint.Y +"\n Sector: "+sector + "\n Rotation: "+ mapSec.rotationAngle );
         }
         private void Context_Impassible_OnClick(object sender, EventArgs args)
         {
@@ -875,8 +878,32 @@ namespace JBookman_Mapper
             return 0;
         }
 
+        //GET SECTOR DETAILS (FROM POINT DATA).
+        private MapSector getMapSectorDetails_FromPoint(Point location, Rectangle[] rectArray, object senderObj)
+        {
+            if (senderObj == mapPanel)
+            {
+                if (bMapLoaded)
+                {
+                    int i = 0;
 
-
+                    for (i = 0; i < rectArray.Length; i++)
+                    {
+                        if (location.X >= rectArray[i].X && location.X <= (rectArray[i].X + 32))
+                        {
+                            if (location.Y >= rectArray[i].Y && location.Y <= (rectArray[i].Y + 32))
+                            {
+                                  int x1 = i % currentMap.MapCols;
+                                  int y1 = (int)((i / currentMap.MapCols) + 0.001f);
+                                return currentMap.m_MapSectors[y1, x1];
+                            }
+                        }
+                    }
+                    return null;
+                }
+            };
+            return null;
+        }
 
         private void MapPanel_OnPaint(object sender, PaintEventArgs paintEventArgs)
         {
