@@ -68,17 +68,19 @@ namespace JBookman_Conversion.Engine
             GL.End();
         }
 
-        private static void DrawTiles(Map g_CurrentMap, int m_iCurrentTileSet, Player m_Player)
+        private static void DrawTiles(Map currentMap, int tileSetId, Player player)
         {
-            var drawBoundries = GetDrawBoundries(g_CurrentMap, m_iCurrentTileSet, m_Player);
+            var drawBoundries = GetDrawBoundries(currentMap, tileSetId, player);
 
             int tile;
 
-            GL.BindTexture(TextureTarget.Texture2D, m_iCurrentTileSet); //set texture
+            GL.BindTexture(TextureTarget.Texture2D, tileSetId); //set texture
 
             int drawRow = 0;
 
             // Draw row by row so: outer == rows, inner == cols
+            // drawcol and drawrow == screen drawing, currRow and currCol == where we are on map.
+            // Drawing is always from 0,0, but we could be at map co-ord 50,50 or something.
             for (int currRow = drawBoundries.MinVisibleRow; currRow <= drawBoundries.MaxVisibleRow; currRow++)
             {
                 int drawCol = 0;
@@ -86,7 +88,7 @@ namespace JBookman_Conversion.Engine
                 for (int currCol = drawBoundries.MinVisibleCol; currCol <= drawBoundries.MaxVisibleCol; currCol++)
                 {
                     //get the map tile value
-                    var currentMapSector = g_CurrentMap.m_MapSectors[currRow, currCol];
+                    var currentMapSector = currentMap.m_MapSectors[currRow, currCol];
                     tile = currentMapSector.TileNumberId;
 
                     //calulate tilenumber's row and column value on tileset
@@ -104,45 +106,22 @@ namespace JBookman_Conversion.Engine
                     float t2 = 1 - (texture_size * (row + 1));
 
                     //Proper GL way, translate grid, then draw at new 0.0
-                    GL.PushMatrix(); //save
-                    GL.LoadIdentity();
+                    GL.PushMatrix();
 
-                    // Rotation should be done before trans!
-                    //GL.Translate(drawCol, -drawRow, 0);
+                    // Matrices applied from right = last transform operation applied first!
                     var translateVector = new Vector3(drawCol, -drawRow, 0);
                     GL.Translate(translateVector);
 
-                    ////Rotation to be handled here. Need to recenter the draw for this to work before shifting tiles around.
-                    //if (currentMapSector.rotationAngle != 0)
-                    //{
-                    //    //GL.PushMatrix();
-
-                    //    //GL.Rotate(currentMapSector.rotationAngle, 0, 0, 1);
-                    //    var rotateVex = new Vector3(0, 0, 1);
-                    //    GL.Rotate(currentMapSector.rotationAngle, rotateVex);
-
-                    //    //GL.PopMatrix();
-                    //}
-
-                    // Rotate the texture matrix
-                    if (currentMapSector.rotationAngle != 0)
+                    if(currentMapSector.rotationAngle != 0)
                     {
-                        var rotateVex = new Vector3(0, 0, 1);
-                        GL.Rotate(currentMapSector.rotationAngle, rotateVex);
+                        // Make origin in middle of texture
+                        GL.Translate(0.5, -0.5, 0.0);
 
-                        //GL.MatrixMode(MatrixMode.Texture);
-                        //GL.LoadIdentity();
+                        var rotateVex0 = new Vector3(0, 0, 1);
+                        GL.Rotate(currentMapSector.rotationAngle, rotateVex0);
 
-                        //// Make origin in middle of texture
-                        //GL.Translate(0.5, 0.5, 0.0);
-
-                        //var rotateVex = new Vector3(0, 0, 1);
-                        //GL.Rotate(currentMapSector.rotationAngle, rotateVex);
-
-                        //// move texture back
-                        //GL.Translate(-0.5, -0.5, 0.0);
-
-                        //GL.MatrixMode(MatrixMode.Modelview);
+                        //move origin back
+                        GL.Translate(-0.5, 0.5, 0.0);
                     }
 
                     GL.Begin(PrimitiveType.Quads);
@@ -175,7 +154,7 @@ namespace JBookman_Conversion.Engine
         private static DrawBoundries GetDrawBoundries(Map g_CurrentMap, int m_iCurrentTileSet, Player m_Player)
         {
             int _minVisibleCol, _maxVisibleCol, _minVisibleRow, _maxVisibleRow;
-        
+
             int playerMapCol = MapUtils.SectorToCols(m_Player.GetSector(), g_CurrentMap.MapCols);
             int playerMapRow = MapUtils.SectorToRow(m_Player.GetSector(), g_CurrentMap.MapRows);
 
@@ -209,7 +188,7 @@ namespace JBookman_Conversion.Engine
             }
 
             var drawBoundries = new DrawBoundries(_minVisibleCol, _maxVisibleCol, _minVisibleRow, _maxVisibleRow);
-            
+
             return drawBoundries;
         }
 
