@@ -10,16 +10,48 @@ namespace JBookman_Conversion.Engine
 {
     public static class StaticPlayerRenderer
     {
-        /////////////////
-        // Draw player
-        /////////////////
         public static void DrawPlayer(Map g_CurrentMap, Player m_Player, int m_iPlayerTileSet)
         {
-            /* int playerMapCol = m_Player.GetSector() % m_MapCols;
-            int playerMapRow = (int)m_Player.GetSector() / m_MapRows;*/
+            // int playerMapCol = m_Player.GetSector() % m_MapCols;
+            // int playerMapRow = (int)m_Player.GetSector() / m_MapRows;
 
-            int playerMapCol = MapUtils.SectorToCols(m_Player.GetSector(), g_CurrentMap.MapCols);
-            int playerMapRow = MapUtils.SectorToRow(m_Player.GetSector(), g_CurrentMap.MapRows);
+            var playerBoundries = GetPlayerBoundries(g_CurrentMap, m_Player);
+
+            //drawing the bastard.
+            GL.BindTexture(TextureTarget.Texture2D, m_iPlayerTileSet); //set texture
+
+            GL.Enable(EnableCap.Blend);
+            // GL.BlendFunc(BlendingFactorSrc.SrcAlpha,BlendingFactorDest.OneMinusSrcAlpha);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            GL.LoadIdentity();
+            
+            // TODO: TRANSLATE INSTEAD
+
+            GL.Begin(PrimitiveType.Quads);
+            //quad1
+            //bottomleft
+            GL.TexCoord2(0, 0);
+            GL.Vertex3(playerBoundries.FinalVisiblePlayerCol, -(playerBoundries.FinalVisiblePlayerRow) - 1.0f, 1.0f);
+            //top left
+            GL.TexCoord2(0, 1);
+            GL.Vertex3(playerBoundries.FinalVisiblePlayerCol, -playerBoundries.FinalVisiblePlayerRow, 1.0f);
+            //top right
+            GL.TexCoord2(1, 1);
+            GL.Vertex3(playerBoundries.FinalVisiblePlayerCol + 1.0f, -playerBoundries.FinalVisiblePlayerRow, 1.0f);
+            //bottom right
+            GL.TexCoord2(1, 0);
+            GL.Vertex3(playerBoundries.FinalVisiblePlayerCol + 1.0f, -playerBoundries.FinalVisiblePlayerRow - 1.0f, 1.0f);
+
+            GL.End();
+
+            GL.Disable(EnableCap.Blend);
+
+            //end of DrawPlayer()
+        }
+        private static PlayerBoundries GetPlayerBoundries(Map currentMap, Player player)
+        {
+            int playerMapCol = MapUtils.SectorToCols(player.GetSector(), currentMap.MapCols);
+            int playerMapRow = MapUtils.SectorToRow(player.GetSector(), currentMap.MapRows);
 
             int FinalVisiblePlayerCol = Constants.NORMALVISIBLEPLAYERCOL;
             int FinalVisiblePlayerRow = Constants.NORMALVISIBLEPLAYERROW;
@@ -35,10 +67,10 @@ namespace JBookman_Conversion.Engine
                     Constants.NORMALVISIBLEPLAYERCOL - (Constants.NORMALVISIBLEPLAYERCOL - playerMapCol);
             }
             //else if location is right of last possible rightmost viewport centre line
-            else if (playerMapCol > ((g_CurrentMap.MapCols - 1) - Constants.NORMALVISIBLEPLAYERCOL))
+            else if (playerMapCol > ((currentMap.MapCols - 1) - Constants.NORMALVISIBLEPLAYERCOL))
             {
                 FinalVisiblePlayerCol =
-                    Constants.VISIBLECOLUMNCOUNT - ((g_CurrentMap.MapCols - 1) - playerMapCol) - 1;
+                    Constants.VISIBLECOLUMNCOUNT - ((currentMap.MapCols - 1) - playerMapCol) - 1;
                 //-1 on end is to take into account the visible display is 25 tiles wide, but range is 0 to 24.
             }
             //if location is top of last possible uppermost viewport centre line
@@ -48,40 +80,24 @@ namespace JBookman_Conversion.Engine
                     Constants.NORMALVISIBLEPLAYERROW - (Constants.NORMALVISIBLEPLAYERROW - playerMapRow);
             }
             //else if location is below last possible lowermost viewport centre line
-            else if (playerMapRow > ((g_CurrentMap.MapRows - 1) - Constants.NORMALVISIBLEPLAYERROW))
+            else if (playerMapRow > ((currentMap.MapRows - 1) - Constants.NORMALVISIBLEPLAYERROW))
             {
                 FinalVisiblePlayerRow =
-                    Constants.VISIBLEROWCOUNT - ((g_CurrentMap.MapRows - 1) - playerMapRow) - 1;
+                    Constants.VISIBLEROWCOUNT - ((currentMap.MapRows - 1) - playerMapRow) - 1;
 
             }
-            //drawing the bastard.
-            GL.BindTexture(TextureTarget.Texture2D, m_iPlayerTileSet); //set texture
 
-            GL.Enable(EnableCap.Blend);
-            // GL.BlendFunc(BlendingFactorSrc.SrcAlpha,BlendingFactorDest.OneMinusSrcAlpha);
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-            GL.LoadIdentity();
-            GL.Begin(BeginMode.Quads);
-            //quad1
-            //bottomleft
-            GL.TexCoord2(0, 0);
-            GL.Vertex3((float)FinalVisiblePlayerCol, -((float)FinalVisiblePlayerRow) - 1.0f, 1.0f);
-            //top left
-            GL.TexCoord2(0, 1);
-            GL.Vertex3((float)FinalVisiblePlayerCol, -(float)FinalVisiblePlayerRow, 1.0f);
-            //top right
-            GL.TexCoord2(1, 1);
-            GL.Vertex3((float)FinalVisiblePlayerCol + 1.0f, -(float)FinalVisiblePlayerRow, 1.0f);
-            //bottom right
-            GL.TexCoord2(1, 0);
-            GL.Vertex3((float)FinalVisiblePlayerCol + 1.0f, -(float)FinalVisiblePlayerRow - 1.0f, 1.0f);
+            return new PlayerBoundries
+            {
+                FinalVisiblePlayerCol = FinalVisiblePlayerCol,
+                FinalVisiblePlayerRow = FinalVisiblePlayerRow
+            };
+        }
 
-
-            GL.End();
-
-            GL.Disable(EnableCap.Blend);
-
-            //end of DrawPlayer()
+        private class PlayerBoundries
+        {
+            public float FinalVisiblePlayerCol { get; set; }
+            public float FinalVisiblePlayerRow { get; set; }
         }
 
     }
