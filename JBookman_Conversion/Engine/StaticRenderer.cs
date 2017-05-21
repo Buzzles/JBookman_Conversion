@@ -89,21 +89,7 @@ namespace JBookman_Conversion.Engine
                 {
                     //get the map tile value
                     var currentMapSector = currentMap.m_MapSectors[currRow, currCol];
-                    tile = currentMapSector.TileNumberId;
-
-                    //calulate tilenumber's row and column value on tileset
-                    // int numberofcolumns = 2;
-                    int row;
-                    int column;
-                    column = tile % Constants.TILESETCOLUMNCOUNT;
-                    float texture_size = 1.0f / Constants.TILESETCOLUMNCOUNT;
-                    //0.5 = size
-                    row = (int)((tile * texture_size) + 0.00001f);
-                    // MessageBox.Show("tile number: " + tile +" row: "+row+" col: "+column +" texturesize:"+texture_size);
-                    float s1 = texture_size * (column + 0);
-                    float s2 = texture_size * (column + 1);
-                    float t1 = 1 - (texture_size * (row + 0));
-                    float t2 = 1 - (texture_size * (row + 1));
+                    tile = currentMapSector.TileNumberId;                    
 
                     //Proper GL way, translate grid, then draw at new 0.0
                     GL.PushMatrix();
@@ -124,23 +110,7 @@ namespace JBookman_Conversion.Engine
                         GL.Translate(-0.5, 0.5, 0.0);
                     }
 
-                    GL.Begin(PrimitiveType.Quads);
-
-                    //quad1
-                    //bottomleft
-                    GL.TexCoord2(s1, t2);
-                    GL.Vertex3(0, -1.0f, 0.0f);  //vertex3(x,y,z)
-                    //top left
-                    GL.TexCoord2(s1, t1);
-                    GL.Vertex3(0, 0.0f, 0.0f);
-                    //top right
-                    GL.TexCoord2(s2, t1);
-                    GL.Vertex3(1.0f, 0.0f, 0.0f);
-                    //bottom right
-                    GL.TexCoord2(s2, t2);
-                    GL.Vertex3(1.0f, -1.0f, 0.0f);
-
-                    GL.End();
+                    DrawTile(tile);
 
                     GL.PopMatrix();
 
@@ -190,6 +160,41 @@ namespace JBookman_Conversion.Engine
             var drawBoundries = new DrawBoundries(_minVisibleCol, _maxVisibleCol, _minVisibleRow, _maxVisibleRow);
 
             return drawBoundries;
+        }
+
+        private static void DrawTile(int tilesetTileNumber)
+        {
+            //calulate tilenumber's row and column value on tileset
+            // int numberofcolumns = 2;
+            int row;
+            int column;
+            column = tilesetTileNumber % Constants.TILESETCOLUMNCOUNT;
+            float texture_size = 1.0f / Constants.TILESETCOLUMNCOUNT;
+            //0.5 = size
+            row = (int)((tilesetTileNumber * texture_size) + 0.00001f);
+            // MessageBox.Show("tile number: " + tile +" row: "+row+" col: "+column +" texturesize:"+texture_size);
+            float s1 = texture_size * (column + 0);
+            float s2 = texture_size * (column + 1);
+            float t1 = 1 - (texture_size * (row + 0));
+            float t2 = 1 - (texture_size * (row + 1));
+
+            GL.Begin(PrimitiveType.Quads);
+
+            //quad1
+            //bottomleft
+            GL.TexCoord2(s1, t2);
+            GL.Vertex3(0, -1.0f, 0.0f);  //vertex3(x,y,z)
+                                         //top left
+            GL.TexCoord2(s1, t1);
+            GL.Vertex3(0, 0.0f, 0.0f);
+            //top right
+            GL.TexCoord2(s2, t1);
+            GL.Vertex3(1.0f, 0.0f, 0.0f);
+            //bottom right
+            GL.TexCoord2(s2, t2);
+            GL.Vertex3(1.0f, -1.0f, 0.0f);
+
+            GL.End();
         }
 
         private class DrawBoundries
