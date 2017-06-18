@@ -3,20 +3,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK;
+using OpenTK.Audio;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Input;
 
-namespace JBookman_Conversion.Engine
+namespace JBookman_Conversion.EngineBits
 {
-    public static class StaticPlayerRenderer
+    public class PlayerRenderer
     {
+        private Player _currentPlayer;
+
+        public PlayerRenderer()
+        {
+
+        }
+
+        public void SetPlayer(Player player)
+        {
+            if (IsPlayerInitialised())
+            {
+                throw new InvalidOperationException("Player is already initialised");
+            }
+            _currentPlayer = player;
+        }
+
+        public bool IsPlayerInitialised()
+        {
+            return _currentPlayer != null;
+        }
+
+        public void RenderPlayer()
+        {
+            if (!IsPlayerInitialised())
+            {
+                throw new InvalidOperationException("Player is not initialised");
+            }
+
+            DrawPlayer(null, _currentPlayer, 0);
+        }
+
         public static void DrawPlayer(Map g_CurrentMap, Player m_Player, int m_iPlayerTileSet)
         {
-            // int playerMapCol = m_Player.GetSector() % m_MapCols;
-            // int playerMapRow = (int)m_Player.GetSector() / m_MapRows;
+            /* int playerMapCol = m_Player.GetSector() % m_MapCols;
+            int playerMapRow = (int)m_Player.GetSector() / m_MapRows;*/
 
             var playerBoundries = GetPlayerBoundries(g_CurrentMap, m_Player);
-
+            
             //drawing the bastard.
             GL.BindTexture(TextureTarget.Texture2D, m_iPlayerTileSet); //set texture
 
@@ -24,9 +58,8 @@ namespace JBookman_Conversion.Engine
             // GL.BlendFunc(BlendingFactorSrc.SrcAlpha,BlendingFactorDest.OneMinusSrcAlpha);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             GL.LoadIdentity();
-            
-            // TODO: TRANSLATE INSTEAD
 
+            // TODO: TRANSLATE FIRST
             GL.Begin(PrimitiveType.Quads);
             //quad1
             //bottomleft
@@ -34,13 +67,13 @@ namespace JBookman_Conversion.Engine
             GL.Vertex3(playerBoundries.FinalVisiblePlayerCol, -(playerBoundries.FinalVisiblePlayerRow) - 1.0f, 1.0f);
             //top left
             GL.TexCoord2(0, 1);
-            GL.Vertex3(playerBoundries.FinalVisiblePlayerCol, -playerBoundries.FinalVisiblePlayerRow, 1.0f);
+            GL.Vertex3(playerBoundries.FinalVisiblePlayerCol, -(playerBoundries.FinalVisiblePlayerRow), 1.0f);
             //top right
             GL.TexCoord2(1, 1);
-            GL.Vertex3(playerBoundries.FinalVisiblePlayerCol + 1.0f, -playerBoundries.FinalVisiblePlayerRow, 1.0f);
+            GL.Vertex3(playerBoundries.FinalVisiblePlayerCol + 1.0f, -(playerBoundries.FinalVisiblePlayerRow), 1.0f);
             //bottom right
             GL.TexCoord2(1, 0);
-            GL.Vertex3(playerBoundries.FinalVisiblePlayerCol + 1.0f, -playerBoundries.FinalVisiblePlayerRow - 1.0f, 1.0f);
+            GL.Vertex3(playerBoundries.FinalVisiblePlayerCol + 1.0f, -(playerBoundries.FinalVisiblePlayerRow) - 1.0f, 1.0f);
 
             GL.End();
 
@@ -48,6 +81,7 @@ namespace JBookman_Conversion.Engine
 
             //end of DrawPlayer()
         }
+
         private static PlayerBoundries GetPlayerBoundries(Map currentMap, Player player)
         {
             int playerMapCol = MapUtils.SectorToCols(player.GetSector(), currentMap.MapCols);
@@ -99,6 +133,5 @@ namespace JBookman_Conversion.Engine
             public float FinalVisiblePlayerCol { get; set; }
             public float FinalVisiblePlayerRow { get; set; }
         }
-
     }
 }

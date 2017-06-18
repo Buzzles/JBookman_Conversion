@@ -1,4 +1,4 @@
-﻿namespace JBookman_Conversion.Engine
+﻿namespace JBookman_Conversion.EngineBits
 {
     internal static class MapUtils
     {

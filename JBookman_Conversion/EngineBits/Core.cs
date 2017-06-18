@@ -10,7 +10,7 @@ using OpenTK.Graphics.OpenGL;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace JBookman_Conversion.Engine
+namespace JBookman_Conversion.EngineBits
 {
     public static class Core
     {

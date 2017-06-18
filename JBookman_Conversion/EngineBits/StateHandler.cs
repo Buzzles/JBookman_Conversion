@@ -4,8 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MessageBox = System.Windows.Forms.MessageBox;
 
-namespace JBookman_Conversion.Engine
+namespace JBookman_Conversion.EngineBits
 {
     class StateHandler
     {
@@ -34,6 +35,7 @@ namespace JBookman_Conversion.Engine
             _transitionDictionary = new Dictionary<StateTransition, ProcessState>
             {
                 { new StateTransition(ProcessState.Menu, ProcessAction.ToWorld), ProcessState.World },
+                { new StateTransition(ProcessState.Menu, ProcessAction.BattleStart), ProcessState.Battle },
                 { new StateTransition(ProcessState.World, ProcessAction.BattleStart), ProcessState.Battle },
                 { new StateTransition(ProcessState.World, ProcessAction.GoToMenu), ProcessState.Menu },
                 { new StateTransition(ProcessState.Battle, ProcessAction.ToWorld), ProcessState.World },
@@ -57,7 +59,14 @@ namespace JBookman_Conversion.Engine
 
         public ProcessState MoveNext(ProcessAction command)
         {
+            var existingState = CurrentState;            
+
             CurrentState = GetNextState(command);
+
+            // TODO: Debug remove
+            MessageBox.Show($"Changing existing state {existingState} with Command:{command} to: {CurrentState} ");
+
+
             return CurrentState;
         }
 

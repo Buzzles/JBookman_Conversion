@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
-using JBookman_Conversion.Engine;
+using JBookman_Conversion.EngineBits;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static JBookman_Conversion.Engine.StateHandler;
+using static JBookman_Conversion.EngineBits.StateHandler;
 
 namespace JBookman_Conversion_Tests
 {
@@ -21,6 +21,14 @@ namespace JBookman_Conversion_Tests
         { 
             var current = _stateHandler.MoveNext(ProcessAction.ToWorld);
             current.Should().Be(ProcessState.World);
+        }
+
+        [TestMethod]
+        public void World_ToBattle_Returns_BattleState()
+        {
+            _stateHandler.MoveNext(ProcessAction.ToWorld);
+            var current = _stateHandler.MoveNext(ProcessAction.BattleStart);
+            current.Should().Be(ProcessState.Battle);
         }
     }
 }

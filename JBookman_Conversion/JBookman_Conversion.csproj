@@ -63,13 +63,15 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Engine\Core.cs" />
-    <Compile Include="Engine\MapUtils.cs" />
-    <Compile Include="Engine\PlayerRenderer.cs" />
-    <Compile Include="Engine\StaticPlayerRenderer.cs" />
-    <Compile Include="Engine\Renderer.cs" />
-    <Compile Include="Engine\StaticRenderer.cs" />
-    <Compile Include="Engine\StateHandler.cs" />
+    <Compile Include="EngineBits\Core.cs" />
+    <Compile Include="EngineBits\Engine.cs" />
+    <Compile Include="EngineBits\InputHandler.cs" />
+    <Compile Include="EngineBits\MapUtils.cs" />
+    <Compile Include="EngineBits\PlayerRenderer.cs" />
+    <Compile Include="EngineBits\StaticPlayerRenderer.cs" />
+    <Compile Include="EngineBits\Renderer.cs" />
+    <Compile Include="EngineBits\StaticRenderer.cs" />
+    <Compile Include="EngineBits\StateHandler.cs" />
     <Compile Include="GameObjects\Container.cs" />
     <Compile Include="GameObjects\Door.cs" />
     <Compile Include="GameObjects\Map.cs" />
