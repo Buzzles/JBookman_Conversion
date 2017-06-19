@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Input;
 using MessageBox = System.Windows.Forms.MessageBox;
+using JBookman_Conversion.EngineParts;
+using OpenTK;
 
 namespace JBookman_Conversion.EngineBits
 {
@@ -15,6 +17,7 @@ namespace JBookman_Conversion.EngineBits
         private Player _player;
 
         private const float moveAmount = 0.1f;
+        private KeyboardState _lastKeyState, _keyboardState;
 
         public InputHandler(Map currentMap, Player player)
         {
@@ -146,29 +149,84 @@ namespace JBookman_Conversion.EngineBits
             return blocked;
         }
 
-        internal void HandleKeyboardDown(object sender, KeyboardKeyEventArgs e, Game gameContext)
+        internal void HandleKeyboardDown(FrameEventArgs e, Game gameContext, Engine engineContext)
         {
-            switch (e.Key)
+            _keyboardState = gameContext.Keyboard.GetState();
+
+            if (KeyPress(Key.Escape))
             {
-                case Key.Escape:
-                    gameContext.Exit();
-                    break;
-                default:
-                    //  Default. Do nothing for now
-                    break;
-                case Key.Up:
-                    MovePlayerUp();
-                    break;
-                case Key.Down:
-                    MovePlayerDown();
-                    break;
-                case Key.Left:
-                    MovePlayerLeft();
-                    break;
-                case Key.Right:
-                    MovePlayerRight();
-                    break;
+                gameContext.Exit();
             }
+
+            if (KeyPress(Key.Up))
+            {
+                MovePlayerUp();
+            }
+
+            if (KeyPress(Key.Down))
+            {
+                MovePlayerDown();
+            }
+
+            if (KeyPress(Key.Left))
+            {
+                MovePlayerLeft();
+            }
+            if (KeyPress(Key.Right))
+            {
+                MovePlayerRight();
+            }
+            //  _player location + viewport test code
+            if (KeyPress(Key.Number1))
+            {
+                _player.SetSector(85);
+            }
+            if (KeyPress(Key.Number2))
+            {
+                _player.SetSector(842);
+            }
+            if (KeyPress(Key.Number3))
+            {
+                _player.SetSector(1530);
+            }
+            if (KeyPress(Key.Number4))
+            {
+                _player.SetSector(820);
+            }
+            if (KeyPress(Key.Number5))
+            {
+                _player.SetSector(1558);
+            }
+            if (KeyPress(Key.Number0))
+            {
+                _player.SetSector(0);
+            }
+
+            // State change!
+            var engine = engineContext;
+
+            if (KeyPress(Key.F1))
+            {
+                engine.StateHandler.MoveNext(StateHandler.ProcessAction.GoToMenu);
+            }
+
+            if (KeyPress(Key.F2))
+            {
+                engine.StateHandler.MoveNext(StateHandler.ProcessAction.ToWorld);
+            }
+
+            if (KeyPress(Key.F3))
+            {
+                engine.StateHandler.MoveNext(StateHandler.ProcessAction.BattleStart);
+            }
+
+            // Store for next update method
+            _lastKeyState = _keyboardState;
+        }
+
+        private bool KeyPress(Key key)
+        {
+            return (_keyboardState[key] && (_keyboardState[key] != _lastKeyState[key]));
         }
     }
 }

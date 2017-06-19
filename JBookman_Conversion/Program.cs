@@ -34,12 +34,13 @@ namespace JBookman_Conversion
 
         private Engine _engine;
 
+        private KeyboardState lastState;
+
         /// <summary>Creates a 800x600 window with the specified title.</summary>
         public Game()
             : base(800, 600, GraphicsMode.Default, "JBookman Conversion")
         {
             VSync = VSyncMode.On;
-            Keyboard.KeyDown += HandleKeyboardKeyDown;
 
             // Instantiate renderer here!
             _renderer = new Renderer();
@@ -63,7 +64,7 @@ namespace JBookman_Conversion
             // m_sFirstMap = "Maps\\SerialiseMapTest01.map";
             var mapName = "Maps\\April2017.map";
             var mapType = (int)g_iLocationEnum.FIRSTTOWN;
-            
+
             //m_iStartSector = 1485;
             var startSector = 85;
 
@@ -107,10 +108,23 @@ namespace JBookman_Conversion
         {
             base.OnUpdateFrame(e);
 
-            //  KeyboardState keystate = OpenTK.Input.Keyboard.GetState();
+            _engine.InputHandler.HandleKeyboardDown(e, this, _engine);
+
+            KeyboardState keystate = Keyboard.GetState();
+
+            if (keystate != lastState)
+            {
+                if (keystate.IsKeyDown(Key.Up))
+                { }
+
+                if (keystate.IsKeyDown(Key.Escape))
+                { }
+            }
+            // log last state to see if the state has changed or if it's just an update cycle
+            lastState = keystate;
 
             if (Keyboard[Key.Escape])
-            { 
+            {
                 // Exit();
             }
 
@@ -166,53 +180,11 @@ namespace JBookman_Conversion
             //  end of OnUpdateFrame
         }
 
+
+        // OLD, TO BIN!
         private void HandleKeyboardKeyDown(object sender, KeyboardKeyEventArgs e)
         {
             //  MessageBox.Show("HandleKeyPressEvent triggered by: " + e.Key);
-            _engine.InputHandler.HandleKeyboardDown(sender, e, this);
-
-            var player = _engine.GetPlayer();
-
-            //  player location + viewport test code
-            if (Keyboard[Key.Number1])
-            {
-                player.SetSector(85);
-            }
-            if (Keyboard[Key.Number2])
-            {
-                player.SetSector(842);
-            }
-            if (Keyboard[Key.Number3])
-            {
-                player.SetSector(1530);
-            }
-            if (Keyboard[Key.Number4])
-            {
-                player.SetSector(820);
-            }
-            if (Keyboard[Key.Number5])
-            {
-                player.SetSector(1558);
-            }
-            if (Keyboard[Key.Number0])
-            {
-                player.SetSector(0);
-            }
-
-            if (Keyboard[Key.F1])
-            {
-                _engine.StateHandler.MoveNext(StateHandler.ProcessAction.GoToMenu);
-            }
-
-            if (Keyboard[Key.F2])
-            {
-                _engine.StateHandler.MoveNext(StateHandler.ProcessAction.ToWorld);
-            }
-
-            if (Keyboard[Key.F3])
-            {
-                _engine.StateHandler.MoveNext(StateHandler.ProcessAction.BattleStart);
-            }
         }
 
         /// <summary>
