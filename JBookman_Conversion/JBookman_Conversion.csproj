@@ -63,7 +63,11 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="EngineBits\Abstract\IDrawable.cs" />
+    <Compile Include="EngineBits\Abstract\IGameState.cs" />
+    <Compile Include="EngineBits\Abstract\IUpdatable.cs" />
     <Compile Include="EngineBits\Core.cs" />
+    <Compile Include="EngineBits\DirectRenderStackStateManager.cs" />
     <Compile Include="EngineBits\Engine.cs" />
     <Compile Include="EngineBits\InputHandler.cs" />
     <Compile Include="EngineBits\MapUtils.cs" />
@@ -79,6 +83,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="GameObjects\Person.cs" />
     <Compile Include="GameObjects\Player.cs" />
+    <Compile Include="GameStates\MenuState.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -117,6 +122,7 @@
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>robocopy "$(ProjectDir)Tilesets" "$(TargetDir)Tilesets" /purge
