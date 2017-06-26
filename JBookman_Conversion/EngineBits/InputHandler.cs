@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK.Input;
+﻿using OpenTK.Input;
 using MessageBox = System.Windows.Forms.MessageBox;
-using JBookman_Conversion.EngineParts;
 using OpenTK;
+using JBookman_Conversion.EngineBits.Consts;
 
 namespace JBookman_Conversion.EngineBits
 {
@@ -207,17 +202,17 @@ namespace JBookman_Conversion.EngineBits
 
             if (KeyPress(Key.F1))
             {
-                engine.StateHandler.MoveNext(StateHandler.ProcessAction.GoToMenu);
+                engine.StateHandler.MoveNext(ProcessAction.GoToMenu);
             }
 
             if (KeyPress(Key.F2))
             {
-                engine.StateHandler.MoveNext(StateHandler.ProcessAction.ToWorld);
+                engine.StateHandler.MoveNext(ProcessAction.ToWorld);
             }
 
             if (KeyPress(Key.F3))
             {
-                engine.StateHandler.MoveNext(StateHandler.ProcessAction.BattleStart);
+                engine.StateHandler.MoveNext(ProcessAction.BattleStart);
             }
 
             // Store for next update method

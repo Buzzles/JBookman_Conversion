@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using JBookman_Conversion.EngineBits;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static JBookman_Conversion.EngineBits.StateHandler;
+using JBookman_Conversion.EngineBits.Consts;
 
 namespace JBookman_Conversion_Tests
 {

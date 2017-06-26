@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace JBookman_Conversion
+﻿namespace JBookman_Conversion
 {
     class Constants
     {

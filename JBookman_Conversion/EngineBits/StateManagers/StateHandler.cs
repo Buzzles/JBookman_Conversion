@@ -1,29 +1,12 @@
-﻿using System;
+﻿using JBookman_Conversion.EngineBits.Consts;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace JBookman_Conversion.EngineBits
 {
-    class StateHandler
+    public class StateHandler
     {
-        public enum ProcessState
-        {   
-            Menu,
-            World,
-            Battle
-        };
-
-        public enum ProcessAction
-        {
-            GoToMenu,
-            ToWorld,
-            BattleStart
-        }
-
         public ProcessState CurrentState { get; private set; }
 
         private Dictionary<StateTransition, ProcessState> _transitionDictionary;

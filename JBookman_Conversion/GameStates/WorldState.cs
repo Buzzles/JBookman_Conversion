@@ -1,20 +1,16 @@
 ﻿using JBookman_Conversion.EngineBits.Abstract;
 using System;
+using JBookman_Conversion.EngineBits.Consts;
 
 namespace JBookman_Conversion.GameStates
 {
-    public class MenuState : IGameState, IDrawable, IUpdatable
+    public class WorldState : IGameState, IDrawable, IUpdatable
     {
-        private MenuRenderer _menuRenderer;
-
-        public MenuState()
-        {
-            _menuRenderer = new MenuRenderer();
-        }
+        public ProcessState ProcessState => ProcessState.World;
 
         public void Draw(float dt)
         {
-            _menuRenderer.DrawMenu();
+            throw new NotImplementedException();
         }
 
         public void Entering()

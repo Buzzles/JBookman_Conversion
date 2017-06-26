@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
-using OpenTK.Audio;
-using OpenTK.Graphics;
+﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using OpenTK.Input;
 
 namespace JBookman_Conversion.EngineBits
 {
@@ -195,22 +187,6 @@ namespace JBookman_Conversion.EngineBits
             GL.Vertex3(1.0f, -1.0f, 0.0f);
 
             GL.End();
-        }
-
-        private class DrawBoundries
-        {
-            public int MinVisibleCol { get; private set; }
-            public int MaxVisibleCol { get; private set; }
-            public int MinVisibleRow { get; private set; }
-            public int MaxVisibleRow { get; private set; }
-
-            public DrawBoundries(int _minVisibleCol, int _maxVisibleCol, int _minVisibleRow, int _maxVisibleRow)
-            {
-                MinVisibleCol = _minVisibleCol;
-                MaxVisibleCol = _maxVisibleCol;
-                MinVisibleRow = _minVisibleRow;
-                MaxVisibleRow = _maxVisibleRow;
-            }
         }
     }
 }

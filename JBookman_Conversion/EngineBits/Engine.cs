@@ -1,12 +1,6 @@
-﻿using JBookman_Conversion.EngineBits;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MessageBox = System.Windows.Forms.MessageBox;
+﻿using MessageBox = System.Windows.Forms.MessageBox;
 
-namespace JBookman_Conversion.EngineParts
+namespace JBookman_Conversion.EngineBits
 {
     public class Engine
     {
