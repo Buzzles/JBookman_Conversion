@@ -202,17 +202,21 @@ namespace JBookman_Conversion.EngineBits
 
             if (KeyPress(Key.F1))
             {
-                engine.StateHandler.MoveNext(ProcessAction.GoToMenu);
+                engine.StateManager.MoveNext(ProcessAction.GoToMenu);
+                //engine.StateHandler.MoveNext(ProcessAction.GoToMenu)
             }
 
             if (KeyPress(Key.F2))
             {
-                engine.StateHandler.MoveNext(ProcessAction.ToWorld);
+                //engine.StateHandler.MoveNext(ProcessAction.ToWorld);
+                engine.StateManager.MoveNext(ProcessAction.ToWorld);
+
             }
 
             if (KeyPress(Key.F3))
             {
-                engine.StateHandler.MoveNext(ProcessAction.BattleStart);
+                //engine.StateHandler.MoveNext(ProcessAction.BattleStart);
+                engine.StateManager.MoveNext(ProcessAction.BattleStart);
             }
 
             // Store for next update method

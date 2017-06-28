@@ -1,15 +1,25 @@
-﻿using JBookman_Conversion.EngineBits.Consts;
+﻿using JBookman_Conversion.EngineBits.Abstract;
+using JBookman_Conversion.EngineBits.Consts;
+using JBookman_Conversion.GameStates;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace JBookman_Conversion.EngineBits.StateManagers
 {
-    class DeterministicStateManager
+    public class DeterministicStateManager
     {
         public ProcessState CurrentState { get; private set; }
 
+        public IGameState CurrentGameState { get; private set; }
+
         private Dictionary<StateTransition, ProcessState> _transitionDictionary;
+
+        private IEnumerable<IGameState> _availableStates = new List<IGameState>
+        {
+            new MenuState(), new WorldState()
+        };
 
         public DeterministicStateManager()
         {
@@ -26,16 +36,18 @@ namespace JBookman_Conversion.EngineBits.StateManagers
             };
         }
 
-        public ProcessState GetNextState(ProcessAction actionToTake)
+        public IGameState GetNextState(ProcessAction actionToTake)
         {
             var newTrans = new StateTransition(CurrentState, actionToTake);
 
-            ProcessState nextState;
+            ProcessState nextProcessState;
 
-            if (!_transitionDictionary.TryGetValue(newTrans, out nextState))
+            if (!_transitionDictionary.TryGetValue(newTrans, out nextProcessState))
             {
                 Debug.Write($"Invalid transition: {CurrentState} -> {actionToTake}");
             };
+
+            var nextState = _availableStates.FirstOrDefault(s => s.ProcessState == nextProcessState);
 
             return nextState;
         }
@@ -44,7 +56,8 @@ namespace JBookman_Conversion.EngineBits.StateManagers
         {
             var existingState = CurrentState;
 
-            CurrentState = GetNextState(command);
+            CurrentGameState = GetNextState(command);
+            CurrentState = CurrentGameState.ProcessState;
 
             // TODO: Debug remove
             MessageBox.Show($"Changing existing state {existingState} with Command:{command} to: {CurrentState} ");

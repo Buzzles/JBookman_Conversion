@@ -37,6 +37,15 @@ namespace JBookman_Conversion.EngineBits
         public void Push(IGameState state)
         {
             _states.Push(state);
+
+            if (state is IDrawable)
+            {
+                _drawables.Add((IDrawable)state);
+            }
+            if (state is IUpdatable)
+            {
+                _updatables.Add((IUpdatable)state);
+            }
         }
 
         public void Draw(float dt)
@@ -55,6 +64,5 @@ namespace JBookman_Conversion.EngineBits
                 _updatables[i].Update();
             }
         }
-
     }
 }

@@ -5,15 +5,13 @@ using JBookman_Conversion.EngineBits;
 
 namespace JBookman_Conversion.GameStates
 {
-    internal partial class MenuRenderer
+    internal class MenuRenderer
     {
-        private Map _currentMap;
         private int _mapTileSetId;
         private Matrix4 _moveMatrix;
 
         public void Initialise(Map currentMap, int mapTileSet, Matrix4 moveMatrix)
         {
-            _currentMap = currentMap;
             _mapTileSetId = mapTileSet;
             _moveMatrix = moveMatrix;
         }
@@ -38,22 +36,17 @@ namespace JBookman_Conversion.GameStates
 
             GL.Enable(EnableCap.Texture2D);
 
-            DrawTiles(_currentMap, _mapTileSetId);
+            DrawTiles(_mapTileSetId);
 
             GL.Disable(EnableCap.Texture2D);
         }
 
         private bool Initialised()
         {
-            if (_mapTileSetId == 0)
-            {
-                return false;
-            }
-
-            if (_currentMap == null)
-            {
-                return false;
-            }
+            //if (_mapTileSetId == 0)
+            //{
+            //    return false;
+            //}
 
             if (_moveMatrix == null)
             {
@@ -92,9 +85,9 @@ namespace JBookman_Conversion.GameStates
             GL.End();
         }
 
-        private static void DrawTiles(Map currentMap, int tileSetId)
+        private static void DrawTiles(int tileSetId)
         {
-            var drawBoundries = GetDrawBoundries(currentMap, tileSetId);
+            var drawBoundries = GetDrawBoundries();
 
             int tile;
 
@@ -127,7 +120,7 @@ namespace JBookman_Conversion.GameStates
             }
         }
 
-        private static DrawBoundries GetDrawBoundries(Map g_CurrentMap, int m_iCurrentTileSet)
+        private static DrawBoundries GetDrawBoundries()
         {
             //var _minVisibleCol = 0 - Constants.NORMALVISIBLEPLAYERCOL;
             var _maxVisibleCol = 0 + Constants.NORMALVISIBLEPLAYERCOL;

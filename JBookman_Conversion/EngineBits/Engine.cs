@@ -1,4 +1,5 @@
-﻿using MessageBox = System.Windows.Forms.MessageBox;
+﻿using JBookman_Conversion.EngineBits.StateManagers;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace JBookman_Conversion.EngineBits
 {
@@ -7,6 +8,8 @@ namespace JBookman_Conversion.EngineBits
         internal InputHandler InputHandler { get; private set; }
 
         internal StateHandler StateHandler { get; private set; }
+
+        internal DeterministicStateManager StateManager { get; private set; }
 
         internal Player _player;
         internal Map _currentMap;
@@ -31,6 +34,10 @@ namespace JBookman_Conversion.EngineBits
         {
             InputHandler = new InputHandler(_currentMap, _player);
             StateHandler = new StateHandler();
+
+            StateManager = new DeterministicStateManager();
+
+            StateManager.MoveNext(Consts.ProcessAction.GoToMenu);
         }
 
         public void InitGame()

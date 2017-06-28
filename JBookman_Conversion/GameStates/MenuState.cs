@@ -1,10 +1,13 @@
 ﻿using JBookman_Conversion.EngineBits.Abstract;
+using JBookman_Conversion.EngineBits.Consts;
 using System;
 
 namespace JBookman_Conversion.GameStates
 {
     public class MenuState : IGameState, IDrawable, IUpdatable
     {
+        public ProcessState ProcessState => ProcessState.Menu;
+
         private MenuRenderer _menuRenderer;
 
         public MenuState()

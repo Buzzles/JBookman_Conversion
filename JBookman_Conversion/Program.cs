@@ -1,4 +1,5 @@
 ﻿using JBookman_Conversion.EngineBits;
+using JBookman_Conversion.EngineBits.Abstract;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Input;
@@ -197,9 +198,19 @@ namespace JBookman_Conversion
             var player = _engine.GetPlayer();
             var map = _engine.GetMap();
             var m_moveMatrix = _renderer.MoveMatrix;
-            StaticRenderer.Render(map, m_iCurrentTileSet, m_iPlayerTileSet, player, m_moveMatrix);
 
-            _renderer.RenderFrame();
+            if (_engine.StateManager.CurrentState == EngineBits.Consts.ProcessState.Menu)
+            {
+                //hacky
+                var state = _engine.StateManager.CurrentGameState;
+                var drawableState = state as IDrawable;
+                drawableState.Draw(0f);
+            }
+            else
+            {
+                StaticRenderer.Render(map, m_iCurrentTileSet, m_iPlayerTileSet, player, m_moveMatrix);
+                //_renderer.RenderFrame();
+            }
 
             SwapBuffers();
         }
