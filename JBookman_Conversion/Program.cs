@@ -1,5 +1,6 @@
 ﻿using JBookman_Conversion.EngineBits;
 using JBookman_Conversion.EngineBits.Abstract;
+using JBookman_Conversion.GameStates;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Input;
@@ -85,6 +86,12 @@ namespace JBookman_Conversion
             m_iDungeonTileSet = Core.DungeonTileSetId;
             m_iWildernessTileSet = Core.WildernessTileSetId;
             m_iCurrentTileSet = Core.CurrentTileSetId;
+
+            _engine.StateManager.AddNewState(new MenuState());
+
+            var worldState = new WorldState();
+
+            _engine.StateManager.AddNewState(worldState);
         }
 
         /// <summary>
@@ -135,6 +142,8 @@ namespace JBookman_Conversion
             else m_iUpdateCount++;
 
             var player = _engine.GetPlayer();
+
+            _engine.StateManager.UpdateCurrentState();
 
             ////  player location + viewport test code
             //if (Keyboard[Key.Number1])
@@ -199,12 +208,10 @@ namespace JBookman_Conversion
             var map = _engine.GetMap();
             var m_moveMatrix = _renderer.MoveMatrix;
 
+
             if (_engine.StateManager.CurrentState == EngineBits.Consts.ProcessState.Menu)
             {
-                //hacky
-                var state = _engine.StateManager.CurrentGameState;
-                var drawableState = state as IDrawable;
-                drawableState.Draw(0f);
+                _engine.StateManager.DrawCurrentState();
             }
             else
             {

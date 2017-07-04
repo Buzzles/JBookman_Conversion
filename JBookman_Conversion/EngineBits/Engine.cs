@@ -37,7 +37,7 @@ namespace JBookman_Conversion.EngineBits
 
             StateManager = new DeterministicStateManager();
 
-            StateManager.MoveNext(Consts.ProcessAction.GoToMenu);
+            //StateManager.MoveNext(Consts.ProcessAction.GoToMenu);
         }
 
         public void InitGame()

@@ -42,7 +42,6 @@ namespace JBookman_Conversion.GameStates
 
         public void Update()
         {
-            throw new NotImplementedException();
         }
     }
 }

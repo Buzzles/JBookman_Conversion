@@ -1,6 +1,7 @@
 ﻿using JBookman_Conversion.EngineBits.Abstract;
 using System;
 using JBookman_Conversion.EngineBits.Consts;
+using JBookman_Conversion.EngineBits;
 
 namespace JBookman_Conversion.GameStates
 {
@@ -10,7 +11,8 @@ namespace JBookman_Conversion.GameStates
 
         public void Draw(float dt)
         {
-            throw new NotImplementedException();
+            //StaticRenderer.Render(map, m_iCurrentTileSet, m_iPlayerTileSet, player, m_moveMatrix);
+            //throw new NotImplementedException();
         }
 
         public void Entering()
@@ -35,7 +37,6 @@ namespace JBookman_Conversion.GameStates
 
         public void Update()
         {
-            throw new NotImplementedException();
         }
     }
 }

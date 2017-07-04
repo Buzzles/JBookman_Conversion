@@ -16,10 +16,7 @@ namespace JBookman_Conversion.EngineBits.StateManagers
 
         private Dictionary<StateTransition, ProcessState> _transitionDictionary;
 
-        private IEnumerable<IGameState> _availableStates = new List<IGameState>
-        {
-            new MenuState(), new WorldState()
-        };
+        private ICollection<IGameState> _availableStates = new List<IGameState>();
 
         public DeterministicStateManager()
         {
@@ -34,6 +31,11 @@ namespace JBookman_Conversion.EngineBits.StateManagers
                 { new StateTransition(ProcessState.Battle, ProcessAction.ToWorld), ProcessState.World },
                 { new StateTransition(ProcessState.Battle, ProcessAction.GoToMenu), ProcessState.Menu }
             };
+        }
+
+        public void AddNewState(IGameState newState)
+        {
+            _availableStates.Add(newState);
         }
 
         public IGameState GetNextState(ProcessAction actionToTake)
@@ -64,6 +66,26 @@ namespace JBookman_Conversion.EngineBits.StateManagers
 
 
             return CurrentState;
+        }
+
+        public void DrawCurrentState()
+        {
+            var drawableState = CurrentGameState as IDrawable;
+
+            if (drawableState != null && CurrentState != ProcessState.World) // 2nd half is temp hack
+            {
+                drawableState.Draw(0f);
+            }
+        }
+
+        public void UpdateCurrentState()
+        {
+            var updatableState = CurrentGameState as IUpdatable;
+
+            if (updatableState != null)
+            {
+                updatableState.Update();
+            }
         }
 
         class StateTransition
