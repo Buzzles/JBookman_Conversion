@@ -21,10 +21,9 @@ namespace JBookman_Conversion.EngineBits.StateManagers
 
         public DeterministicStateManager()
         {
-            CurrentState = ProcessState.Menu;
-
             _transitionDictionary = new Dictionary<StateTransition, ProcessState>
             {
+                { new StateTransition(ProcessState.Initial, ProcessAction.GoToMenu), ProcessState.Menu },
                 { new StateTransition(ProcessState.Menu, ProcessAction.ToWorld), ProcessState.World },
                 { new StateTransition(ProcessState.Menu, ProcessAction.BattleStart), ProcessState.Battle },
                 { new StateTransition(ProcessState.World, ProcessAction.BattleStart), ProcessState.Battle },

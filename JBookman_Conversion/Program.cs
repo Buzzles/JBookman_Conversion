@@ -1,5 +1,6 @@
 ﻿using JBookman_Conversion.EngineBits;
 using JBookman_Conversion.EngineBits.Abstract;
+using JBookman_Conversion.EngineBits.Consts;
 using JBookman_Conversion.GameStates;
 using OpenTK;
 using OpenTK.Graphics;
@@ -96,6 +97,8 @@ namespace JBookman_Conversion
             var worldState = new WorldState(_engine._currentMap, _engine._player);
 
             _engine.StateManager.AddNewState(worldState);
+
+            _engine.StateManager.MoveNext(ProcessAction.GoToMenu);
         }
 
         /// <summary>

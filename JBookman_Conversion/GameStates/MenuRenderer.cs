@@ -8,15 +8,15 @@ namespace JBookman_Conversion.GameStates
     internal class MenuRenderer
     {
         private int _mapTileSetId;
-        private Matrix4 _moveMatrix;
+        private Matrix4 _moveMatrix = new Matrix4();
 
-        public void Initialise(Map currentMap, int mapTileSet, Matrix4 moveMatrix)
+        public void Initialise(int mapTileSet, Matrix4 moveMatrix)
         {
             _mapTileSetId = mapTileSet;
             _moveMatrix = moveMatrix;
         }
 
-        internal void DrawMenu()
+        internal void DrawMenu(int textureId)
         {
             if (!Initialised())
             {
@@ -24,7 +24,10 @@ namespace JBookman_Conversion.GameStates
             }
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            Matrix4 modelview = Matrix4.LookAt(0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+            Matrix4 modelview = Matrix4.LookAt(
+                0.0f, 0.0f, 10.0f, 
+                0.0f, 0.0f, 0.0f,
+                0.0f, 1.0f, 0.0f);
 
             modelview = _moveMatrix * modelview;
 
@@ -69,18 +72,20 @@ namespace JBookman_Conversion.GameStates
             GL.Begin(PrimitiveType.Lines);
 
             //  x = blue
-            GL.Color3(0.0f, 0.0f, 1.0f);
-            GL.Vertex3(-100.0f, 0.0f, 0.0f);
-            GL.Vertex3(100.0f, 0.0f, 0.0f);
+            GL.Color3(new Vector3(0.0f, 0.0f, 1.0f));
+            GL.Vertex3(new Vector3(-100.0f, 0.0f, 0.0f));
+            GL.Vertex3(new Vector3(100.0f, 0.0f, 0.0f));
+            
             //  y = red
-            GL.Color3(1.0f, 0.0f, 0.0f);
-            GL.Vertex3(0.0f, -110.0f, 0.0f);
-            GL.Vertex3(0.0f, 100.0f, 0.0f);
+            GL.Color3(new Vector3(1.0f, 0.0f, 0.0f));
+            GL.Vertex3(new Vector3(0.0f, -110.0f, 0.0f));
+            GL.Vertex3(new Vector3(0.0f, 100.0f, 0.0f));
+            
             //  z = green
-            GL.Color3(0.0f, 1.0f, 0.0f);
-            GL.Vertex3(0.0f, 0.0f, -100.0f);
-            GL.Vertex3(0.0f, 0.0f, 100.0f);
-            GL.Color4(1.0f, 1.0f, 1.0f, 1.0f);
+            GL.Color3(new Vector3(0.0f, 1.0f, 0.0f));
+            GL.Vertex3(new Vector3(0.0f, 0.0f, -100.0f));
+            GL.Vertex3(new Vector3(0.0f, 0.0f, 100.0f));
+            GL.Color4(new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 
             GL.End();
         }

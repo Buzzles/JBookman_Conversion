@@ -170,7 +170,7 @@ namespace JBookman_Conversion.EngineBits
             GL.Vertex3(0.0f, -110.0f, 0.0f);
             GL.Vertex3(0.0f, 100.0f, 0.0f);
             //  z = green
-            GL.Color3(0.0f, 1.0f, 0.0f);
+            GL.Color3(new Vector3(0.0f, 1.0f, 0.0f));
             GL.Vertex3(0.0f, 0.0f, -100.0f);
             GL.Vertex3(0.0f, 0.0f, 100.0f);
             GL.Color4(1.0f, 1.0f, 1.0f, 1.0f);

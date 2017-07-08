@@ -16,14 +16,10 @@ namespace JBookman_Conversion.GameStates
             _menuRenderer = new MenuRenderer();
         }
 
-        public void Draw(float dt)
-        {
-            _menuRenderer.DrawMenu();
-        }
-
         public void Draw(Renderer renderer)
         {
-            _menuRenderer.DrawMenu();
+            var textureId = renderer.MainTileSetTextureId;
+            _menuRenderer.DrawMenu(textureId);
             //renderer.RenderFrame();
         }
 

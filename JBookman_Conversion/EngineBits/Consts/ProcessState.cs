@@ -2,6 +2,7 @@
 {
     public enum ProcessState
     {
+        Initial,
         Menu,
         World,
         Battle

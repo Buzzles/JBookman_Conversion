@@ -63,8 +63,8 @@ namespace JBookman_Conversion.EngineBits
                 MessageBox.Show("Map load failure");
             }
 
-            MessageBox.Show("Firstmap loaded rows: " + g_FirstMap.MapRows);
-            MessageBox.Show("Firstmap loaded tile 1,1: " + g_FirstMap.m_MapSectors[1, 1].TileNumberId);
+            //MessageBox.Show("Firstmap loaded rows: " + g_FirstMap.MapRows);
+            //MessageBox.Show("Firstmap loaded tile 1,1: " + g_FirstMap.m_MapSectors[1, 1].TileNumberId);
         }
 
         internal void InitPlayer(int startSector)
