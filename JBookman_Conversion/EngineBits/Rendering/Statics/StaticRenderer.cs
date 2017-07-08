@@ -37,8 +37,8 @@ namespace JBookman_Conversion.EngineBits
                     var currentMapSector = currentMap.m_MapSectors[currRow, currCol];
                     var tilePrimitive = new Primitive
                     {
-                        X = currCol,
-                        Y = currCol,
+                        X = drawCol,
+                        Y = drawRow,
                         Z = 0,
                         TileId = currentMapSector.TileNumberId,
                         Rotation = currentMapSector.rotationAngle,
