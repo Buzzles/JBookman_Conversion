@@ -28,17 +28,21 @@ namespace JBookman_Conversion.GameStates
             var playerTileSetId = renderer.PlayerTileSetTextureId;
 
             var primitives = StaticRenderer.GetPrimitivesForStaticRenderer(_currentMap, mapTileSetId, playerTileSetId, _player);
-
-            StaticRenderer.RenderPrimitives(primitives.ToArray(), renderer.MoveMatrix);
-
             var playerPrimitive = StaticPlayerRenderer.GetPlayerPrimitive(_currentMap, _player, playerTileSetId);
-            StaticPlayerRenderer.RenderPlayerPrimitive(playerPrimitive);
-
-            //StaticRenderer.Render(_currentMap, m_iCurrentTileSet, m_iPlayerTileSet, _player, m_moveMatrix);
-            //throw new NotImplementedException();
 
             //var primis = GetRenderablePrimitives();
+
+            StaticRenderer.BeginRender(renderer.MoveMatrix);
+
+            StaticRenderer.RenderPrimitives(primitives.ToArray(), renderer.MoveMatrix);
+            StaticPlayerRenderer.RenderPlayerPrimitive(playerPrimitive);
+
+            ////StaticPlayerRenderer.DrawPlayer(_currentMap, _player, playerTileSetId);
+            ////StaticRenderer.Render(_currentMap, m_iCurrentTileSet, m_iPlayerTileSet, _player, m_moveMatrix);
+            
             //renderer.RenderPrimitives(primis);
+
+            StaticRenderer.EndRender();
         }
 
         public void Entering()

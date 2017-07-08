@@ -16,11 +16,7 @@ namespace JBookman_Conversion.EngineBits
             var mapTilesToRender = GetMapTiles(currentMap, playerSector, glTextureId);
 
             primitiveList.AddRange(mapTilesToRender);
-
-            ////// Get Player primitive
-            ////var playerPrimitive = StaticPlayerRenderer.GetPlayerPrimitive(currentMap, player, glPlayerTextureId);
-            ////primitiveList.Add(playerPrimitive);
-
+            
             return primitiveList;
         }
 
@@ -85,7 +81,7 @@ namespace JBookman_Conversion.EngineBits
         ////    GL.Disable(EnableCap.Texture2D);
         ////}
 
-        internal static void RenderPrimitives(Primitive[] primitives, Matrix4 moveMatrix)
+        internal static void BeginRender(Matrix4 moveMatrix)
         {
             // Setup Rendering
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -97,15 +93,18 @@ namespace JBookman_Conversion.EngineBits
             GL.LoadIdentity();
             GL.LoadMatrix(ref modelview);
 
-            //  move down by 10;
-            //  GL.Translate(0.0f, -0.0f, -10.0f);
-            //  GL.Rotate(180, Vector3.UnitY);
-
             drawAxis();
 
             GL.Enable(EnableCap.Texture2D);
+        }
 
-            // Render the prims!
+        internal static void EndRender()
+        {
+            GL.Disable(EnableCap.Texture2D);
+        }
+
+        internal static void RenderPrimitives(Primitive[] primitives, Matrix4 moveMatrix)
+        {
             var primitivesGroupedByTextureId = primitives.GroupBy(p => p.TextureId);
 
             foreach (var grouping in primitivesGroupedByTextureId)
@@ -119,10 +118,6 @@ namespace JBookman_Conversion.EngineBits
                     DrawPrimitive(primitive);
                 }
             }
-
-            //StaticPlayerRenderer.DrawPlayer(g_CurrentMap, m_Player, m_iPlayerTileSet);
-
-            GL.Disable(EnableCap.Texture2D);
         }
 
         private static void DrawPrimitive(Primitive primitive)

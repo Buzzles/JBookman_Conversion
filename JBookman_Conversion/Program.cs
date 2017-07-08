@@ -90,7 +90,6 @@ namespace JBookman_Conversion
             _engine.StateManager.AddNewState(new MenuState());
 
             // hack
-
             _renderer.MainTileSetTextureId = m_iCurrentTileSet;
             _renderer.PlayerTileSetTextureId = m_iPlayerTileSet;
 

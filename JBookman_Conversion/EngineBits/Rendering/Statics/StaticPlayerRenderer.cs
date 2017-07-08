@@ -7,44 +7,44 @@ namespace JBookman_Conversion.EngineBits
 {
     public static class StaticPlayerRenderer
     {
-        public static void DrawPlayer(Map g_CurrentMap, Player m_Player, int m_iPlayerTileSet)
-        {
-            // int playerMapCol = m_Player.GetSector() % m_MapCols;
-            // int playerMapRow = (int)m_Player.GetSector() / m_MapRows;
+        //public static void DrawPlayer(Map g_CurrentMap, Player m_Player, int m_iPlayerTileSet)
+        //{
+        //    // int playerMapCol = m_Player.GetSector() % m_MapCols;
+        //    // int playerMapRow = (int)m_Player.GetSector() / m_MapRows;
 
-            var playerBoundries = GetPlayerBoundries(g_CurrentMap, m_Player);
+        //    var playerBoundries = GetPlayerBoundries(g_CurrentMap, m_Player);
 
-            //drawing the bastard.
-            GL.BindTexture(TextureTarget.Texture2D, m_iPlayerTileSet); //set texture
+        //    //drawing the bastard.
+        //    GL.BindTexture(TextureTarget.Texture2D, m_iPlayerTileSet); //set texture
 
-            GL.Enable(EnableCap.Blend);
-            // GL.BlendFunc(BlendingFactorSrc.SrcAlpha,BlendingFactorDest.OneMinusSrcAlpha);
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-            GL.LoadIdentity();
+        //    GL.Enable(EnableCap.Blend);
+        //    // GL.BlendFunc(BlendingFactorSrc.SrcAlpha,BlendingFactorDest.OneMinusSrcAlpha);
+        //    GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+        //    GL.LoadIdentity();
             
-            // TODO: TRANSLATE INSTEAD
+        //    // TODO: TRANSLATE INSTEAD
 
-            GL.Begin(PrimitiveType.Quads);
-            //quad1
-            //bottomleft
-            GL.TexCoord2(0, 0);
-            GL.Vertex3(playerBoundries.FinalVisiblePlayerCol, -(playerBoundries.FinalVisiblePlayerRow) - 1.0f, 1.0f);
-            //top left
-            GL.TexCoord2(0, 1);
-            GL.Vertex3(playerBoundries.FinalVisiblePlayerCol, -playerBoundries.FinalVisiblePlayerRow, 1.0f);
-            //top right
-            GL.TexCoord2(1, 1);
-            GL.Vertex3(playerBoundries.FinalVisiblePlayerCol + 1.0f, -playerBoundries.FinalVisiblePlayerRow, 1.0f);
-            //bottom right
-            GL.TexCoord2(1, 0);
-            GL.Vertex3(playerBoundries.FinalVisiblePlayerCol + 1.0f, -playerBoundries.FinalVisiblePlayerRow - 1.0f, 1.0f);
+        //    GL.Begin(PrimitiveType.Quads);
+        //    //quad1
+        //    //bottomleft
+        //    GL.TexCoord2(0, 0);
+        //    GL.Vertex3(playerBoundries.FinalVisiblePlayerCol, -(playerBoundries.FinalVisiblePlayerRow) - 1.0f, 1.0f);
+        //    //top left
+        //    GL.TexCoord2(0, 1);
+        //    GL.Vertex3(playerBoundries.FinalVisiblePlayerCol, -playerBoundries.FinalVisiblePlayerRow, 1.0f);
+        //    //top right
+        //    GL.TexCoord2(1, 1);
+        //    GL.Vertex3(playerBoundries.FinalVisiblePlayerCol + 1.0f, -playerBoundries.FinalVisiblePlayerRow, 1.0f);
+        //    //bottom right
+        //    GL.TexCoord2(1, 0);
+        //    GL.Vertex3(playerBoundries.FinalVisiblePlayerCol + 1.0f, -playerBoundries.FinalVisiblePlayerRow - 1.0f, 1.0f);
 
-            GL.End();
+        //    GL.End();
 
-            GL.Disable(EnableCap.Blend);
+        //    GL.Disable(EnableCap.Blend);
 
-            //end of DrawPlayer()
-        }
+        //    //end of DrawPlayer()
+        //}
 
         internal static Primitive GetPlayerPrimitive(Map currentMap, Player player, int textureId)
         {
@@ -55,7 +55,8 @@ namespace JBookman_Conversion.EngineBits
                 X = playerBoundries.FinalVisiblePlayerCol,
                 Y = playerBoundries.FinalVisiblePlayerRow,
                 Z = 1.0f,
-                TextureId = textureId
+                TextureId = textureId,
+                TileId = 0
             };
 
             return playerPrimitive;
@@ -63,11 +64,10 @@ namespace JBookman_Conversion.EngineBits
 
         internal static void RenderPlayerPrimitive(Primitive playerPrimitive)
         {
-            //drawing the bastard.
+            // TEMP, do texture binding at a higher level
             GL.BindTexture(TextureTarget.Texture2D, playerPrimitive.TextureId); //set texture
 
             GL.Enable(EnableCap.Blend);
-            // GL.BlendFunc(BlendingFactorSrc.SrcAlpha,BlendingFactorDest.OneMinusSrcAlpha);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             GL.LoadIdentity();
 
@@ -79,37 +79,19 @@ namespace JBookman_Conversion.EngineBits
             GL.Translate(translateVector);
 
             GL.Begin(PrimitiveType.Quads);
-            ////quad1
-            ////bottomleft
-            //GL.TexCoord2(0, 0);
-            //GL.Vertex3(playerPrimitive.X, -(playerPrimitive.Y) - 1.0f, playerPrimitive.Z);
             
-            ////top left
-            //GL.TexCoord2(0, 1);
-            //GL.Vertex3(playerPrimitive.X, -playerPrimitive.Y, playerPrimitive.Z);
-            ////top right
-            //GL.TexCoord2(1, 1);
-            //GL.Vertex3(playerPrimitive.X + 1.0f, -playerPrimitive.Y, playerPrimitive.Z);
-            ////bottom right
-            //GL.TexCoord2(1, 0);
-            //GL.Vertex3(playerPrimitive.X + 1.0f, -playerPrimitive.Y - 1.0f, playerPrimitive.Z);
-
-            // NEW
-            //quad1
             //bottomleft
             GL.TexCoord2(0, 0);
-            GL.Vertex3(0, -1.0f, 0.0f);  //vertex3(x,y,z)
+            GL.Vertex3(0, -1.0f, 1.0f);  //vertex3(x,y,z)
             //top left
             GL.TexCoord2(0, 1);
-            GL.Vertex3(0, 0.0f, 0.0f);
+            GL.Vertex3(0, 0.0f, 1.0f);
             //top right
             GL.TexCoord2(1, 1);
-            GL.Vertex3(1.0f, 0.0f, 0.0f);
+            GL.Vertex3(1.0f, 0.0f, 1.0f);
             //bottom right
             GL.TexCoord2(1, 0);
-            GL.Vertex3(1.0f, -1.0f, 0.0f);
-
-
+            GL.Vertex3(1.0f, -1.0f, 1.0f);
 
             GL.End();
 
