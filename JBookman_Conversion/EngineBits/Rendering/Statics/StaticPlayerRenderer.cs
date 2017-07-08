@@ -1,4 +1,6 @@
-﻿using OpenTK.Graphics.OpenGL;
+﻿using System;
+using OpenTK.Graphics.OpenGL;
+using JBookman_Conversion.EngineBits.Rendering;
 
 namespace JBookman_Conversion.EngineBits
 {
@@ -42,6 +44,54 @@ namespace JBookman_Conversion.EngineBits
 
             //end of DrawPlayer()
         }
+
+        internal static Primitive GetPlayerPrimitive(Map currentMap, Player player, int textureId)
+        {
+            var playerBoundries = GetPlayerBoundries(currentMap, player);
+
+            var playerPrimitive = new Primitive
+            {
+                X = playerBoundries.FinalVisiblePlayerCol,
+                Y = playerBoundries.FinalVisiblePlayerRow,
+                Z = 1.0f,
+                TextureId = textureId
+            };
+
+            return playerPrimitive;
+        }
+
+        internal static void RenderPlayerPrimitive(Primitive playerPrimitive)
+        {
+            //drawing the bastard.
+            GL.BindTexture(TextureTarget.Texture2D, playerPrimitive.TextureId); //set texture
+
+            GL.Enable(EnableCap.Blend);
+            // GL.BlendFunc(BlendingFactorSrc.SrcAlpha,BlendingFactorDest.OneMinusSrcAlpha);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            GL.LoadIdentity();
+
+            // TODO: TRANSLATE INSTEAD
+
+            GL.Begin(PrimitiveType.Quads);
+            //quad1
+            //bottomleft
+            GL.TexCoord2(0, 0);
+            GL.Vertex3(playerPrimitive.X, -(playerPrimitive.Y) - 1.0f, playerPrimitive.Z);
+            //top left
+            GL.TexCoord2(0, 1);
+            GL.Vertex3(playerPrimitive.X, -playerPrimitive.Y, playerPrimitive.Z);
+            //top right
+            GL.TexCoord2(1, 1);
+            GL.Vertex3(playerPrimitive.X + 1.0f, -playerPrimitive.Y, playerPrimitive.Z);
+            //bottom right
+            GL.TexCoord2(1, 0);
+            GL.Vertex3(playerPrimitive.X + 1.0f, -playerPrimitive.Y - 1.0f, playerPrimitive.Z);
+
+            GL.End();
+
+            GL.Disable(EnableCap.Blend);
+        }
+
         private static PlayerBoundries GetPlayerBoundries(Map currentMap, Player player)
         {
             int playerMapCol = MapUtils.SectorToCols(player.GetSector(), currentMap.MapCols);

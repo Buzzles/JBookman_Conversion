@@ -7,6 +7,8 @@ namespace JBookman_Conversion.EngineBits
     {
         public Matrix4 MoveMatrix { get; set; } = new Matrix4();
         ////private const float moveAmount = 0.1f;
+        public int MainTileSetTextureId { get; set; }
+        public int PlayerTileSetTextureId { get; set; }
 
         private PlayerRenderer _playerRenderer;
 
@@ -42,6 +44,24 @@ namespace JBookman_Conversion.EngineBits
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
             GL.LoadMatrix(ref projection);
+        }
+
+        internal void RenderScene(object scene)
+        { }
+
+        // OR
+
+        internal void RenderPrimitives(object[] primitives)
+        {
+            foreach (var primitive in primitives)
+            {
+                DrawPrimitive(primitive);
+            }
+        }
+
+        private void DrawPrimitive(object primitive)
+        {
+            // DO A THING?
         }
 
         // This is the render context

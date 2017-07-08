@@ -89,7 +89,12 @@ namespace JBookman_Conversion
 
             _engine.StateManager.AddNewState(new MenuState());
 
-            var worldState = new WorldState();
+            // hack
+
+            _renderer.MainTileSetTextureId = m_iCurrentTileSet;
+            _renderer.PlayerTileSetTextureId = m_iPlayerTileSet;
+
+            var worldState = new WorldState(_engine._currentMap, _engine._player);
 
             _engine.StateManager.AddNewState(worldState);
         }
@@ -208,16 +213,17 @@ namespace JBookman_Conversion
             var map = _engine.GetMap();
             var m_moveMatrix = _renderer.MoveMatrix;
 
+            _engine.StateManager.DrawCurrentState(_renderer);
 
-            if (_engine.StateManager.CurrentState == EngineBits.Consts.ProcessState.Menu)
-            {
-                _engine.StateManager.DrawCurrentState();
-            }
-            else
-            {
-                StaticRenderer.Render(map, m_iCurrentTileSet, m_iPlayerTileSet, player, m_moveMatrix);
-                //_renderer.RenderFrame();
-            }
+            ////if (_engine.StateManager.CurrentState == EngineBits.Consts.ProcessState.Menu)
+            ////{
+            ////    //_engine.StateManager.DrawCurrentState();
+            ////}
+            ////else
+            ////{
+            ////    //StaticRenderer.Render(map, m_iCurrentTileSet, m_iPlayerTileSet, player, m_moveMatrix);
+            ////    //_renderer.RenderFrame();
+            ////}
 
             SwapBuffers();
         }

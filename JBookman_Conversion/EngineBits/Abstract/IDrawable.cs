@@ -2,6 +2,6 @@
 {
     public interface IDrawable
     {
-        void Draw(float dt);
+        void Draw(Renderer renderer);
     }
 }

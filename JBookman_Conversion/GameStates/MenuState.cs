@@ -1,6 +1,7 @@
 ﻿using JBookman_Conversion.EngineBits.Abstract;
 using JBookman_Conversion.EngineBits.Consts;
 using System;
+using JBookman_Conversion.EngineBits;
 
 namespace JBookman_Conversion.GameStates
 {
@@ -18,6 +19,12 @@ namespace JBookman_Conversion.GameStates
         public void Draw(float dt)
         {
             _menuRenderer.DrawMenu();
+        }
+
+        public void Draw(Renderer renderer)
+        {
+            _menuRenderer.DrawMenu();
+            //renderer.RenderFrame();
         }
 
         public void Entering()

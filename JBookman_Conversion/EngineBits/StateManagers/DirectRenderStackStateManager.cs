@@ -52,7 +52,7 @@ namespace JBookman_Conversion.EngineBits
         {
             for (var i = 0; i < _drawables.Count(); i++)
             {
-                _drawables[i].Draw(dt);
+                _drawables[i].Draw(null);
             }
         }
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using MessageBox = System.Windows.Forms.MessageBox;
+using System;
 
 namespace JBookman_Conversion.EngineBits.StateManagers
 {
@@ -64,17 +65,26 @@ namespace JBookman_Conversion.EngineBits.StateManagers
             // TODO: Debug remove
             MessageBox.Show($"Changing existing state {existingState} with Command:{command} to: {CurrentState} ");
 
-
             return CurrentState;
         }
 
-        public void DrawCurrentState()
+        internal void DrawCurrentState(Renderer renderer)
         {
             var drawableState = CurrentGameState as IDrawable;
 
-            if (drawableState != null && CurrentState != ProcessState.World) // 2nd half is temp hack
+            if (drawableState != null) // 2nd half is temp hack
             {
-                drawableState.Draw(0f);
+                drawableState.Draw(renderer);
+
+                //var getDrawables = drawableState.Draw(renderer);
+
+                //if (CurrentState == ProcessState.World)
+                //{ }
+                //else
+                //{
+                //    renderer.RenderPrimitives();
+                //}
+
             }
         }
 
