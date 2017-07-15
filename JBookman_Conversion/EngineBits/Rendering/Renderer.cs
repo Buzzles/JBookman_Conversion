@@ -1,5 +1,7 @@
-﻿using OpenTK;
+﻿using JBookman_Conversion.EngineBits.Rendering;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using System.Linq;
 
 namespace JBookman_Conversion.EngineBits
 {
@@ -34,7 +36,7 @@ namespace JBookman_Conversion.EngineBits
         {
             var clientRectangle = gameContext.ClientRectangle;
             GL.Viewport(clientRectangle.X, clientRectangle.Y, clientRectangle.Width, clientRectangle.Height);
-            
+
             //  Matrix4 projection = Matrix4.CreateOrthographicOffCenter(0, 1024 / 56, -768 / 56, 0, -50.0f, 50.0f);
 
             //  working, calculing 25 cols and 18.75 rows.
@@ -49,26 +51,136 @@ namespace JBookman_Conversion.EngineBits
         internal void RenderScene(object scene)
         { }
 
-        // OR
-
-        internal void RenderPrimitives(object[] primitives)
+        internal void BeginRender()
         {
-            foreach (var primitive in primitives)
+            // Setup Rendering
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            Matrix4 modelview = Matrix4.LookAt(0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+
+            modelview = MoveMatrix * modelview;
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+            GL.LoadMatrix(ref modelview);
+
+            drawAxis();
+
+            GL.Enable(EnableCap.Texture2D);
+        }
+
+        internal void EndRender()
+        {
+            GL.Disable(EnableCap.Texture2D);
+        }
+
+        internal void RenderPrimitives(Primitive[] primitives)
+        {
+            var primitivesGroupedByTextureId = primitives.GroupBy(p => p.TextureId);
+
+            foreach (var grouping in primitivesGroupedByTextureId)
             {
-                DrawPrimitive(primitive);
+                // Bind texture for these primitives
+                var groupTextureKey = grouping.Key;
+                GL.BindTexture(TextureTarget.Texture2D, groupTextureKey); //set texture
+
+                foreach (var primitive in grouping)
+                {
+                    DrawPrimitive(primitive);
+                }
             }
         }
 
-        private void DrawPrimitive(object primitive)
+        private static void DrawPrimitive(Primitive primitive)
         {
-            // DO A THING?
+            //Proper GL way, translate grid, then draw at new 0.0
+            GL.PushMatrix();
+
+            // Matrices applied from right = last transform operation applied first!
+            var translateVector = new Vector3(primitive.X, -primitive.Y, primitive.Z);
+            GL.Translate(translateVector);
+
+            if (primitive.Rotation != 0)
+            {
+                // Make origin in middle of texture
+                GL.Translate(0.5, -0.5, 0.0);
+
+                var rotateVex0 = new Vector3(0, 0, 1);
+                GL.Rotate(primitive.Rotation, rotateVex0);
+
+                //move origin back
+                GL.Translate(-0.5, 0.5, 0.0);
+            }
+
+            if (primitive.TileId.HasValue)
+            {
+                DrawTile(primitive.TileId.Value);
+            }
+
+            GL.PopMatrix();
         }
 
-        // This is the render context
+        private static void drawAxis()
+        {
+            /*  Axis Draw Code
+             *  Simply draw 3 lines representing the 3D axis
+             *  Blue = x axis (-left/+right)
+             *  Red = y axis (+up/-down)
+             *  Green = Z (depth)
+             */
 
-        // Will need to split into different bits.
-        // Ie, renderer for the world.
-        // renderer for the menu
-        // renderer for the battlescreen
+            //  test code
+            GL.Begin(PrimitiveType.Lines);
+
+            //  x = blue
+            GL.Color3(0.0f, 0.0f, 1.0f);
+            GL.Vertex3(-100.0f, 0.0f, 0.0f);
+            GL.Vertex3(100.0f, 0.0f, 0.0f);
+            //  y = red
+            GL.Color3(1.0f, 0.0f, 0.0f);
+            GL.Vertex3(0.0f, -110.0f, 0.0f);
+            GL.Vertex3(0.0f, 100.0f, 0.0f);
+            //  z = green
+            GL.Color3(new Vector3(0.0f, 1.0f, 0.0f));
+            GL.Vertex3(0.0f, 0.0f, -100.0f);
+            GL.Vertex3(0.0f, 0.0f, 100.0f);
+            GL.Color4(1.0f, 1.0f, 1.0f, 1.0f);
+
+            GL.End();
+        }
+
+        private static void DrawTile(int tilesetTileNumber)
+        {
+            //calulate tilenumber's row and column value on tileset
+            // int numberofcolumns = 2;
+            int row;
+            int column;
+            column = tilesetTileNumber % Constants.TILESETCOLUMNCOUNT;
+            float texture_size = 1.0f / Constants.TILESETCOLUMNCOUNT;
+            //0.5 = size
+            row = (int)((tilesetTileNumber * texture_size) + 0.00001f);
+            // MessageBox.Show("tile number: " + tile +" row: "+row+" col: "+column +" texturesize:"+texture_size);
+            float s1 = texture_size * (column + 0);
+            float s2 = texture_size * (column + 1);
+            float t1 = 1 - (texture_size * (row + 0));
+            float t2 = 1 - (texture_size * (row + 1));
+
+            GL.Begin(PrimitiveType.Quads);
+
+            //quad1
+            //bottomleft
+            GL.TexCoord2(s1, t2);
+            GL.Vertex3(0, -1.0f, 0.0f);  //vertex3(x,y,z)
+                                         //top left
+            GL.TexCoord2(s1, t1);
+            GL.Vertex3(0, 0.0f, 0.0f);
+            //top right
+            GL.TexCoord2(s2, t1);
+            GL.Vertex3(1.0f, 0.0f, 0.0f);
+            //bottom right
+            GL.TexCoord2(s2, t2);
+            GL.Vertex3(1.0f, -1.0f, 0.0f);
+
+            GL.End();
+        }
     }
 }

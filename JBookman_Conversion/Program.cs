@@ -211,21 +211,7 @@ namespace JBookman_Conversion
         {
             base.OnRenderFrame(e);
 
-            var player = _engine.GetPlayer();
-            var map = _engine.GetMap();
-            var m_moveMatrix = _renderer.MoveMatrix;
-
             _engine.StateManager.DrawCurrentState(_renderer);
-
-            ////if (_engine.StateManager.CurrentState == EngineBits.Consts.ProcessState.Menu)
-            ////{
-            ////    //_engine.StateManager.DrawCurrentState();
-            ////}
-            ////else
-            ////{
-            ////    //StaticRenderer.Render(map, m_iCurrentTileSet, m_iPlayerTileSet, player, m_moveMatrix);
-            ////    //_renderer.RenderFrame();
-            ////}
 
             SwapBuffers();
         }

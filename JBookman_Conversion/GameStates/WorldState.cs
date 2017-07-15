@@ -32,17 +32,12 @@ namespace JBookman_Conversion.GameStates
 
             //var primis = GetRenderablePrimitives();
 
-            StaticRenderer.BeginRender(renderer.MoveMatrix);
+            renderer.BeginRender();
+            renderer.RenderPrimitives(primitives.ToArray());
 
-            StaticRenderer.RenderPrimitives(primitives.ToArray(), renderer.MoveMatrix);
             StaticPlayerRenderer.RenderPlayerPrimitive(playerPrimitive);
 
-            ////StaticPlayerRenderer.DrawPlayer(_currentMap, _player, playerTileSetId);
-            ////StaticRenderer.Render(_currentMap, m_iCurrentTileSet, m_iPlayerTileSet, _player, m_moveMatrix);
-            
-            //renderer.RenderPrimitives(primis);
-
-            StaticRenderer.EndRender();
+            renderer.EndRender();
         }
 
         public void Entering()
