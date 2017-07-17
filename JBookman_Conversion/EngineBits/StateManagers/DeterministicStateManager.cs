@@ -47,6 +47,7 @@ namespace JBookman_Conversion.EngineBits.StateManagers
             if (!_transitionDictionary.TryGetValue(newTrans, out nextProcessState))
             {
                 Debug.Write($"Invalid transition: {CurrentState} -> {actionToTake}");
+                return CurrentGameState;
             };
 
             var nextState = _availableStates.FirstOrDefault(s => s.ProcessState == nextProcessState);

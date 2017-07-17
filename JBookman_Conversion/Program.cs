@@ -1,5 +1,4 @@
 ﻿using JBookman_Conversion.EngineBits;
-using JBookman_Conversion.EngineBits.Abstract;
 using JBookman_Conversion.EngineBits.Consts;
 using JBookman_Conversion.GameStates;
 using OpenTK;
@@ -35,8 +34,6 @@ namespace JBookman_Conversion
         private readonly Renderer _renderer;
 
         private Engine _engine;
-
-        private KeyboardState lastState;
 
         /// <summary>Creates a 800x600 window with the specified title.</summary>
         public Game()
@@ -124,19 +121,6 @@ namespace JBookman_Conversion
 
             _engine.InputHandler.HandleKeyboardDown(e, this, _engine);
 
-            KeyboardState keystate = Keyboard.GetState();
-
-            if (keystate != lastState)
-            {
-                if (keystate.IsKeyDown(Key.Up))
-                { }
-
-                if (keystate.IsKeyDown(Key.Escape))
-                { }
-            }
-            // log last state to see if the state has changed or if it's just an update cycle
-            lastState = keystate;
-
             if (Keyboard[Key.Escape])
             {
                 // Exit();
@@ -148,59 +132,9 @@ namespace JBookman_Conversion
             }
             else m_iUpdateCount++;
 
-            var player = _engine.GetPlayer();
-
             _engine.StateManager.UpdateCurrentState();
-
-            ////  player location + viewport test code
-            //if (Keyboard[Key.Number1])
-            //{
-            //    player.SetSector(85);
-            //}
-            //if (Keyboard[Key.Number2])
-            //{
-            //    player.SetSector(842);
-            //}
-            //if (Keyboard[Key.Number3])
-            //{
-            //    player.SetSector(1530);
-            //}
-            //if (Keyboard[Key.Number4])
-            //{
-            //    player.SetSector(820);
-            //}
-            //if (Keyboard[Key.Number5])
-            //{
-            //    player.SetSector(1558);
-            //}
-            //if (Keyboard[Key.Number0])
-            //{
-            //    player.SetSector(0);
-            //}
-
-            //if (Keyboard[Key.F1])
-            //{
-            //    _engine.StateHandler.MoveNext(StateHandler.ProcessAction.GoToMenu);
-            //}
-
-            //if (Keyboard[Key.F2])
-            //{
-            //    _engine.StateHandler.MoveNext(StateHandler.ProcessAction.ToWorld);
-            //}
-
-            //if (Keyboard[Key.F2])
-            //{
-            //    _engine.StateHandler.MoveNext(StateHandler.ProcessAction.BattleStart);
-            //}
-
+            
             //  end of OnUpdateFrame
-        }
-
-
-        // OLD, TO BIN!
-        private void HandleKeyboardKeyDown(object sender, KeyboardKeyEventArgs e)
-        {
-            //  MessageBox.Show("HandleKeyPressEvent triggered by: " + e.Key);
         }
 
         /// <summary>
