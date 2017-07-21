@@ -2,6 +2,7 @@
 using System;
 using JBookman_Conversion.EngineBits.Consts;
 using JBookman_Conversion.EngineBits;
+using OpenTK.Input;
 
 namespace JBookman_Conversion.GameStates
 {
@@ -9,6 +10,8 @@ namespace JBookman_Conversion.GameStates
     {
         internal Player _player;
         internal Map _currentMap;
+
+        internal WorldInputHandler _inputHandler;
 
         public WorldState()
         {
@@ -18,6 +21,8 @@ namespace JBookman_Conversion.GameStates
         {
             _currentMap = initialMap;
             _player = player;
+
+            _inputHandler = new WorldInputHandler(_currentMap, _player);
         }
 
         public ProcessState ProcessState => ProcessState.World;
@@ -60,8 +65,9 @@ namespace JBookman_Conversion.GameStates
             throw new NotImplementedException();
         }
 
-        public void Update()
+        public void Update(KeyboardState keyboardState)
         {
+            _inputHandler.HandleKeyboardDown(keyboardState);
         }
     }
 }

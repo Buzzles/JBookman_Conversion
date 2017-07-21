@@ -61,7 +61,7 @@ namespace JBookman_Conversion.EngineBits
             // Foreach?
             for (var i = 0; i < _updatables.Count(); i++)
             {
-                _updatables[i].Update();
+                //_updatables[i].Update();
             }
         }
     }

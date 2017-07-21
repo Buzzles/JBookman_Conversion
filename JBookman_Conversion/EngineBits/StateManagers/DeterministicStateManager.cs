@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using MessageBox = System.Windows.Forms.MessageBox;
 using System;
+using OpenTK.Input;
 
 namespace JBookman_Conversion.EngineBits.StateManagers
 {
@@ -88,13 +89,13 @@ namespace JBookman_Conversion.EngineBits.StateManagers
             }
         }
 
-        public void UpdateCurrentState()
+        public void UpdateCurrentState(KeyboardState keyboardState)
         {
             var updatableState = CurrentGameState as IUpdatable;
 
             if (updatableState != null)
             {
-                updatableState.Update();
+                updatableState.Update(keyboardState);
             }
         }
 

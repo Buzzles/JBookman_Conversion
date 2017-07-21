@@ -32,7 +32,7 @@ namespace JBookman_Conversion.EngineBits
         // TEMP, use DI? Or roll own initialiser?
         public void InitialiseEngine()
         {
-            InputHandler = new InputHandler(_currentMap, _player);
+            InputHandler = new InputHandler();
             StateHandler = new StateHandler();
 
             StateManager = new DeterministicStateManager();

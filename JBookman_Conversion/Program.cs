@@ -20,7 +20,7 @@ namespace JBookman_Conversion
         }
     }
 
-    class Game : GameWindow
+    public class Game : GameWindow
     {
         //tileset vars
         int m_iPlayerTileSet = 0;
@@ -119,11 +119,12 @@ namespace JBookman_Conversion
         {
             base.OnUpdateFrame(e);
 
+            // This should be a basic handler, mostly for debugging
             _engine.InputHandler.HandleKeyboardDown(e, this, _engine);
 
             if (Keyboard[Key.Escape])
             {
-                // Exit();
+                this.Exit();
             }
 
             if (m_iUpdateCount == 15)
@@ -132,7 +133,9 @@ namespace JBookman_Conversion
             }
             else m_iUpdateCount++;
 
-            _engine.StateManager.UpdateCurrentState();
+            var keyboardState = this.Keyboard.GetState();
+
+            _engine.StateManager.UpdateCurrentState(keyboardState);
             
             //  end of OnUpdateFrame
         }

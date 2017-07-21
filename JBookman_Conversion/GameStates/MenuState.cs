@@ -2,6 +2,7 @@
 using JBookman_Conversion.EngineBits.Consts;
 using System;
 using JBookman_Conversion.EngineBits;
+using OpenTK.Input;
 
 namespace JBookman_Conversion.GameStates
 {
@@ -45,6 +46,12 @@ namespace JBookman_Conversion.GameStates
 
         public void Update()
         {
+        }
+
+        public void Update(KeyboardState keyboardState)
+        {
+            // Handle input for menu here
+            // InputHandler.HandleKeyboardInput(keyboardState) etc....
         }
     }
 }
