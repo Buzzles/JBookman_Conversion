@@ -5,7 +5,7 @@ using JBookman_Conversion.EngineBits.Consts;
 
 namespace JBookman_Conversion.EngineBits
 {
-    public class InputHandler
+    internal class InputHandler
     {
         private KeyboardState _lastKeyState, _keyboardState;
 
@@ -19,7 +19,7 @@ namespace JBookman_Conversion.EngineBits
 
             if (KeyPress(Key.Escape))
             {
-                gameContext.Exit();
+                //gameContext.Exit();
             }
 
             // State change!

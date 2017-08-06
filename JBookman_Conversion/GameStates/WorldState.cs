@@ -13,6 +13,8 @@ namespace JBookman_Conversion.GameStates
 
         internal WorldInputHandler _inputHandler;
 
+        internal UpdateResult _updateResult;
+
         public WorldState()
         {
         }
@@ -22,7 +24,9 @@ namespace JBookman_Conversion.GameStates
             _currentMap = initialMap;
             _player = player;
 
-            _inputHandler = new WorldInputHandler(_currentMap, _player);
+            _updateResult = new UpdateResult();
+
+            _inputHandler = new WorldInputHandler(_currentMap, _player, _updateResult);
         }
 
         public ProcessState ProcessState => ProcessState.World;
@@ -65,9 +69,14 @@ namespace JBookman_Conversion.GameStates
             throw new NotImplementedException();
         }
 
-        public void Update(KeyboardState keyboardState)
+        public UpdateResult Update(KeyboardState keyboardState)
         {
+            // Reset update result
+            _updateResult = new UpdateResult();
+
             _inputHandler.HandleKeyboardDown(keyboardState);
+
+            return _updateResult;
         }
     }
 }

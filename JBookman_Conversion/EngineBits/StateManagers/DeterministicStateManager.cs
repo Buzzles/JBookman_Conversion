@@ -95,7 +95,14 @@ namespace JBookman_Conversion.EngineBits.StateManagers
 
             if (updatableState != null)
             {
-                updatableState.Update(keyboardState);
+                var result = updatableState.Update(keyboardState);
+                ////var stateChange = updatableState.Update(keyboardState); // ? bad?
+                // tie an event/delegate into this?
+
+                if (result.ChangeState && result.ActionToDo.HasValue)
+                {
+                    MoveNext(result.ActionToDo.Value);
+                }
             }
         }
 

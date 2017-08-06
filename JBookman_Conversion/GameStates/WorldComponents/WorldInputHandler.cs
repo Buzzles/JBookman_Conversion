@@ -13,10 +13,80 @@ namespace JBookman_Conversion.EngineBits
         private const float moveAmount = 0.1f;
         private KeyboardState _lastKeyState, _keyboardState;
 
-        public WorldInputHandler(Map currentMap, Player player)
+        private UpdateResult _updateResult;
+
+        public WorldInputHandler(Map currentMap, Player player, UpdateResult updateResult)
         {
             _currentMap = currentMap;
             _player = player;
+
+            _updateResult = updateResult;
+        }
+
+        internal void HandleKeyboardDown(KeyboardState keyboardState)
+        {
+            _keyboardState = keyboardState;
+
+            if (KeyPress(Key.Escape))
+            {
+                _updateResult = new UpdateResult
+                {
+                    ChangeState = true,
+                    ActionToDo = ProcessAction.GoToMenu
+                };
+            }
+
+            if (KeyPress(Key.Up))
+            {
+                MovePlayerUp();
+            }
+
+            if (KeyPress(Key.Down))
+            {
+                MovePlayerDown();
+            }
+
+            if (KeyPress(Key.Left))
+            {
+                MovePlayerLeft();
+            }
+            if (KeyPress(Key.Right))
+            {
+                MovePlayerRight();
+            }
+            //  _player location + viewport test code
+            if (KeyPress(Key.Number1))
+            {
+                _player.SetSector(85);
+            }
+            if (KeyPress(Key.Number2))
+            {
+                _player.SetSector(842);
+            }
+            if (KeyPress(Key.Number3))
+            {
+                _player.SetSector(1530);
+            }
+            if (KeyPress(Key.Number4))
+            {
+                _player.SetSector(820);
+            }
+            if (KeyPress(Key.Number5))
+            {
+                _player.SetSector(1558);
+            }
+            if (KeyPress(Key.Number0))
+            {
+                _player.SetSector(0);
+            }
+
+            // Store for next update method
+            _lastKeyState = _keyboardState;
+        }
+
+        private bool KeyPress(Key key)
+        {
+            return (_keyboardState[key] && (_keyboardState[key] != _lastKeyState[key]));
         }
 
         private void MovePlayerUp()
@@ -137,63 +207,6 @@ namespace JBookman_Conversion.EngineBits
             }
 
             return blocked;
-        }
-
-        internal void HandleKeyboardDown(KeyboardState keyboardState)
-        {
-            _keyboardState = keyboardState;
-            
-            if (KeyPress(Key.Up))
-            {
-                MovePlayerUp();
-            }
-
-            if (KeyPress(Key.Down))
-            {
-                MovePlayerDown();
-            }
-
-            if (KeyPress(Key.Left))
-            {
-                MovePlayerLeft();
-            }
-            if (KeyPress(Key.Right))
-            {
-                MovePlayerRight();
-            }
-            //  _player location + viewport test code
-            if (KeyPress(Key.Number1))
-            {
-                _player.SetSector(85);
-            }
-            if (KeyPress(Key.Number2))
-            {
-                _player.SetSector(842);
-            }
-            if (KeyPress(Key.Number3))
-            {
-                _player.SetSector(1530);
-            }
-            if (KeyPress(Key.Number4))
-            {
-                _player.SetSector(820);
-            }
-            if (KeyPress(Key.Number5))
-            {
-                _player.SetSector(1558);
-            }
-            if (KeyPress(Key.Number0))
-            {
-                _player.SetSector(0);
-            }
-
-            // Store for next update method
-            _lastKeyState = _keyboardState;
-        }
-
-        private bool KeyPress(Key key)
-        {
-            return (_keyboardState[key] && (_keyboardState[key] != _lastKeyState[key]));
         }
     }
 }

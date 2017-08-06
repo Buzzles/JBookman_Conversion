@@ -48,8 +48,10 @@ namespace JBookman_Conversion.GameStates
         {
         }
 
-        public void Update(KeyboardState keyboardState)
+        public UpdateResult Update(KeyboardState keyboardState)
         {
+            return new UpdateResult();
+
             // Handle input for menu here
             // InputHandler.HandleKeyboardInput(keyboardState) etc....
         }

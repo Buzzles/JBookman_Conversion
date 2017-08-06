@@ -66,6 +66,7 @@
     <Compile Include="EngineBits\Abstract\IDrawable.cs" />
     <Compile Include="EngineBits\Abstract\IGameState.cs" />
     <Compile Include="EngineBits\Abstract\IUpdatable.cs" />
+    <Compile Include="EngineBits\UpateResult.cs" />
     <Compile Include="EngineBits\Core.cs" />
     <Compile Include="EngineBits\Rendering\Primitive.cs" />
     <Compile Include="EngineBits\StateManagers\DeterministicStateManager.cs" />

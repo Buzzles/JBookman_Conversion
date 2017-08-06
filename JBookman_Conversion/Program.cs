@@ -124,7 +124,7 @@ namespace JBookman_Conversion
 
             if (Keyboard[Key.Escape])
             {
-                this.Exit();
+                //this.Exit();
             }
 
             if (m_iUpdateCount == 15)
