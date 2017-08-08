@@ -72,7 +72,8 @@ namespace JBookman_Conversion.GameStates
         public UpdateResult Update(KeyboardState keyboardState)
         {
             // Reset update result
-            _updateResult = new UpdateResult();
+            _updateResult.ActionToDo = null;
+            _updateResult.ChangeState = false;
 
             _inputHandler.HandleKeyboardDown(keyboardState);
 

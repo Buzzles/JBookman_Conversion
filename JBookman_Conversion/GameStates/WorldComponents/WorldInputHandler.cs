@@ -29,11 +29,8 @@ namespace JBookman_Conversion.EngineBits
 
             if (KeyPress(Key.Escape))
             {
-                _updateResult = new UpdateResult
-                {
-                    ChangeState = true,
-                    ActionToDo = ProcessAction.GoToMenu
-                };
+                _updateResult.ChangeState = true;
+                _updateResult.ActionToDo = ProcessAction.GoToMenu;
             }
 
             if (KeyPress(Key.Up))
