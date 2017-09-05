@@ -73,19 +73,9 @@ namespace JBookman_Conversion.EngineBits.StateManagers
         {
             var drawableState = CurrentGameState as IDrawable;
 
-            if (drawableState != null) // 2nd half is temp hack
+            if (drawableState != null)
             {
                 drawableState.Draw(renderer);
-
-                //var getDrawables = drawableState.Draw(renderer);
-
-                //if (CurrentState == ProcessState.World)
-                //{ }
-                //else
-                //{
-                //    renderer.RenderPrimitives();
-                //}
-
             }
         }
 
@@ -95,13 +85,16 @@ namespace JBookman_Conversion.EngineBits.StateManagers
 
             if (updatableState != null)
             {
-                var result = updatableState.Update(keyboardState);
-                ////var stateChange = updatableState.Update(keyboardState); // ? bad?
-                // tie an event/delegate into this?
+                updatableState.Update(keyboardState);
 
-                if (result.ChangeState && result.ActionToDo.HasValue)
+                var stateQueueItem = StateQueueFactory.GetNext();
+
+                if (stateQueueItem != null)
                 {
-                    MoveNext(result.ActionToDo.Value);
+                    if (stateQueueItem.ChangeState && stateQueueItem.ActionToDo.HasValue)
+                    {
+                        MoveNext(stateQueueItem.ActionToDo.Value);
+                    }
                 }
             }
         }

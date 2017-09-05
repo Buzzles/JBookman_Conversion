@@ -1,6 +1,7 @@
 ﻿using OpenTK.Input;
 using OpenTK;
 using JBookman_Conversion.EngineBits.Consts;
+using JBookman_Conversion.EngineBits.StateManagers;
 
 namespace JBookman_Conversion.EngineBits
 {
@@ -13,14 +14,10 @@ namespace JBookman_Conversion.EngineBits
         private const float moveAmount = 0.1f;
         private KeyboardState _lastKeyState, _keyboardState;
 
-        private UpdateResult _updateResult;
-
-        public WorldInputHandler(Map currentMap, Player player, UpdateResult updateResult)
+        public WorldInputHandler(Map currentMap, Player player)
         {
             _currentMap = currentMap;
             _player = player;
-
-            _updateResult = updateResult;
         }
 
         internal void HandleKeyboardDown(KeyboardState keyboardState)
@@ -29,8 +26,15 @@ namespace JBookman_Conversion.EngineBits
 
             if (KeyPress(Key.Escape))
             {
-                _updateResult.ChangeState = true;
-                _updateResult.ActionToDo = ProcessAction.GoToMenu;
+                var stateChange = new StateQueueItem
+                {
+                    ChangeState = true,
+                    ActionToDo = ProcessAction.GoToMenu
+                };
+
+                StateQueueFactory.AddToQueue(stateChange);
+
+                return;
             }
 
             if (KeyPress(Key.Up))

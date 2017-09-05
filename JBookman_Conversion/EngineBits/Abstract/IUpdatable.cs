@@ -6,6 +6,6 @@ namespace JBookman_Conversion.EngineBits.Abstract
     public interface IUpdatable
     {
         //void Update();
-        UpdateResult Update(KeyboardState keyboardState);
+        void Update(KeyboardState keyboardState);
     }
 }

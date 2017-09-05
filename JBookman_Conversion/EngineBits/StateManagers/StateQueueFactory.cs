@@ -24,7 +24,12 @@ namespace JBookman_Conversion.EngineBits.StateManagers
         {
             var queue = GetQueue();
 
-            return queue.Dequeue();
+            if (queue.Any())
+            {
+                return queue.Dequeue();
+            }
+
+            return null;
         }
 
 

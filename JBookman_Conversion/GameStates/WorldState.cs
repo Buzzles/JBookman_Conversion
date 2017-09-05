@@ -26,7 +26,7 @@ namespace JBookman_Conversion.GameStates
 
             _updateResult = new UpdateResult();
 
-            _inputHandler = new WorldInputHandler(_currentMap, _player, _updateResult);
+            _inputHandler = new WorldInputHandler(_currentMap, _player);
         }
 
         public ProcessState ProcessState => ProcessState.World;
@@ -69,15 +69,9 @@ namespace JBookman_Conversion.GameStates
             throw new NotImplementedException();
         }
 
-        public UpdateResult Update(KeyboardState keyboardState)
+        public void Update(KeyboardState keyboardState)
         {
-            // Reset update result
-            _updateResult.ActionToDo = null;
-            _updateResult.ChangeState = false;
-
             _inputHandler.HandleKeyboardDown(keyboardState);
-
-            return _updateResult;
         }
     }
 }
