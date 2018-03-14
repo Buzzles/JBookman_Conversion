@@ -87,6 +87,9 @@ namespace JBookman_Conversion
 
             _engine.StateManager.AddNewState(new MenuState());
 
+            // TEMP -- battle state should be added later?
+            _engine.StateManager.AddNewState(new BattleState());
+
             // Hack
             _renderer.MainTileSetTextureId = m_iCurrentTileSet;
             _renderer.PlayerTileSetTextureId = m_iPlayerTileSet;
