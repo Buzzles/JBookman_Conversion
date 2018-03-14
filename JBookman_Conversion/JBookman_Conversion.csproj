@@ -92,7 +92,7 @@
     <Compile Include="GameObjects\Player.cs" />
     <Compile Include="EngineBits\DrawBoundries.cs" />
     <Compile Include="GameStates\BattleState.cs" />
-    <Compile Include="GameStates\MenuRenderer.cs" />
+    <Compile Include="GameStates\MenuComponents\MenuRenderer.cs" />
     <Compile Include="GameStates\WorldComponents\WorldInputHandler.cs" />
     <Compile Include="GameStates\WorldState.cs" />
     <Compile Include="GameStates\MenuState.cs" />
@@ -134,7 +134,9 @@
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="GameStates\BattleComponents\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>robocopy "$(ProjectDir)Tilesets" "$(TargetDir)Tilesets" /purge
