@@ -1,12 +1,8 @@
 ﻿using JBookman_Conversion.EngineBits;
 using JBookman_Conversion.EngineBits.Abstract;
 using JBookman_Conversion.EngineBits.Consts;
-using JBookman_Conversion.EngineBits.Rendering;
+using JBookman_Conversion.GameStates.BattleComponents;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JBookman_Conversion.GameStates
 {
@@ -14,17 +10,17 @@ namespace JBookman_Conversion.GameStates
     {
         public ProcessState ProcessState => ProcessState.Battle;
 
-        private MenuRenderer _menuRenderer; //temp
+        private BattleRenderer _battleRenderer; //temp
 
         public BattleState()
         {
-            _menuRenderer = new MenuRenderer();
+            _battleRenderer = new BattleRenderer();
         }
 
         public void Draw(Renderer renderer)
         {
             var textureId = renderer.MainTileSetTextureId;
-            _menuRenderer.DrawMenu(textureId);
+            _battleRenderer.DrawBattle(textureId);
 
             //renderer.BeginRender();
             //var primitives = new Primitive[0];

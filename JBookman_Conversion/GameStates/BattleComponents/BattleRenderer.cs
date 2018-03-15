@@ -3,9 +3,9 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK;
 using JBookman_Conversion.EngineBits;
 
-namespace JBookman_Conversion.GameStates.MenuComponents
+namespace JBookman_Conversion.GameStates.BattleComponents
 {
-    internal class MenuRenderer
+    internal class BattleRenderer
     {
         private int _mapTileSetId;
         private Matrix4 _moveMatrix = new Matrix4();
@@ -16,11 +16,11 @@ namespace JBookman_Conversion.GameStates.MenuComponents
             _moveMatrix = moveMatrix;
         }
 
-        internal void DrawMenu(int textureId)
+        internal void DrawBattle(int textureId)
         {
             if (!Initialised())
             {
-                throw new InvalidOperationException("Menu renderer not initialised");
+                throw new InvalidOperationException("Battle renderer not initialised");
             }
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -35,8 +35,6 @@ namespace JBookman_Conversion.GameStates.MenuComponents
             GL.LoadIdentity();
             GL.LoadMatrix(ref modelview);
             
-            DrawAxis();
-
             GL.Enable(EnableCap.Texture2D);
 
             DrawTiles(_mapTileSetId);
@@ -57,37 +55,6 @@ namespace JBookman_Conversion.GameStates.MenuComponents
             }
 
             return true;
-        }
-
-        private static void DrawAxis()
-        {
-            /*  Axis Draw Code
-             *  Simply draw 3 lines representing the 3D axis
-             *  Blue = x axis (-left/+right)
-             *  Red = y axis (+up/-down)
-             *  Green = Z (depth)
-             */
-
-            //  test code
-            GL.Begin(PrimitiveType.Lines);
-
-            //  x = blue
-            GL.Color3(new Vector3(0.0f, 0.0f, 1.0f));
-            GL.Vertex3(new Vector3(-100.0f, 0.0f, 0.0f));
-            GL.Vertex3(new Vector3(100.0f, 0.0f, 0.0f));
-            
-            //  y = red
-            GL.Color3(new Vector3(1.0f, 0.0f, 0.0f));
-            GL.Vertex3(new Vector3(0.0f, -110.0f, 0.0f));
-            GL.Vertex3(new Vector3(0.0f, 100.0f, 0.0f));
-            
-            //  z = green
-            GL.Color3(new Vector3(0.0f, 1.0f, 0.0f));
-            GL.Vertex3(new Vector3(0.0f, 0.0f, -100.0f));
-            GL.Vertex3(new Vector3(0.0f, 0.0f, 100.0f));
-            GL.Color4(new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-
-            GL.End();
         }
 
         private static void DrawTiles(int tileSetId)

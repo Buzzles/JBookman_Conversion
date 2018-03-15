@@ -63,7 +63,7 @@ namespace JBookman_Conversion.EngineBits
             GL.LoadIdentity();
             GL.LoadMatrix(ref modelview);
 
-            drawAxis();
+            DrawAxis();
 
             GL.Enable(EnableCap.Texture2D);
         }
@@ -88,6 +88,12 @@ namespace JBookman_Conversion.EngineBits
                     DrawPrimitive(primitive);
                 }
             }
+        }
+
+        // TODO: Combine into normal render code above
+        internal void RenderPlayerPrimitive(Primitive playerPrimitive)
+        {
+            _playerRenderer.RenderPlayerPrimitive(playerPrimitive);
         }
 
         private static void DrawPrimitive(Primitive primitive)
@@ -119,7 +125,7 @@ namespace JBookman_Conversion.EngineBits
             GL.PopMatrix();
         }
 
-        private static void drawAxis()
+        private static void DrawAxis()
         {
             /*  Axis Draw Code
              *  Simply draw 3 lines representing the 3D axis

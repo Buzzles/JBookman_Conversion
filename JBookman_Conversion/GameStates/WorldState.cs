@@ -3,6 +3,7 @@ using System;
 using JBookman_Conversion.EngineBits.Consts;
 using JBookman_Conversion.EngineBits;
 using OpenTK.Input;
+using JBookman_Conversion.GameStates.WorldComponents;
 
 namespace JBookman_Conversion.GameStates
 {
@@ -12,6 +13,9 @@ namespace JBookman_Conversion.GameStates
         internal Map _currentMap;
 
         internal WorldInputHandler _inputHandler;
+
+        internal WorldDrawer _worldDrawer;
+        internal PlayerDrawer _playerDrawer;
 
         internal UpdateResult _updateResult;
 
@@ -27,6 +31,9 @@ namespace JBookman_Conversion.GameStates
             _updateResult = new UpdateResult();
 
             _inputHandler = new WorldInputHandler(_currentMap, _player);
+
+            _worldDrawer = new WorldDrawer();
+            _playerDrawer = new PlayerDrawer();
         }
 
         public ProcessState ProcessState => ProcessState.World;
@@ -36,15 +43,15 @@ namespace JBookman_Conversion.GameStates
             var mapTileSetId = renderer.MainTileSetTextureId;
             var playerTileSetId = renderer.PlayerTileSetTextureId;
 
-            var primitives = StaticRenderer.GetPrimitivesForStaticRenderer(_currentMap, mapTileSetId, playerTileSetId, _player);
-            var playerPrimitive = StaticPlayerRenderer.GetPlayerPrimitive(_currentMap, _player, playerTileSetId);
-
-            //var primis = GetRenderablePrimitives();
+            var primitives = _worldDrawer.GetPrimitivesForStaticRenderer(_currentMap, mapTileSetId, playerTileSetId, _player);
+            var playerPrimitive = _playerDrawer.GetPlayerPrimitive(_currentMap, _player, playerTileSetId);
 
             renderer.BeginRender();
             renderer.RenderPrimitives(primitives.ToArray());
 
-            StaticPlayerRenderer.RenderPlayerPrimitive(playerPrimitive);
+            // TODO: Move player rendering code to actual Renderer.cs
+            renderer.RenderPlayerPrimitive(playerPrimitive);
+            //renderer.RenderPrimitives(new[] { playerPrimitive });
 
             renderer.EndRender();
         }

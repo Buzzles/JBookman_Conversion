@@ -1,14 +1,12 @@
-﻿using JBookman_Conversion.EngineBits.Rendering;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
+﻿using JBookman_Conversion.EngineBits;
+using JBookman_Conversion.EngineBits.Rendering;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace JBookman_Conversion.EngineBits
+namespace JBookman_Conversion.GameStates.WorldComponents
 {
-    public static class StaticRenderer
+    public class WorldDrawer
     {
-        public static List<Primitive> GetPrimitivesForStaticRenderer(Map currentMap, int glTextureId, int glPlayerTextureId, Player player)
+        public List<Primitive> GetPrimitivesForStaticRenderer(Map currentMap, int glTextureId, int glPlayerTextureId, Player player)
         {
             var primitiveList = new List<Primitive>();
 
@@ -16,11 +14,11 @@ namespace JBookman_Conversion.EngineBits
             var mapTilesToRender = GetMapTiles(currentMap, playerSector, glTextureId);
 
             primitiveList.AddRange(mapTilesToRender);
-            
+
             return primitiveList;
         }
 
-        private static List<Primitive> GetMapTiles(Map currentMap, int playerSector, int glTextureId)
+        private List<Primitive> GetMapTiles(Map currentMap, int playerSector, int glTextureId)
         {
             var tilePrimitives = new List<Primitive>();
 
@@ -51,11 +49,11 @@ namespace JBookman_Conversion.EngineBits
                 }
                 drawRow++;
             }
-        
+
             return tilePrimitives;
         }
 
-        private static DrawBoundries GetDrawBoundries(Map g_CurrentMap, int playerSector)
+        private DrawBoundries GetDrawBoundries(Map g_CurrentMap, int playerSector)
         {
             int _minVisibleCol, _maxVisibleCol, _minVisibleRow, _maxVisibleRow;
 

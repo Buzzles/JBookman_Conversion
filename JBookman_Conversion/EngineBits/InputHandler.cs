@@ -17,9 +17,9 @@ namespace JBookman_Conversion.EngineBits
         {
             _keyboardState = gameContext.Keyboard.GetState();
 
-            if (KeyPress(Key.Escape))
+            if (KeyPress(Key.Q))
             {
-                //gameContext.Exit();
+                gameContext.Exit();
             }
 
             // State change!
@@ -40,8 +40,8 @@ namespace JBookman_Conversion.EngineBits
 
             if (KeyPress(Key.F3))
             {
-                //engine.StateHandler.MoveNext(ProcessAction.BattleStart);
                 engine.StateManager.MoveNext(ProcessAction.BattleStart);
+                //engine.StateHandler.MoveNext(ProcessAction.BattleStart);
             }
 
             // Store for next update method

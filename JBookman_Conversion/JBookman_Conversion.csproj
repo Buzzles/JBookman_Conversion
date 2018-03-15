@@ -66,9 +66,10 @@
     <Compile Include="EngineBits\Abstract\IDrawable.cs" />
     <Compile Include="EngineBits\Abstract\IGameState.cs" />
     <Compile Include="EngineBits\Abstract\IUpdatable.cs" />
+    <Compile Include="EngineBits\Rendering\PlayerRenderer.cs" />
     <Compile Include="EngineBits\StateManagers\StateQueueFactory.cs" />
     <Compile Include="EngineBits\StateManagers\StateQueueItem.cs" />
-    <Compile Include="EngineBits\UpateResult.cs" />
+    <Compile Include="EngineBits\UpdateResult.cs" />
     <Compile Include="EngineBits\Core.cs" />
     <Compile Include="EngineBits\Rendering\Primitive.cs" />
     <Compile Include="EngineBits\StateManagers\DeterministicStateManager.cs" />
@@ -76,12 +77,11 @@
     <Compile Include="EngineBits\Engine.cs" />
     <Compile Include="EngineBits\InputHandler.cs" />
     <Compile Include="EngineBits\MapUtils.cs" />
-    <Compile Include="EngineBits\Rendering\PlayerRenderer.cs" />
     <Compile Include="EngineBits\Consts\ProcessAction.cs" />
     <Compile Include="EngineBits\Consts\ProcessState.cs" />
-    <Compile Include="EngineBits\Rendering\Statics\StaticPlayerRenderer.cs" />
+    <Compile Include="GameStates\BattleComponents\BattleRenderer.cs" />
+    <Compile Include="GameStates\WorldComponents\PlayerDrawer.cs" />
     <Compile Include="EngineBits\Rendering\Renderer.cs" />
-    <Compile Include="EngineBits\Rendering\Statics\StaticRenderer.cs" />
     <Compile Include="EngineBits\StateManagers\StateHandler.cs" />
     <Compile Include="GameObjects\Container.cs" />
     <Compile Include="GameObjects\Door.cs" />
@@ -93,6 +93,7 @@
     <Compile Include="EngineBits\DrawBoundries.cs" />
     <Compile Include="GameStates\BattleState.cs" />
     <Compile Include="GameStates\MenuComponents\MenuRenderer.cs" />
+    <Compile Include="GameStates\WorldComponents\WorldDrawer.cs" />
     <Compile Include="GameStates\WorldComponents\WorldInputHandler.cs" />
     <Compile Include="GameStates\WorldState.cs" />
     <Compile Include="GameStates\MenuState.cs" />
@@ -134,9 +135,7 @@
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GameStates\BattleComponents\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>robocopy "$(ProjectDir)Tilesets" "$(TargetDir)Tilesets" /purge

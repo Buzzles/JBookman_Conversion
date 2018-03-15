@@ -1,9 +1,9 @@
 ﻿using OpenTK.Input;
-using OpenTK;
 using JBookman_Conversion.EngineBits.Consts;
 using JBookman_Conversion.EngineBits.StateManagers;
+using JBookman_Conversion.EngineBits;
 
-namespace JBookman_Conversion.EngineBits
+namespace JBookman_Conversion.GameStates.WorldComponents
 {
     public class WorldInputHandler
     {
