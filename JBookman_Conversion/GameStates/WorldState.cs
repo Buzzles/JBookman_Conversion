@@ -1,9 +1,9 @@
-﻿using JBookman_Conversion.EngineBits.Abstract;
-using System;
+﻿using JBookman_Conversion.EngineBits;
+using JBookman_Conversion.EngineBits.Abstract;
 using JBookman_Conversion.EngineBits.Consts;
-using JBookman_Conversion.EngineBits;
-using OpenTK.Input;
 using JBookman_Conversion.GameStates.WorldComponents;
+using OpenTK.Input;
+using System;
 
 namespace JBookman_Conversion.GameStates
 {
@@ -43,7 +43,7 @@ namespace JBookman_Conversion.GameStates
             var mapTileSetId = renderer.MainTileSetTextureId;
             var playerTileSetId = renderer.PlayerTileSetTextureId;
 
-            var primitives = _worldDrawer.GetPrimitivesForStaticRenderer(_currentMap, mapTileSetId, playerTileSetId, _player);
+            var primitives = _worldDrawer.GetPrimitivesToRender(_currentMap, mapTileSetId, playerTileSetId, _player);
             var playerPrimitive = _playerDrawer.GetPlayerPrimitive(_currentMap, _player, playerTileSetId);
 
             renderer.BeginRender();

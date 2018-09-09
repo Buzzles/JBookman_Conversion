@@ -4,6 +4,7 @@ using System;
 using JBookman_Conversion.EngineBits;
 using OpenTK.Input;
 using JBookman_Conversion.GameStates.MenuComponents;
+using JBookman_Conversion.EngineBits.Rendering;
 
 namespace JBookman_Conversion.GameStates
 {
@@ -12,17 +13,33 @@ namespace JBookman_Conversion.GameStates
         public ProcessState ProcessState => ProcessState.Menu;
 
         private MenuRenderer _menuRenderer;
+        private MenuInputHandler _inputHandler;
+        private MenuDrawer _menuDrawer;
 
         public MenuState()
         {
             _menuRenderer = new MenuRenderer();
+
+            _inputHandler = new MenuInputHandler(null);
+
+            _menuDrawer = new MenuDrawer();
         }
 
         public void Draw(Renderer renderer)
         {
+            // Old, to be removed once new drawer is working.
             var textureId = renderer.MainTileSetTextureId;
             _menuRenderer.DrawMenu(textureId);
-            //renderer.RenderFrame();
+            
+            // New!
+            // TODO: Pass in the menu container object to the drawer.
+            var menuPrimitives = _menuDrawer.GetPrimitivesToRender();
+
+            renderer.BeginRender();
+
+            renderer.RenderPrimitives(menuPrimitives);
+
+            renderer.EndRender();
         }
 
         public void Entering()
@@ -45,14 +62,9 @@ namespace JBookman_Conversion.GameStates
             throw new NotImplementedException();
         }
 
-        public void Update()
-        {
-        }
-
         public void Update(KeyboardState keyboardState)
         {
-            // Handle input for menu here
-            // InputHandler.HandleKeyboardInput(keyboardState) etc....
+            _inputHandler.HandleKeyboardDown(keyboardState);
         }
     }
 }

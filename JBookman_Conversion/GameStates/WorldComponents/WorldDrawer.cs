@@ -6,7 +6,7 @@ namespace JBookman_Conversion.GameStates.WorldComponents
 {
     public class WorldDrawer
     {
-        public List<Primitive> GetPrimitivesForStaticRenderer(Map currentMap, int glTextureId, int glPlayerTextureId, Player player)
+        public List<Primitive> GetPrimitivesToRender(Map currentMap, int glTextureId, int glPlayerTextureId, Player player)
         {
             var primitiveList = new List<Primitive>();
 

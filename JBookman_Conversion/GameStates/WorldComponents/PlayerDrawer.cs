@@ -1,7 +1,4 @@
-﻿using System;
-using OpenTK.Graphics.OpenGL;
-using JBookman_Conversion.EngineBits.Rendering;
-using OpenTK;
+﻿using JBookman_Conversion.EngineBits.Rendering;
 using JBookman_Conversion.EngineBits;
 
 namespace JBookman_Conversion.GameStates

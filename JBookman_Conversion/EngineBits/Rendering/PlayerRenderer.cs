@@ -1,6 +1,4 @@
-﻿using System;
-using OpenTK.Graphics.OpenGL;
-using JBookman_Conversion.EngineBits.Rendering;
+﻿using OpenTK.Graphics.OpenGL;
 using OpenTK;
 
 namespace JBookman_Conversion.EngineBits.Rendering

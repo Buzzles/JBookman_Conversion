@@ -80,6 +80,8 @@
     <Compile Include="EngineBits\Consts\ProcessAction.cs" />
     <Compile Include="EngineBits\Consts\ProcessState.cs" />
     <Compile Include="GameStates\BattleComponents\BattleRenderer.cs" />
+    <Compile Include="GameStates\MenuComponents\MenuDrawer.cs" />
+    <Compile Include="GameStates\MenuComponents\MenuInputHandler.cs" />
     <Compile Include="GameStates\WorldComponents\PlayerDrawer.cs" />
     <Compile Include="EngineBits\Rendering\Renderer.cs" />
     <Compile Include="EngineBits\StateManagers\StateHandler.cs" />
