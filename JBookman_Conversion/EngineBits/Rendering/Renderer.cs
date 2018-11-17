@@ -13,10 +13,13 @@ namespace JBookman_Conversion.EngineBits
         public int PlayerTileSetTextureId { get; set; }
 
         private PlayerRenderer _playerRenderer;
+        private TextRenderer _textRenderer;
 
         public Renderer()
         {
             _playerRenderer = new PlayerRenderer();
+
+            _textRenderer = new TextRenderer();
         }
 
         public void Initialise()
