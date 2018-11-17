@@ -68,6 +68,7 @@
     <Compile Include="EngineBits\Abstract\IUpdatable.cs" />
     <Compile Include="EngineBits\Rendering\PlayerRenderer.cs" />
     <Compile Include="EngineBits\Rendering\TextRenderer.cs" />
+    <Compile Include="EngineBits\Rendering\Text\FreeTypeWrapper.cs" />
     <Compile Include="EngineBits\StateManagers\StateQueueFactory.cs" />
     <Compile Include="EngineBits\StateManagers\StateQueueItem.cs" />
     <Compile Include="EngineBits\UpdateResult.cs" />
@@ -135,10 +136,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Libs\freetype\win64\freetype.lib" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Content Include="Libs\freetype\win64\freetype.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>robocopy "$(ProjectDir)Tilesets" "$(TargetDir)Tilesets" /purge
