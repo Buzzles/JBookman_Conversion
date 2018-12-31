@@ -47,7 +47,7 @@ namespace JBookman_Conversion.EngineBits
                 var drawImg = new DrawingImage(geomDrawing);
 
                 // render to image?
-                
+
                 int textureID = GL.GenTexture();
                 //bind a named texture to a texturing target
                 GL.BindTexture(TextureTarget.Texture2D, textureID);
@@ -56,7 +56,7 @@ namespace JBookman_Conversion.EngineBits
                 //// This might not be needed at all.
                 var fileName = "HahaNo"; // 
                 var bmp = new Bitmap(fileName); // swap to take an Image?
-                
+
                 //  flip y axis as image will have top left 0.0 but GL has bottom left 0.0 origin.
                 bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
                 //  lock part of bitmap in memory, in this case, the entire bitmap
@@ -85,7 +85,8 @@ namespace JBookman_Conversion.EngineBits
                     ////face->glyph->advance.x
                 };
 
-                Characters.Add(c, character));
+                Characters.Add(c, character);
+            }
             return characterMap;
         }
 
