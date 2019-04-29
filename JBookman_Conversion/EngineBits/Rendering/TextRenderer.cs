@@ -30,8 +30,7 @@ namespace JBookman_Conversion.EngineBits
                 GL.BindTexture(TextureTarget.Texture2D, textureId);
 
                 //temp hacks -- should be able to get bitmap direct from freetype wrapper
-                var fileName = "toBeRemoved";
-                var bmp = new Bitmap(fileName);
+                var bmp = new Bitmap(80, 80, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
                 bmp.RotateFlip(RotateFlipType.RotateNoneFlipY); // lol, opengl bottom left 0.0 origin
 
