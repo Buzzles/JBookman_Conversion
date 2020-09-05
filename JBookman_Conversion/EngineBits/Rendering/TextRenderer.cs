@@ -1,5 +1,6 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -26,7 +27,14 @@ namespace JBookman_Conversion.EngineBits
                 int textureId = GL.GenTexture();
                 GL.BindTexture(TextureTarget.Texture2D, textureId);
 
-                var bmp = new Bitmap(80, 80, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                // Rough conver
+                var character = char.ConvertFromUtf32(c);
+                var alt = Convert.ToChar(c);
+                var charImage = getCharacterImage(alt);
+                
+                ////var bmp = new Bitmap(80, 80, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+                var bmp = charImage;
 
                 bmp.RotateFlip(RotateFlipType.RotateNoneFlipY); // lol, opengl bottom left 0.0 origin
 
@@ -71,6 +79,49 @@ namespace JBookman_Conversion.EngineBits
 
         internal void RenderText()
         {
+        }
+
+        //https://stackoverflow.com/questions/2070365/how-to-generate-an-image-from-text-on-fly-at-runtime
+        private Bitmap getCharacterImage(char character)
+        {
+            // hacks
+            var minSize = new Size(8, 8);
+            var font = SystemFonts.DefaultFont;
+            var backColor = Color.Transparent;
+            var textColor = Color.White;
+            var text = character.ToString();
+
+            //first, create a dummy bitmap just to get a graphics object
+            SizeF textSize;
+            using (Image img = new Bitmap(1, 1))
+            {
+                using (Graphics drawing = Graphics.FromImage(img))
+                {
+                    //measure the string to see how big the image needs to be
+                    textSize = drawing.MeasureString(text, font);
+                    if (!minSize.IsEmpty)
+                    {
+                        textSize.Width = textSize.Width > minSize.Width ? textSize.Width : minSize.Width;
+                        textSize.Height = textSize.Height > minSize.Height ? textSize.Height : minSize.Height;
+                    }
+                }
+            }
+
+            //create a new image of the right size
+            var retImg = new Bitmap((int)textSize.Width, (int)textSize.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            using (var drawing = Graphics.FromImage(retImg))
+            {
+                //paint the background
+                drawing.Clear(backColor);
+
+                //create a brush for the text
+                using (Brush textBrush = new SolidBrush(textColor))
+                {
+                    drawing.DrawString(text, font, textBrush, 0, 0);
+                    drawing.Save();
+                }
+            }
+            return retImg;
         }
 
         private struct Character

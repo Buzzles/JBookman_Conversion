@@ -29,7 +29,7 @@ namespace JBookman_Conversion.GameStates
         {
             // Old, to be removed once new drawer is working.
             var textureId = renderer.MainTileSetTextureId;
-            _menuRenderer.DrawMenu(textureId);
+            ///_menuRenderer.DrawMenu(textureId);
             
             // New!
             // TODO: Pass in the menu container object to the drawer.
