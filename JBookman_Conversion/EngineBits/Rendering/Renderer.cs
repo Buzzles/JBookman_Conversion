@@ -93,6 +93,15 @@ namespace JBookman_Conversion.EngineBits
             }
         }
 
+        // Todo: Move as part of general render code above
+        internal void RenderTextPrimitives(TextPrimitive[] textPrimitives)
+        {
+            foreach (var textPrim in textPrimitives)
+            {
+                _textRenderer.RenderText(textPrim);
+            }
+        }
+
         // TODO: Combine into normal render code above
         internal void RenderPlayerPrimitive(Primitive playerPrimitive)
         {
