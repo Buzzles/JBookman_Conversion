@@ -33,8 +33,6 @@ namespace JBookman_Conversion.EngineBits
                 var alt = Convert.ToChar(c);
                 var charImage = getCharacterImage(alt);
                 
-                ////var bmp = new Bitmap(80, 80, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
                 var bmp = charImage;
 
                 bmp.RotateFlip(RotateFlipType.RotateNoneFlipY); // lol, opengl bottom left 0.0 origin
@@ -65,6 +63,9 @@ namespace JBookman_Conversion.EngineBits
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureParameterName.ClampToEdge);
                 //GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapR, (int)TextureParameterName.ClampToEdge); -- not needed?
 
+                // Unbind texture!
+                GL.BindTexture(TextureTarget.Texture2D, 0);
+                
                 // build up character objs for ref
                 var newCharacter = new Character
                 {
@@ -84,7 +85,7 @@ namespace JBookman_Conversion.EngineBits
             RenderPrimitivesForText(textPrimitive);
         }
 
-        //https://stackoverflow.com/questions/2070365/how-to-generate-an-image-from-text-on-fly-at-runtime
+        // https://stackoverflow.com/questions/2070365/how-to-generate-an-image-from-text-on-fly-at-runtime
         private Bitmap getCharacterImage(char character)
         {
             // hacks
@@ -93,6 +94,10 @@ namespace JBookman_Conversion.EngineBits
             var backColor = Color.Transparent;
             var textColor = Color.White;
             var text = character.ToString();
+
+            var testfont = new Font(FontFamily.GenericMonospace, 16f);
+
+            font = testfont;
 
             //first, create a dummy bitmap just to get a graphics object
             SizeF textSize;
@@ -167,6 +172,8 @@ namespace JBookman_Conversion.EngineBits
             GL.PopMatrix();
 
             GL.Disable(EnableCap.Blend);
+
+            GL.BindTexture(TextureTarget.Texture2D, 0); //unbind texture
         }
 
         private struct Character

@@ -5,6 +5,7 @@ using JBookman_Conversion.EngineBits;
 
 namespace JBookman_Conversion.GameStates.MenuComponents
 {
+    [Obsolete("Old renderer, replaced with call to proper new generic renderer + text renderer in MenuState")]
     internal class MenuRenderer
     {
         private int _mapTileSetId;

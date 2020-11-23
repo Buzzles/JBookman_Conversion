@@ -9,7 +9,10 @@ namespace JBookman_Conversion.GameStates.MenuComponents
         {
             var primitives = new List<TextPrimitive>();
 
-            var charWidth = 0.5f;
+            // Temp.
+            // Todo: Change text primitive to be starting location and text string,
+            // have renderer create 1 tile high but as wide as needed for the text string, rather than a 1x1 square tile
+            var charWidth = 1.0f; //0.5f;
 
             var startingX = 0.0f; // todo
 
