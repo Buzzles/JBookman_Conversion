@@ -41,6 +41,8 @@ namespace JBookman_Conversion.EngineBits.Rendering
             GL.PopMatrix();
 
             GL.Disable(EnableCap.Blend);
+
+            GL.BindTexture(TextureTarget.Texture2D, 0); // Unbind
         }
     }
 }

@@ -97,7 +97,6 @@
     <Compile Include="GameObjects\Player.cs" />
     <Compile Include="EngineBits\DrawBoundries.cs" />
     <Compile Include="GameStates\BattleState.cs" />
-    <Compile Include="GameStates\MenuComponents\MenuRenderer.cs" />
     <Compile Include="GameStates\WorldComponents\WorldDrawer.cs" />
     <Compile Include="GameStates\WorldComponents\WorldInputHandler.cs" />
     <Compile Include="GameStates\WorldState.cs" />
