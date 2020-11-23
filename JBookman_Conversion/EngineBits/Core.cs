@@ -92,6 +92,9 @@ namespace JBookman_Conversion.EngineBits
                 Console.WriteLine("ArgExcp " + e1);
             }
 
+            // Unbind texture
+            GL.BindTexture(TextureTarget.Texture2D, 0);
+
             //return texture ID for use.
             return textureID;
         }

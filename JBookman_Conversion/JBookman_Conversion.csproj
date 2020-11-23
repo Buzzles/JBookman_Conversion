@@ -67,6 +67,8 @@
     <Compile Include="EngineBits\Abstract\IGameState.cs" />
     <Compile Include="EngineBits\Abstract\IUpdatable.cs" />
     <Compile Include="EngineBits\Rendering\PlayerRenderer.cs" />
+    <Compile Include="EngineBits\Rendering\TextPrimitive.cs" />
+    <Compile Include="EngineBits\Rendering\TextRenderer.cs" />
     <Compile Include="EngineBits\StateManagers\StateQueueFactory.cs" />
     <Compile Include="EngineBits\StateManagers\StateQueueItem.cs" />
     <Compile Include="EngineBits\UpdateResult.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="GameStates\BattleComponents\BattleRenderer.cs" />
     <Compile Include="GameStates\MenuComponents\MenuDrawer.cs" />
     <Compile Include="GameStates\MenuComponents\MenuInputHandler.cs" />
+    <Compile Include="GameStates\MenuComponents\MenuItem.cs" />
     <Compile Include="GameStates\WorldComponents\PlayerDrawer.cs" />
     <Compile Include="EngineBits\Rendering\Renderer.cs" />
     <Compile Include="EngineBits\StateManagers\StateHandler.cs" />
@@ -94,7 +97,6 @@
     <Compile Include="GameObjects\Player.cs" />
     <Compile Include="EngineBits\DrawBoundries.cs" />
     <Compile Include="GameStates\BattleState.cs" />
-    <Compile Include="GameStates\MenuComponents\MenuRenderer.cs" />
     <Compile Include="GameStates\WorldComponents\WorldDrawer.cs" />
     <Compile Include="GameStates\WorldComponents\WorldInputHandler.cs" />
     <Compile Include="GameStates\WorldState.cs" />

@@ -13,10 +13,13 @@ namespace JBookman_Conversion.EngineBits
         public int PlayerTileSetTextureId { get; set; }
 
         private PlayerRenderer _playerRenderer;
+        private TextRenderer _textRenderer;
 
         public Renderer()
         {
             _playerRenderer = new PlayerRenderer();
+
+            _textRenderer = new TextRenderer();
         }
 
         public void Initialise()
@@ -87,6 +90,15 @@ namespace JBookman_Conversion.EngineBits
                 {
                     DrawPrimitive(primitive);
                 }
+            }
+        }
+
+        // Todo: Move as part of general render code above
+        internal void RenderTextPrimitives(TextPrimitive[] textPrimitives)
+        {
+            foreach (var textPrim in textPrimitives)
+            {
+                _textRenderer.RenderText(textPrim);
             }
         }
 
