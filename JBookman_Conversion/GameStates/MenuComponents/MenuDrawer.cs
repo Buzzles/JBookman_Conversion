@@ -19,6 +19,8 @@ namespace JBookman_Conversion.GameStates.MenuComponents
             // Work out location
             foreach (var item in itemsToRender)
             {
+                // V1 - Tile per character - temp
+
                 var charArray = item.Text.ToCharArray();
 
                 var numberOfChars = charArray.Length;
@@ -37,6 +39,17 @@ namespace JBookman_Conversion.GameStates.MenuComponents
 
                     primitives.Add(prim);
                 }
+
+                // V2 - Proper way, set location and text, not per tile
+                var stringPrim = new TextPrimitive
+                {
+                    Text = item.Text,
+                    X = 10f, // temp, mid way down screen
+                    Y = 0f, // temp, left side
+                    Z = 1f
+                };
+
+                primitives.Add(stringPrim);
 
                 //var menuItem = SomeMenuItem(item.Text);
 

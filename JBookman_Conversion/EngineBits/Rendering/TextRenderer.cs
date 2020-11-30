@@ -32,7 +32,7 @@ namespace JBookman_Conversion.EngineBits
                 var character = char.ConvertFromUtf32(c);
                 var alt = Convert.ToChar(c);
                 var charImage = getCharacterImage(alt);
-                
+
                 var bmp = charImage;
 
                 bmp.RotateFlip(RotateFlipType.RotateNoneFlipY); // lol, opengl bottom left 0.0 origin
@@ -65,7 +65,7 @@ namespace JBookman_Conversion.EngineBits
 
                 // Unbind texture!
                 GL.BindTexture(TextureTarget.Texture2D, 0);
-                
+
                 // build up character objs for ref
                 var newCharacter = new Character
                 {
