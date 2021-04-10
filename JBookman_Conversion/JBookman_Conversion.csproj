@@ -68,6 +68,8 @@
     <Compile Include="EngineBits\Abstract\IUpdatable.cs" />
     <Compile Include="EngineBits\Rendering\PlayerRenderer.cs" />
     <Compile Include="EngineBits\Rendering\TextPrimitive.cs" />
+    <Compile Include="EngineBits\Rendering\TextRendererBase.cs" />
+    <Compile Include="EngineBits\Rendering\TextRendererVbos.cs" />
     <Compile Include="EngineBits\Rendering\TextRenderer.cs" />
     <Compile Include="EngineBits\StateManagers\StateQueueFactory.cs" />
     <Compile Include="EngineBits\StateManagers\StateQueueItem.cs" />
