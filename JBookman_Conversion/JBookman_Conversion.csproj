@@ -71,6 +71,7 @@
     <Compile Include="EngineBits\Rendering\TextRendererBase.cs" />
     <Compile Include="EngineBits\Rendering\TextRendererVbos.cs" />
     <Compile Include="EngineBits\Rendering\TextRenderer.cs" />
+    <Compile Include="EngineBits\Shader.cs" />
     <Compile Include="EngineBits\StateManagers\StateQueueFactory.cs" />
     <Compile Include="EngineBits\StateManagers\StateQueueItem.cs" />
     <Compile Include="EngineBits\UpdateResult.cs" />

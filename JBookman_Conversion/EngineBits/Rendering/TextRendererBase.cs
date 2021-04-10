@@ -92,7 +92,7 @@ namespace JBookman_Conversion.EngineBits
             // hacks
             var minSize = new Size(8, 8);
             var font = SystemFonts.DefaultFont;
-            var backColor = Color.Transparent;
+            var backColor = Color.Pink; // Color.Transparent;
             var textColor = Color.White;
             var text = character.ToString();
 
