@@ -139,6 +139,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="EngineBits\shader.frag" />
+    <None Include="EngineBits\shader.vert" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
   </ItemGroup>
