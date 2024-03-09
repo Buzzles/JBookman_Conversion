@@ -123,7 +123,9 @@ namespace JBookman_Conversion
             // This should be a basic handler, mostly for debugging
             _engine.InputHandler.HandleKeyboardDown(e, this, _engine);
 
-            if (Keyboard[Key.Escape])
+            var keyboardState = Keyboard.GetState();
+
+            if (keyboardState.IsKeyDown(Key.Escape))
             {
                 //this.Exit();
             }
@@ -133,8 +135,6 @@ namespace JBookman_Conversion
                 m_iUpdateCount = 0;
             }
             else m_iUpdateCount++;
-
-            var keyboardState = this.Keyboard.GetState();
 
             _engine.StateManager.UpdateCurrentState(keyboardState);
             

@@ -11,7 +11,7 @@ namespace JBookman_Conversion.EngineBits.Rendering
             GL.BindTexture(TextureTarget.Texture2D, playerPrimitive.TextureId); //set texture
 
             GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             GL.LoadIdentity();
 
             //Proper GL way, translate grid, then draw at new 0.0

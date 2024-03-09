@@ -15,7 +15,7 @@ namespace JBookman_Conversion.EngineBits
 
         internal void HandleKeyboardDown(FrameEventArgs e, Game gameContext, Engine engineContext)
         {
-            _keyboardState = gameContext.Keyboard.GetState();
+            _keyboardState = Keyboard.GetState();
 
             if (KeyPress(Key.Q))
             {

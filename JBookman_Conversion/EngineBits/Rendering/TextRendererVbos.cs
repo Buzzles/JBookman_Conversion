@@ -21,14 +21,19 @@ namespace JBookman_Conversion.EngineBits
             // VBO (Vertex Buffer Object) = array/s of vertex data stored on gpu
             // VAO (Vertex Array Object) = holds what is essentially a pointer to VBOs, VAO are really just thin state wrappers
 
+            // with vao testing
+            var vao = GL.GenVertexArray(); // test
+            GL.BindVertexArray(vao); // need to do this before binding the vbo to the array buffer.
+
             // Create VBO
             // 1: Generate new buffer object (uninitialised, so just get id)
-            var buf = GL.GenBuffer(); // short for gl.GenBuffers(1, out int[])
+            var vbo = GL.GenBuffer(); // short for gl.GenBuffers(1, out int[])
+            
             
             // 2: Bind buffer object -- hook buffer to a type. ArrayBuffer is for vertex attributes, eg: vertex coords, texture coords, normals, colour component arrays. (If using Index arrays, use ElementArrayBuffer)
             // This actually initialises the buffer with initial states and a 0 size mem buffer
-            GL.BindBuffer(BufferTarget.ArrayBuffer, buf);
-
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
+            
             // 3: copy data info buffer object
             float[] vertices = {
                 -0.5f, -0.5f, 0.0f, //Bottom-left vertex
@@ -46,11 +51,11 @@ namespace JBookman_Conversion.EngineBits
             // TODO: load data with GL.BufferData!
 
             // Draw it all
-            DrawVbo_songHo(buf, indexBuffer);
+            DrawVbo_songHo(vbo, indexBuffer);
 
             // Clean up when we've finished!
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-            GL.DeleteBuffer(buf);
+            GL.DeleteBuffer(vbo);
         }
 
         private void DrawVbo_songHo(int vboId, int indexBufferId)
@@ -62,10 +67,15 @@ namespace JBookman_Conversion.EngineBits
             GL.EnableClientState(ArrayCap.NormalArray); // activate vertex normal array
             GL.EnableClientState(ArrayCap.TextureCoordArray); // activate texture coord array
 
+            var offset = 36; // sizeof vertices; 3x floats per vertex = 12, 3 vertices = 36
+            var nOffset = offset + 12;
+            var cOffset = nOffset + 12; // sizeof normals; // colour offset
+            var tOffset = cOffset + 12; // sizeof colors; // texture offset
+
             var stride = 0;
             GL.VertexPointer(3, VertexPointerType.Float, stride, offset);
-            GL.NormalPointer(NormalPointerType.Float, stride, offset2);
-            GL.TexCoordPointer(2, TexCoordPointerType.Float, stride, offset3);
+            GL.NormalPointer(NormalPointerType.Float, stride, nOffset);
+            GL.TexCoordPointer(2, TexCoordPointerType.Float, stride, tOffset);
 
             var faceCount = 36;
             GL.DrawElements(BeginMode.Triangles, faceCount, DrawElementsType.UnsignedByte, 0);
@@ -88,6 +98,7 @@ namespace JBookman_Conversion.EngineBits
             GL.BindVertexArray(VAO);
             GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
             
+            // 3rd arg should point to vbo?
             GL.BufferData(BufferTarget.ArrayBuffer, sizeof(float) * 6 * 4, (System.IntPtr)null, BufferUsageHint.DynamicDraw);
             
             GL.EnableVertexAttribArray(0);
